@@ -56,10 +56,16 @@
 
   /* ---------------- le schede dei software ---------------- */
   main {
-    width: 100%; max-width: 980px; margin-top: 54px;
-    display: grid; gap: 22px; grid-template-columns: repeat(2, 1fr);
+    width: 100%; max-width: 1240px; margin-top: 54px;
+    display: grid; gap: 18px; grid-template-columns: repeat(4, 1fr);
   }
-  @media (max-width: 700px) { main { grid-template-columns: 1fr; } }
+  /* Sotto i 1040px l'ingrandimento non ha senso: quattro schede in fila
+     sarebbero troppo strette perche' se ne capisca il contenuto, e su un
+     dispositivo a sfioramento il passaggio del cursore non esiste. Si torna
+     alla griglia, che li' funziona meglio. */
+  @media (max-width: 1040px) { main { grid-template-columns: repeat(2, 1fr);
+                                      max-width: 980px; } }
+  @media (max-width: 700px)  { main { grid-template-columns: 1fr; } }
 
   .scheda {
     display: flex; flex-direction: column; text-decoration: none; color: inherit;
@@ -68,9 +74,22 @@
                                   border-color .18s ease;
   }
   .scheda:hover, .scheda:focus-visible {
-    transform: translateY(-4px);
     border-color: color-mix(in srgb, var(--ciano) 55%, var(--line));
     box-shadow: 0 16px 40px color-mix(in srgb, var(--blu) 18%, transparent);
+  }
+  /* Ingrandimento alla maniera del Dock: la scheda sotto il cursore cresce di
+     piu', le vicine un po' meno, e chi e' lontano resta ferma. Il fattore lo
+     scrive il codice in --k; l'ancoraggio in basso fa crescere le schede verso
+     l'alto, come le icone del Dock, invece di spingersi a vicenda. */
+  main.dock .scheda { transform-origin: bottom center;
+                      transform: scale(var(--k, 1));
+                      position: relative; z-index: var(--z, 1);
+                      transition: transform .18s cubic-bezier(.2,.8,.3,1),
+                                  border-color .18s ease, box-shadow .18s ease; }
+  main.dock .scheda:hover { transform: scale(var(--k, 1)); }
+  /* Chi ha chiesto meno animazioni al sistema non se la ritrova addosso. */
+  @media (prefers-reduced-motion: reduce) {
+    main.dock .scheda { transform: none !important; transition: none; }
   }
   .scheda:focus-visible { outline: 3px solid var(--ciano); outline-offset: 3px; }
 
@@ -263,6 +282,50 @@
 </div>
 
 <script>
+/* Effetto Dock. Si accende solo se il dispositivo ha un puntatore vero e la
+   riga e' davvero una riga: su schermo stretto o a sfioramento resta la
+   griglia normale, dove l'ingrandimento non servirebbe a niente. */
+(function dock() {
+  const riga = document.querySelector('main');
+  const schede = [...riga.querySelectorAll('.scheda')];
+  const finemouse = window.matchMedia('(hover: hover) and (pointer: fine)');
+  const menoMoto = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  const MAX = 1.18;     // quanto cresce quella sotto il cursore
+  // Il raggio deve superare la distanza fra i centri di due schede (~315px),
+  // altrimenti le vicine restano ferme e non c'e' nessuna onda: con 260 si
+  // ingrandiva soltanto quella puntata.
+  const RAGGIO = 700;
+
+  function attiva() {
+    return finemouse.matches && !menoMoto.matches &&
+           window.getComputedStyle(riga).gridTemplateColumns.split(' ').length === 4;
+  }
+  function spegni() {
+    riga.classList.remove('dock');
+    schede.forEach(s => { s.style.removeProperty('--k'); s.style.removeProperty('--z'); });
+  }
+  function muovi(e) {
+    if (!attiva()) { spegni(); return; }
+    riga.classList.add('dock');
+    schede.forEach(s => {
+      const r = s.getBoundingClientRect();
+      const d = Math.abs(e.clientX - (r.left + r.width / 2));
+      // curva morbida: 1 sotto il cursore, 0 oltre il raggio
+      const vicinanza = Math.max(0, 1 - d / RAGGIO);
+      const k = 1 + (MAX - 1) * Math.pow(vicinanza, 1.4);
+      s.style.setProperty('--k', k.toFixed(3));
+      // chi cresce sta davanti: senza, la scheda ingrandita finisce sotto
+      // la vicina e sembra tagliata
+      s.style.setProperty('--z', String(Math.round(k * 100)));
+    });
+  }
+
+  riga.addEventListener('pointermove', muovi);
+  riga.addEventListener('pointerleave', spegni);
+  window.addEventListener('resize', spegni);
+})();
+
 (function pannelloCookie(){
   const w = document.getElementById('cookiewrap');
   const apri = () => { w.hidden = false; document.getElementById('cookieok').focus(); };

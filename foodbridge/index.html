@@ -41,7 +41,14 @@
   .topbar .brand img { height: 46px; width: auto; display: block; }
 
   header.hero { padding: 34px 0 8px; }
-  h1 { font-size: 46px; line-height: 1.08; margin: 0 0 10px; letter-spacing: -.6px; }
+  /* Il nome e' dentro il marchio, che e' un'immagine: il testo deve
+     esistere lo stesso per chi legge con la voce e per i motori di
+     ricerca. Stessa scelta della pagina d'ingresso. */
+  h1 { position: absolute; width: 1px; height: 1px; overflow: hidden;
+       clip: rect(0 0 0 0); white-space: nowrap; }
+  .marchio { width: min(420px, 82vw); height: auto; display: block;
+             margin: 0 auto 18px;
+             filter: drop-shadow(0 14px 34px rgba(0,0,0,.45)); }
   .claim { font-size: 21px; color: #d7e6ee; margin: 0 auto 20px;
            max-width: var(--testo); }
   .stato { display: inline-flex; align-items: center; gap: 8px; font-size: 13px;
@@ -119,6 +126,7 @@
 
   <header class="hero">
     <h1>FoodBridge</h1>
+    <img class="marchio" src="img/foodbridge-logo.svg?v=1" alt="FoodBridge">
     <p class="claim">Il marketplace B2B dove ristoranti, hotel e catering comprano
     food &amp; beverage e forniture professionali da più fornitori, con un solo ordine.</p>
     <span class="stato"><i></i> MVP completo · non ancora in produzione</span>
