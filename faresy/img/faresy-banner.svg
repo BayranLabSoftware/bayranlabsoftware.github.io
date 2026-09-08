@@ -234,7 +234,7 @@
         font-size="10" font-weight="500"
         fill="#334155"
         text-anchor="middle"
-        letter-spacing="2.5">Enterprise Face Recognition  |  Built on DeepFace  |  Law Enforcement Grade</text>
+        letter-spacing="2.5">Enterprise Face Recognition  |  Built on DeepFace</text>
 
   <!-- Bottom accent line -->
   <rect x="0" y="297" width="900" height="3" fill="url(#accentGrad)" opacity="0.6"/>
