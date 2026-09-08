@@ -101,11 +101,50 @@
   .langgrid span{display:inline-flex;align-items:center}
   /* footer */
   footer{background:#08201f;color:#bcd3cf;font-size:14px}
-  footer .wrap{padding:36px 22px;display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+  footer .wrap{padding:44px 22px 26px}
   footer a{color:#9fe6d8;text-decoration:none}
   footer a:hover{text-decoration:underline}
   .fbrand{display:flex;align-items:center;gap:9px;font-weight:700;color:#eaf6f4}
   .fbrand img{width:26px;height:26px;border-radius:7px}
+  /* Tracce esplicite, non auto-fit: con auto-fit la quarta colonna cadeva su
+     una seconda riga e lasciava un buco in mezzo al footer. Qui le soglie
+     sono due e si vedono. */
+  .fcols{display:grid;gap:30px 26px;grid-template-columns:1.7fr 1fr 1fr 1fr}
+  @media(max-width:900px){ .fcols{grid-template-columns:1fr 1fr} }
+  @media(max-width:520px){ .fcols{grid-template-columns:1fr} }
+  .fcol-brand{max-width:420px}
+  .fcol h3{font-size:12px;text-transform:uppercase;letter-spacing:.09em;
+    color:#7fb8ae;font-weight:700;margin:0 0 12px;min-height:1em}
+  /* L'ultima colonna non ha titolo: sono le voci di servizio, e inventare
+     un'etichetta avrebbe voluto dire 22 traduzioni nuove per una parola. Lo
+     spazio del titolo resta riservato perche' le quattro colonne partano
+     tutte dalla stessa riga. */
+  .fcol h3:empty::after{content:"\00a0"}
+  .fcol a,.fcol .flink{display:block;padding:5px 0;color:#9fe6d8}
+  .flink{background:none;border:0;font:inherit;cursor:pointer;text-align:inherit}
+  .flink:hover{text-decoration:underline}
+  .fclaim{margin:12px 0 10px;opacity:.85;line-height:1.5}
+  .fnote{font-size:13px;opacity:.82;display:inline-flex;align-items:center;gap:6px}
+  .fbottom{margin-top:32px;padding-top:18px;border-top:1px solid rgba(255,255,255,.10);
+    display:flex;flex-wrap:wrap;gap:10px 24px;align-items:baseline;font-size:12.5px;opacity:.72}
+  .ftm{flex:1 1 320px;line-height:1.5}
+
+  /* pannello cookie */
+  .cookiewrap{position:fixed;inset:0;z-index:80;display:flex;align-items:center;
+    justify-content:center;padding:22px;background:rgba(4,20,19,.55)}
+  .cookiewrap[hidden]{display:none}
+  .cookiepanel{background:#fff;color:#13242a;border-radius:16px;max-width:430px;width:100%;
+    padding:26px 26px 20px;box-shadow:0 24px 60px rgba(0,0,0,.35)}
+  .cookiepanel h3{font-size:19px;font-weight:800;margin:0 0 14px;line-height:1.35}
+  .cookielist{list-style:none;margin:0 0 18px;padding:0;display:grid;gap:8px}
+  .cookielist li{display:flex;align-items:center;gap:10px;font-size:14.5px}
+  .cookielist b{min-width:26px;height:26px;border-radius:8px;background:#e6f5f1;color:#0d6e64;
+    display:inline-flex;align-items:center;justify-content:center;font-size:13px;flex:0 0 auto}
+  .cookiefoot{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  .cookiefoot a{color:#0d6e64;font-weight:600}
+  .cookieok{background:#0d6e64;color:#fff;border:0;border-radius:10px;padding:10px 24px;
+    font:inherit;font-weight:700;cursor:pointer}
+  .cookieok:hover{filter:brightness(1.08)}
   /* responsive */
   @media(max-width:820px){
     .hero .wrap{grid-template-columns:1fr;text-align:center;padding:48px 22px 54px}
@@ -144,25 +183,25 @@
   <div class="phone"><img id="heroShot" src="img/01-home-it.png" alt=""></div>
 </div></div>
 
-<section><div class="wrap">
+<section id="funzioni"><div class="wrap">
   <h2 class="sect" data-t="featTitle"></h2>
   <p class="lead" data-t="featLead"></p>
   <div class="grid" id="features"></div>
 </div></section>
 
-<div class="privacy"><div class="wrap">
+<div class="privacy" id="riservatezza"><div class="wrap">
   <div class="lock"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
   <h2 data-t="privTitle"></h2>
   <p data-t="privText"></p>
 </div></div>
 
-<section><div class="wrap">
+<section id="schermate"><div class="wrap">
   <h2 class="sect" data-t="shotsTitle"></h2>
   <p class="lead" data-t="shotsLead"></p>
   <div class="promo"><video id="promoVid" autoplay muted loop playsinline controls preload="auto"></video></div>
 </div></section>
 
-<div class="langs"><section><div class="wrap">
+<div class="langs"><section id="lingue"><div class="wrap">
   <h2 class="sect" data-t="langsTitle"></h2>
   <p class="lead" data-t="langsText"></p>
   <div class="langgrid">
@@ -176,13 +215,74 @@
 </div></div>
 
 <footer><div class="wrap">
-  <div class="fbrand"><img src="img/logo-dog.png" alt="">Bayran Office</div>
-  <span class="fnote" id="fcookie" style="opacity:.82;font-size:13px;display:inline-flex;align-items:center;gap:6px"></span>
-  <div class="spacer"></div>
-  <a href="https://bayranlabsoftware.github.io/BayranOfficePrivacyPolicy/" data-t="fPrivacy"></a>
-  <a href="mailto:bayranlabsoftware@gmail.com" data-t="fContact"></a>
-  <span style="opacity:.7">© 2026 BayranLab Software</span>
+  <div class="fcols">
+
+    <div class="fcol fcol-brand">
+      <div class="fbrand"><img src="img/logo-dog.png" alt="">Bayran Office</div>
+      <p class="fclaim" data-t="heroSub"></p>
+      <span class="fnote" id="fcookie"></span>
+    </div>
+
+    <!-- Le voci qui sotto NON introducono testo nuovo: riusano i titoli delle
+         sezioni, che sono gia' tradotti in tutte e 22 le lingue. Una stringa
+         in piu' avrebbe voluto dire 22 traduzioni in piu' da mantenere. -->
+    <nav class="fcol">
+      <h3>Bayran Office</h3>
+      <a href="#funzioni" data-t="featTitle"></a>
+      <a href="#riservatezza" data-t="privTitle"></a>
+      <a href="#schermate" data-t="shotsTitle"></a>
+      <a href="#lingue" data-t="langsTitle"></a>
+    </nav>
+
+    <nav class="fcol">
+      <h3>BayranLab Software</h3>
+      <a href="../">BayranLab Software</a>
+      <a href="../bayrancleaner/">Bayran Cleaner</a>
+      <a href="https://play.google.com/store/apps/details?id=com.bayran.office">Google Play</a>
+      <a href="https://apps.apple.com/app/id6795818217">App Store</a>
+    </nav>
+
+    <nav class="fcol">
+      <h3></h3>
+      <a href="https://bayranlabsoftware.github.io/BayranOfficePrivacyPolicy/" data-t="fPrivacy"></a>
+      <a href="mailto:bayranlabsoftware@gmail.com" data-t="fContact"></a>
+      <button type="button" class="flink" id="cookiebtn">Cookie</button>
+    </nav>
+
+  </div>
+
+  <div class="fbottom">
+    <span>© 2026 BayranLab Software</span>
+    <!-- Attribuzioni dovute: usare i badge ufficiali dei due store obbliga a
+         citarne i marchi. Restano in inglese perche' e' la forma in cui Apple
+         e Google le pubblicano. -->
+    <span class="ftm">Apple and the Apple logo are trademarks of Apple Inc.
+      App Store is a service mark of Apple Inc. Google Play and the Google Play
+      logo are trademarks of Google LLC.</span>
+  </div>
 </div></footer>
+
+<!-- Pannello cookie. Non chiede un consenso perche' non c'e' niente da
+     consentire: il sito non scrive cookie, non usa alcuna memoria del browser
+     e non contatta terze parti. Si apre solo su richiesta, dal footer: un
+     avviso che comparisse da solo andrebbe poi ricordato come "gia' chiuso",
+     e ricordarlo vorrebbe dire scrivere nel browser proprio l'unico dato che
+     questo sito non scrive. -->
+<div class="cookiewrap" id="cookiewrap" hidden>
+  <div class="cookiepanel" role="dialog" aria-modal="true" aria-labelledby="cookieh">
+    <h3 id="cookieh"></h3>
+    <ul class="cookielist">
+      <li><b>0</b> cookie</li>
+      <li><b>0</b> localStorage · sessionStorage</li>
+      <li><b>0</b> analytics</li>
+      <li><b>0</b> <span class="cookie3p">third-party</span></li>
+    </ul>
+    <div class="cookiefoot">
+      <a href="https://bayranlabsoftware.github.io/BayranOfficePrivacyPolicy/" data-t="fPrivacy"></a>
+      <button type="button" class="cookieok" id="cookieok">OK</button>
+    </div>
+  </div>
+</div>
 
 <script>
 const ICONS = [
@@ -444,8 +544,25 @@ function render(code){
   document.getElementById('curflag').src = 'img/flags/'+code+'.png';
   document.getElementById('curlang').textContent = (LANG[code]||LANG.en).name;
   document.querySelectorAll('#langmenu .lmi').forEach(el=>el.classList.toggle('on', el.dataset.c===code));
-  document.getElementById('fcookie').textContent = '🔒 ' + (COOKIE[code] || COOKIE.en);
+  const cookieTxt = COOKIE[code] || COOKIE.en;
+  document.getElementById('fcookie').textContent = '🔒 ' + cookieTxt;
+  // Il titolo del pannello e' la stessa frase del footer: una fonte sola,
+  // gia' tradotta in 22 lingue, e nessun rischio che le due si contraddicano.
+  document.getElementById('cookieh').textContent = cookieTxt;
 }
+/* Apertura e chiusura del pannello cookie. Niente da ricordare fra una
+   visita e l'altra: non comparendo da solo, non deve nemmeno sapere se lo hai
+   gia' visto — che e' l'unico modo di non scrivere niente nel browser. */
+(function pannelloCookie(){
+  const w = document.getElementById('cookiewrap');
+  const apri = () => { w.hidden = false; document.getElementById('cookieok').focus(); };
+  const chiudi = () => { w.hidden = true; document.getElementById('cookiebtn').focus(); };
+  document.getElementById('cookiebtn').addEventListener('click', apri);
+  document.getElementById('cookieok').addEventListener('click', chiudi);
+  w.addEventListener('click', e => { if (e.target === w) chiudi(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !w.hidden) chiudi(); });
+})();
+
 (function init(){
   const menu = document.getElementById('langmenu'), sel = document.getElementById('langsel'), btn = document.getElementById('langbtn');
   menu.innerHTML = Object.keys(LANG).map(c=>'<button class="lmi" data-c="'+c+'" role="menuitem"><img class="flag" src="img/flags/'+c+'.png" alt="">'+LANG[c].name+'</button>').join('');
