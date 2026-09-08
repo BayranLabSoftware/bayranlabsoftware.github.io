@@ -1,452 +1,144 @@
-<!DOCTYPE html>
-<html lang="it"><head>
+<!doctype html>
+<html lang="it">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bayran Office — I tuoi documenti. Solo tuoi.</title>
-<meta name="description" content="Suite documenti e editor PDF 100% offline. Leggi, scansiona, firma, converti e traduci — senza internet, senza account.">
+<title>BayranLab Software</title>
+<meta name="description" content="I software di BayranLab Software: Bayran Cleaner per Mac e Bayran Office per iPhone e iPad.">
+<link rel="icon" href="img/logo-dog.png">
+<meta property="og:title" content="BayranLab Software">
+<meta property="og:description" content="Bayran Cleaner per Mac, Bayran Office per iPhone e iPad.">
+<meta property="og:image" content="https://bayranlabsoftware.github.io/img/logo-dog.png">
 <style>
-  :root{
-    --teal:#0d6e64; --teal2:#12a79e; --teal3:#0e7d8f; --ink:#13242a; --ink2:#4a5b62;
-    --bg:#ffffff; --soft:#f3f7f7; --line:#e3eceb; --white:#fff;
+  :root {
+    --ink: #13242a;
+    --muted: #5b7683;
+    --line: #dbe7ec;
+    --card: #ffffff;
+    --bg: #f4f9fb;
+    --blu: #1f7aa8;
+    --ciano: #41abd0;
   }
-  *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{font-family:'Segoe UI',-apple-system,Roboto,'Yu Gothic UI','Malgun Gothic',Arial,sans-serif;
-    color:var(--ink);background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased}
-  img{max-width:100%;display:block}
-  a{color:inherit}
-  .wrap{max-width:1080px;margin:0 auto;padding:0 22px}
-  /* header */
-  header{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-  .hbar{display:flex;align-items:center;gap:14px;height:68px}
-  .brand{display:flex;align-items:center}
-  .brand .hlogo{height:46px;width:auto}
-  .spacer{flex:1}
-  /* selettore lingua personalizzato (con bandiere) */
-  .langsel{position:relative}
-  .langbtn{display:inline-flex;align-items:center;font:inherit;font-size:14px;padding:7px 11px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);cursor:pointer}
-  .langbtn .chev{width:16px;height:16px;opacity:.55;margin-left:5px}
-  .langmenu{position:absolute;top:calc(100% + 6px);right:0;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 14px 40px rgba(0,0,0,.16);padding:6px;display:none;max-height:330px;overflow:auto;z-index:40;min-width:188px}
-  .langsel.open .langmenu{display:block}
-  .lmi{display:flex;align-items:center;width:100%;font:inherit;font-size:14px;padding:8px 10px;border:0;background:none;border-radius:8px;cursor:pointer;color:var(--ink);text-align:left}
-  .lmi:hover{background:var(--soft)}
-  .lmi.on{background:#e7f3f1;font-weight:700}
-  .btn{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:#fff;font-weight:700;
-    padding:11px 18px;border-radius:11px;text-decoration:none;font-size:15px;border:0;cursor:pointer;transition:transform .12s,filter .12s}
-  .btn:hover{filter:brightness(1.07);transform:translateY(-1px)}
-  .btn.sm{padding:8px 14px;font-size:14px}
-  .btn svg{width:18px;height:18px}
-  /* hero */
-  .hero{background:linear-gradient(160deg,var(--teal) 0%,var(--teal2) 60%,var(--teal3) 100%);color:#fff;overflow:hidden}
-  .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center;padding:64px 22px 70px}
-  .kick{display:inline-flex;align-items:center;gap:11px;font-size:19px;font-weight:700;letter-spacing:.01em;opacity:.97;margin-bottom:16px}
-  .kicklogo{width:38px;height:38px;border-radius:10px;background:#fff;padding:3px;object-fit:contain;box-shadow:0 5px 16px rgba(0,0,0,.2)}
-  .hero h1{font-size:52px;line-height:1.04;font-weight:800;letter-spacing:-.02em;margin-bottom:18px;text-shadow:0 2px 18px rgba(0,0,0,.16)}
-  .hero p.sub{font-size:20px;opacity:.95;max-width:460px;margin-bottom:14px}
-  .chips{display:flex;flex-wrap:wrap;gap:9px;margin:18px 0 26px}
-  .chip{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:7px 14px;font-size:14px;font-weight:600}
-  .hero .btn{background:#fff;color:var(--teal)}
-  .phone{justify-self:center;width:270px;border-radius:34px;background:#0a3b39;padding:9px;box-shadow:0 30px 70px rgba(0,0,0,.33);border:1px solid rgba(255,255,255,.18)}
-  .phone img{border-radius:26px;width:100%}
-  /* sections */
-  section{padding:66px 0}
-  h2.sect{font-size:33px;font-weight:800;letter-spacing:-.01em;text-align:center;margin-bottom:10px}
-  .lead{text-align:center;color:var(--ink2);font-size:17px;max-width:620px;margin:0 auto 40px}
-  /* features */
-  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-  .card{background:var(--soft);border:1px solid var(--line);border-radius:18px;padding:24px}
-  .ic{width:46px;height:46px;border-radius:12px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
-  .ic svg{width:24px;height:24px;stroke:var(--teal);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-  .card h3{font-size:18px;font-weight:700;margin-bottom:6px}
-  .card p{color:var(--ink2);font-size:15px}
-  /* privacy band */
-  .privacy{background:#0c2b2a;color:#eaf6f4}
-  .privacy .wrap{text-align:center;padding:64px 22px}
-  .privacy .lock{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.28);display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
-  .privacy .lock svg{width:30px;height:30px;stroke:#7fe3d3;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-  .privacy h2{font-size:31px;font-weight:800;margin-bottom:14px}
-  .privacy p{max-width:620px;margin:0 auto;font-size:17px;opacity:.92}
-  /* shots */
-  .shots{display:flex;gap:22px;justify-content:center;flex-wrap:wrap}
-  .frame{width:230px;border-radius:26px;background:#0a3b39;padding:7px;box-shadow:0 18px 44px rgba(0,0,0,.16)}
-  .frame img{border-radius:21px;width:100%}
-  .promo{max-width:820px;margin:6px auto 0;border-radius:22px;overflow:hidden;background:#0d6e64;box-shadow:0 22px 60px rgba(0,0,0,.20);line-height:0}
-  .promo video{display:block;width:100%;height:auto}
-  /* langs */
-  .langs{background:var(--soft)}
-  .langgrid{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:760px;margin:8px auto 0}
-  .langgrid span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 15px;font-size:14px;font-weight:600;color:var(--ink2)}
-  /* cta strip */
-  .ctaStrip{background:linear-gradient(120deg,var(--teal),var(--teal3));color:#fff;text-align:center}
-  .ctaStrip .wrap{padding:56px 22px}
-  .ctaStrip h2{font-size:30px;font-weight:800;margin-bottom:20px}
-  /* store badges (immagini ufficiali) */
-  .badges{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end}
-  .badge-img{position:relative;display:inline-flex;align-items:center;text-decoration:none}
-  .badge-img > img{display:block;height:52px;width:auto}
-  .badge-img.gp > img{height:58px}
-  .badge-img[href]{transition:transform .12s,filter .12s}
-  .badge-img[href]:hover{filter:brightness(1.08);transform:translateY(-1px)}
-  .badge-img.soon{flex-direction:column;align-items:center;gap:7px}
-  .badge-img.soon > img{opacity:.6}
-  .soonlbl{background:#ffc107;color:#181818;font-weight:800;font-size:11px;font-style:normal;
-    padding:4px 12px;border-radius:999px;white-space:nowrap;box-shadow:0 2px 9px rgba(0,0,0,.25);letter-spacing:.01em}
-  /* flags */
-  .flag{width:22px;height:15px;border-radius:3px;object-fit:cover;margin-right:8px;box-shadow:0 0 0 1px rgba(0,0,0,.08);flex:0 0 auto}
-  .langgrid span{display:inline-flex;align-items:center}
-  /* footer */
-  footer{background:#08201f;color:#bcd3cf;font-size:14px}
-  footer .wrap{padding:36px 22px;display:flex;flex-wrap:wrap;gap:14px;align-items:center}
-  footer a{color:#9fe6d8;text-decoration:none}
-  footer a:hover{text-decoration:underline}
-  .fbrand{display:flex;align-items:center;gap:9px;font-weight:700;color:#eaf6f4}
-  .fbrand img{width:26px;height:26px;border-radius:7px}
-  /* responsive */
-  @media(max-width:820px){
-    .hero .wrap{grid-template-columns:1fr;text-align:center;padding:48px 22px 54px}
-    .hero h1{font-size:40px}.hero p.sub{margin-left:auto;margin-right:auto}
-    .chips{justify-content:center}.phone{margin-top:10px;width:240px}
-    .grid{grid-template-columns:1fr}
-    h2.sect{font-size:27px}.privacy h2{font-size:26px}
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #eef6fa; --muted: #9db4c0; --line: rgba(255,255,255,.12);
+      --card: #12242e; --bg: #0b1720;
+    }
   }
-</style></head>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; background: var(--bg); color: var(--ink);
+    font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 0 22px 60px;
+    /* alone del marchio, appena accennato */
+    background-image: radial-gradient(900px 460px at 50% -140px,
+                      color-mix(in srgb, var(--ciano) 20%, transparent), transparent 70%);
+  }
+
+  /* ---------------- testata: il marchio e basta ---------------- */
+  header { text-align: center; padding: 74px 0 8px; }
+  header .cane {
+    width: 168px; height: 168px; display: block; margin: 0 auto 22px;
+    filter: drop-shadow(0 12px 30px color-mix(in srgb, var(--blu) 26%, transparent));
+  }
+  header .scritta { width: min(330px, 76vw); height: auto; display: block; margin: 0 auto; }
+  /* Il marchio e' un'immagine con dentro il nome: per chi legge con la voce
+     e per i motori di ricerca il nome deve esistere comunque come testo. */
+  h1 {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap;
+  }
+
+  /* ---------------- le due schede ---------------- */
+  main {
+    width: 100%; max-width: 940px; margin-top: 54px;
+    display: grid; gap: 22px; grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: 760px) { main { grid-template-columns: 1fr; } }
+
+  .scheda {
+    display: flex; flex-direction: column; text-decoration: none; color: inherit;
+    background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+    overflow: hidden; transition: transform .18s ease, box-shadow .18s ease,
+                                  border-color .18s ease;
+  }
+  .scheda:hover, .scheda:focus-visible {
+    transform: translateY(-4px);
+    border-color: color-mix(in srgb, var(--ciano) 55%, var(--line));
+    box-shadow: 0 16px 40px color-mix(in srgb, var(--blu) 18%, transparent);
+  }
+  .scheda:focus-visible { outline: 3px solid var(--ciano); outline-offset: 3px; }
+
+  /* Riquadro dell'immagine ad altezza fissa: le due anteprime hanno forme
+     molto diverse (un Mac largo, un telefono alto) e senza un riquadro
+     comune le schede verrebbero di due altezze diverse. Le immagini sono
+     ancorate in alto e sbordano sotto: si vede la parte che conta e le due
+     schede restano uguali, invece di rimpicciolire il telefono fino a
+     renderlo illeggibile pur di farlo stare tutto dentro. */
+  .vetrina {
+    height: 210px; display: flex; align-items: flex-start; justify-content: center;
+    padding-top: 24px;
+    background: linear-gradient(160deg,
+                color-mix(in srgb, var(--blu) 92%, #000),
+                color-mix(in srgb, var(--ciano) 78%, #0a3550));
+    overflow: hidden;
+  }
+  .vetrina img { border-radius: 8px 8px 0 0; box-shadow: 0 12px 30px rgba(0,0,0,.38); }
+  .vetrina .mac { width: 86%; height: auto; }
+  .vetrina .telefono { width: 124px; height: auto; }
+
+  .testo { padding: 20px 22px 22px; display: flex; flex-direction: column;
+           gap: 7px; flex: 1; }
+  .nome { font-size: 21px; font-weight: 700; letter-spacing: -.2px; }
+  .claim { color: var(--muted); }
+  .piede { margin-top: auto; padding-top: 14px; display: flex;
+           align-items: center; justify-content: space-between; gap: 12px; }
+  .dove { font-size: 12.5px; color: var(--muted); border: 1px solid var(--line);
+          border-radius: 20px; padding: 3px 11px; white-space: nowrap; }
+  .vai { font-weight: 600; color: var(--blu); white-space: nowrap; }
+  @media (prefers-color-scheme: dark) { .vai { color: var(--ciano); } }
+  .scheda:hover .vai .freccia { transform: translateX(4px); }
+  .freccia { display: inline-block; transition: transform .18s ease; }
+
+  footer { margin-top: 52px; color: var(--muted); font-size: 13px; text-align: center; }
+</style>
+</head>
 <body>
-<header><div class="wrap hbar">
-  <div class="brand"><img class="hlogo" src="img/bayranlab-logo.png" alt="BayranLab Software"></div>
-  <div class="spacer"></div>
-  <div class="langsel" id="langsel">
-    <button class="langbtn" id="langbtn" aria-haspopup="true" aria-expanded="false">
-      <img class="flag" id="curflag" src="img/flags/it.png" alt="">
-      <span id="curlang">Italiano</span>
-      <svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
-    <div class="langmenu" id="langmenu" role="menu"></div>
-  </div>
-</div></header>
 
-<div class="hero"><div class="wrap">
-  <div>
-    <div class="kick"><img class="kicklogo" src="img/logo-dog.png" alt="">Bayran Office</div>
-    <h1><span data-t="h1a"></span><br><span data-t="h1b"></span></h1>
-    <p class="sub" data-t="heroSub"></p>
-    <div class="chips">
-      <span class="chip" data-t="c1"></span>
-      <span class="chip" data-t="c2"></span>
-      <span class="chip" data-t="c3"></span>
+<header>
+  <h1>BayranLab Software</h1>
+  <img class="cane" src="img/logo-dog.png" alt="">
+  <img class="scritta" src="img/bayranlab-logo.png" alt="BayranLab Software">
+</header>
+
+<main>
+  <a class="scheda" href="bayrancleaner/">
+    <div class="vetrina"><img class="mac" src="img/card-cleaner.png" alt="La panoramica di Bayran Cleaner"></div>
+    <div class="testo">
+      <div class="nome">Bayran Cleaner</div>
+      <div class="claim">Pulizia onesta per il tuo Mac.</div>
+      <div class="piede">
+        <span class="dove">macOS · gratuito</span>
+        <span class="vai">Vai <span class="freccia">→</span></span>
+      </div>
     </div>
-    <div class="badges"></div>
-  </div>
-  <div class="phone"><img id="heroShot" src="img/01-home-it.png" alt=""></div>
-</div></div>
+  </a>
 
-<section><div class="wrap">
-  <h2 class="sect" data-t="featTitle"></h2>
-  <p class="lead" data-t="featLead"></p>
-  <div class="grid" id="features"></div>
-</div></section>
+  <a class="scheda" href="bayranoffice/">
+    <div class="vetrina"><img class="telefono" src="img/card-office.png" alt="La schermata iniziale di Bayran Office"></div>
+    <div class="testo">
+      <div class="nome">Bayran Office</div>
+      <div class="claim">I tuoi documenti. Solo tuoi.</div>
+      <div class="piede">
+        <span class="dove">iPhone e iPad</span>
+        <span class="vai">Vai <span class="freccia">→</span></span>
+      </div>
+    </div>
+  </a>
+</main>
 
-<div class="privacy"><div class="wrap">
-  <div class="lock"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-  <h2 data-t="privTitle"></h2>
-  <p data-t="privText"></p>
-</div></div>
+<footer>BayranLab Software</footer>
 
-<section><div class="wrap">
-  <h2 class="sect" data-t="shotsTitle"></h2>
-  <p class="lead" data-t="shotsLead"></p>
-  <div class="promo"><video id="promoVid" autoplay muted loop playsinline controls preload="auto"></video></div>
-</div></section>
-
-<div class="langs"><section><div class="wrap">
-  <h2 class="sect" data-t="langsTitle"></h2>
-  <p class="lead" data-t="langsText"></p>
-  <div class="langgrid">
-    <span><img class="flag" src="img/flags/it.png" alt="">Italiano</span><span><img class="flag" src="img/flags/en.png" alt="">English</span><span><img class="flag" src="img/flags/es.png" alt="">Español</span><span><img class="flag" src="img/flags/fr.png" alt="">Français</span><span><img class="flag" src="img/flags/de.png" alt="">Deutsch</span><span><img class="flag" src="img/flags/pt.png" alt="">Português</span><span><img class="flag" src="img/flags/pl.png" alt="">Polski</span><span><img class="flag" src="img/flags/nl.png" alt="">Nederlands</span><span><img class="flag" src="img/flags/tr.png" alt="">Türkçe</span><span><img class="flag" src="img/flags/ro.png" alt="">Română</span><span><img class="flag" src="img/flags/ru.png" alt="">Русский</span><span><img class="flag" src="img/flags/uk.png" alt="">Українська</span><span><img class="flag" src="img/flags/id.png" alt="">Bahasa Indonesia</span><span><img class="flag" src="img/flags/vi.png" alt="">Tiếng Việt</span><span><img class="flag" src="img/flags/ja.png" alt="">日本語</span><span><img class="flag" src="img/flags/ko.png" alt="">한국어</span><span><img class="flag" src="img/flags/hi.png" alt="">हिन्दी</span><span><img class="flag" src="img/flags/bn.png" alt="">বাংলা</span><span><img class="flag" src="img/flags/mr.png" alt="">मराठी</span><span><img class="flag" src="img/flags/te.png" alt="">తెలుగు</span><span><img class="flag" src="img/flags/ta.png" alt="">தமிழ்</span><span><img class="flag" src="img/flags/ar.png" alt="">العربية</span>
-  </div>
-</div></section></div>
-
-<div class="ctaStrip"><div class="wrap">
-  <h2 data-t="ctaStrip"></h2>
-  <div class="badges" style="justify-content:center"></div>
-</div></div>
-
-<footer><div class="wrap">
-  <div class="fbrand"><img src="img/logo-dog.png" alt="">Bayran Office</div>
-  <span class="fnote" id="fcookie" style="opacity:.82;font-size:13px;display:inline-flex;align-items:center;gap:6px"></span>
-  <div class="spacer"></div>
-  <a href="https://bayranlabsoftware.github.io/BayranOfficePrivacyPolicy/" data-t="fPrivacy"></a>
-  <a href="mailto:bayranlabsoftware@gmail.com" data-t="fContact"></a>
-  <span style="opacity:.7">© 2026 BayranLab Software</span>
-</div></footer>
-
-<script>
-const ICONS = [
-  'M4 19.5A2.5 2.5 0 0 1 6.5 17H20|M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z',
-  'M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z|M12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z',
-  'M12 20h9|M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z',
-  'M23 4v6h-6|M1 20v-6h6|M3.51 9a9 9 0 0 1 14.85-3.36L23 10|M1 14l4.64 4.36A9 9 0 0 0 20.49 15',
-  'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z|M14 2v6h6|M12 18v-6|M9 15h6',
-  'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z|M2 12h20|M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z',
-  'M12 1a7 7 0 1 0 0 14 7 7 0 0 0 0-14z|M8.21 13.89L7 23l5-3 5 3-1.21-9.11',
-  'M5 11a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z|M8 11V7a4 4 0 1 1 8 0v4',
-  'M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z'
-];
-function iconSvg(i){ const parts=ICONS[i].split('|'); return '<svg viewBox="0 0 24 24">'+parts.map(p=>'<path d="'+p+'"/>').join('')+'</svg>'; }
-
-const SOON = { it:'Presto disponibile', en:'Coming soon', es:'Próximamente', fr:'Bientôt disponible', de:'Demnächst verfügbar', pt:'Brevemente', pl:'Wkrótce', nl:'Binnenkort', tr:'Yakında', ro:'În curând', ru:'Скоро', uk:'Незабаром', id:'Segera hadir', vi:'Sắp ra mắt', ja:'近日公開', ko:'곧 출시', hi:'जल्द उपलब्ध', bn:'শীঘ্রই আসছে', mr:'लवकरच येत आहे', te:'త్వరలో', ta:'விரைவில்', ar:'قريبًا' };
-const COOKIE = { it:'Nessun cookie · Nessun tracciamento', en:'No cookies · No tracking', es:'Sin cookies · Sin seguimiento', fr:'Aucun cookie · Aucun pistage', de:'Keine Cookies · Kein Tracking', pt:'Sem cookies · Sem rastreamento', pl:'Bez cookies · Bez śledzenia', nl:'Geen cookies · Geen tracking', tr:'Çerez yok · Takip yok', ro:'Fără cookie-uri · Fără urmărire', ru:'Без cookie · Без отслеживания', uk:'Без cookie · Без стеження', id:'Tanpa cookie · Tanpa pelacakan', vi:'Không cookie · Không theo dõi', ja:'Cookieなし · トラッキングなし', ko:'쿠키 없음 · 추적 없음', hi:'कोई कुकी नहीं · कोई ट्रैकिंग नहीं', bn:'কোনো কুকি নয় · কোনো ট্র্যাকিং নয়', mr:'कुकीज नाहीत · ट्रॅकिंग नाही', te:'కుకీలు లేవు · ట్రాకింగ్ లేదు', ta:'குக்கீகள் இல்லை · கண்காணிப்பு இல்லை', ar:'بلا كوكيز · بلا تتبّع' };
-function badgeMarkup(soon, code){
-  return '<a class="badge-img gp" href="https://play.google.com/store/apps/details?id=com.bayran.office&hl='+code+'" aria-label="Google Play"><img src="img/gplay.png" alt="Get it on Google Play"></a>'
-    +'<span class="badge-img soon" aria-label="App Store"><em class="soonlbl">'+soon+'</em><img src="img/appstore.svg" alt="App Store"></span>';
-}
-
-const LANG = {
-  it:{ name:'Italiano',
-    h1a:'I tuoi documenti.', h1b:'Solo tuoi.',
-    heroSub:'La suite documenti e l’editor PDF che funziona senza internet. Sul tuo telefono, e basta.',
-    c1:'100% offline', c2:'Niente account', c3:'Niente abbonamenti',
-    cta:'Scarica su Google Play',
-    featTitle:'Tutto per i tuoi documenti', featLead:'Una sola app per leggere, scansionare, firmare, convertire, scrivere e tradurre — tutto offline.',
-    feat:[
-      ['Leggi tutto','PDF, Word, Excel, PowerPoint, eBook EPUB, immagini. Lettura scorrevole, modalità notte, lettura ad alta voce.'],
-      ['Scansiona con OCR','Bordi automatici e testo ricercabile, anche offline. Biglietto → rubrica, tabella → Excel, ID fronte-retro in un PDF.'],
-      ['Editor PDF','Firma, annota, compila moduli, evidenzia. Unisci, dividi, comprimi, proteggi con AES-256, oscura davvero.'],
-      ['Converti','Foto e scansioni → PDF. Tabella fotografata → Excel. PDF → testo con OCR.'],
-      ['Scrivi e crea','Documenti Word veri, fogli di calcolo con formule, 22 modelli pronti (fattura, CV, lettere…).'],
-      ['Traduci offline','Traduci testo, foto e PDF senza internet. Italiano ⇄ Inglese incluso.']
-    ],
-    privTitle:'Privacy vera, non una promessa',
-    privText:'Bayran Office non ha nemmeno il permesso internet — puoi verificarlo tu stesso nelle impostazioni Android. Niente account, niente cloud, niente pubblicità, niente tracciamento. Tutto ciò che scansioni, firmi e scrivi resta sul tuo telefono.',
-    shotsTitle:'Guardala da vicino', shotsLead:'Interfaccia pulita, in italiano e in altre 21 lingue.',
-    langsTitle:'In 22 lingue', langsText:'Interfaccia, modelli e nomi file localizzati in 22 lingue.',
-    ctaStrip:'Pronto a tenere i tuoi documenti davvero al sicuro?',
-    fPrivacy:'Privacy policy', fContact:'Contatti'
-  },
-  en:{ name:'English',
-    h1a:'Your documents.', h1b:'Yours only.',
-    heroSub:'The document suite and PDF editor that works without internet. On your phone, full stop.',
-    c1:'100% offline', c2:'No account', c3:'No subscriptions',
-    cta:'Get it on Google Play',
-    featTitle:'Everything for your documents', featLead:'One app to read, scan, sign, convert, write and translate — all offline.',
-    feat:[
-      ['Read everything','PDF, Word, Excel, PowerPoint, EPUB ebooks, images. Reflow reading, night mode, read aloud.'],
-      ['Scan with OCR','Automatic edges and searchable text, even offline. Card → contact, table → Excel, ID front & back in one PDF.'],
-      ['PDF editor','Sign, annotate, fill forms, highlight. Merge, split, compress, protect with AES-256, truly redact.'],
-      ['Convert','Photos and scans → PDF. Photographed table → Excel. PDF → text with OCR.'],
-      ['Write & create','Real Word documents, spreadsheets with formulas, 22 ready templates (invoice, CV, letters…).'],
-      ['Translate offline','Translate text, photos and PDFs with no internet. Italian ⇄ English included.']
-    ],
-    privTitle:'Real privacy, not a promise',
-    privText:'Bayran Office doesn’t even have the internet permission — you can verify it yourself in Android settings. No account, no cloud, no ads, no tracking. Everything you scan, sign and write stays on your phone.',
-    shotsTitle:'Take a closer look', shotsLead:'A clean interface, in English and 21 more languages.',
-    langsTitle:'In 22 languages', langsText:'Interface, templates and file names localized in 22 languages.',
-    ctaStrip:'Ready to keep your documents truly private?',
-    fPrivacy:'Privacy policy', fContact:'Contact'
-  },
-  es:{ name:'Español',
-    h1a:'Tus documentos.', h1b:'Solo tuyos.',
-    heroSub:'La suite de documentos y el editor de PDF que funciona sin internet. En tu teléfono, y punto.',
-    c1:'100% sin conexión', c2:'Sin cuenta', c3:'Sin suscripciones', cta:'Descargar en Google Play',
-    featTitle:'Todo para tus documentos', featLead:'Una sola app para leer, escanear, firmar, convertir, escribir y traducir — todo sin conexión.',
-    feat:[['Léelo todo','PDF, Word, Excel, PowerPoint, libros EPUB, imágenes. Lectura fluida, modo noche, lectura en voz alta.'],['Escanea con OCR','Bordes automáticos y texto buscable, incluso sin conexión. Tarjeta → contacto, tabla → Excel, DNI anverso y reverso en un PDF.'],['Editor de PDF','Firma, anota, rellena formularios, resalta. Combina, divide, comprime, protege con AES-256, redacta de verdad.'],['Convierte','Fotos y escaneos → PDF. Tabla fotografiada → Excel. PDF → texto con OCR.'],['Escribe y crea','Documentos Word reales, hojas de cálculo con fórmulas, 22 plantillas listas (factura, CV, cartas…).'],['Traduce sin conexión','Traduce texto, fotos y PDF sin internet. Italiano ⇄ Inglés incluido.']],
-    privTitle:'Privacidad real, no una promesa',
-    privText:'Bayran Office ni siquiera tiene el permiso de internet — puedes comprobarlo tú mismo en los ajustes de Android. Sin cuenta, sin nube, sin anuncios, sin seguimiento. Todo lo que escaneas, firmas y escribes se queda en tu teléfono.',
-    shotsTitle:'Míralo de cerca', shotsLead:'Una interfaz limpia, en español y 21 idiomas más.',
-    langsTitle:'En 22 idiomas', langsText:'Interfaz, plantillas y nombres de archivo localizados en 22 idiomas.',
-    ctaStrip:'¿Listo para mantener tus documentos realmente privados?', fPrivacy:'Política de privacidad', fContact:'Contacto'
-  },
-  fr:{ name:'Français',
-    h1a:'Vos documents.', h1b:'Rien qu’à vous.',
-    heroSub:'La suite bureautique et l’éditeur PDF qui fonctionne sans internet. Sur votre téléphone, point.',
-    c1:'100% hors ligne', c2:'Sans compte', c3:'Sans abonnement', cta:'Télécharger sur Google Play',
-    featTitle:'Tout pour vos documents', featLead:'Une seule app pour lire, numériser, signer, convertir, écrire et traduire — tout hors ligne.',
-    feat:[['Lisez tout','PDF, Word, Excel, PowerPoint, livres EPUB, images. Lecture fluide, mode nuit, lecture à voix haute.'],['Numérisez avec OCR','Bords automatiques et texte consultable, même hors ligne. Carte → contact, tableau → Excel, pièce d’identité recto-verso en un PDF.'],['Éditeur PDF','Signez, annotez, remplissez des formulaires, surlignez. Fusionnez, divisez, compressez, protégez en AES-256, caviardez vraiment.'],['Convertissez','Photos et scans → PDF. Tableau photographié → Excel. PDF → texte avec OCR.'],['Écrivez et créez','Vrais documents Word, feuilles de calcul avec formules, 22 modèles prêts (facture, CV, lettres…).'],['Traduisez hors ligne','Traduisez texte, photos et PDF sans internet. Italien ⇄ Anglais inclus.']],
-    privTitle:'Une vraie confidentialité, pas une promesse',
-    privText:'Bayran Office n’a même pas la permission internet — vous pouvez le vérifier vous-même dans les paramètres Android. Aucun compte, aucun cloud, aucune publicité, aucun pistage. Tout ce que vous numérisez, signez et écrivez reste sur votre téléphone.',
-    shotsTitle:'Regardez de plus près', shotsLead:'Une interface épurée, en français et 21 autres langues.',
-    langsTitle:'En 22 langues', langsText:'Interface, modèles et noms de fichiers localisés en 22 langues.',
-    ctaStrip:'Prêt à garder vos documents vraiment privés ?', fPrivacy:'Politique de confidentialité', fContact:'Contact'
-  },
-  de:{ name:'Deutsch',
-    h1a:'Deine Dokumente.', h1b:'Nur deine.',
-    heroSub:'Die Dokument-Suite und der PDF-Editor, der ohne Internet funktioniert. Auf deinem Telefon, Punkt.',
-    c1:'100% offline', c2:'Kein Konto', c3:'Keine Abos', cta:'Bei Google Play laden',
-    featTitle:'Alles für deine Dokumente', featLead:'Eine App zum Lesen, Scannen, Signieren, Konvertieren, Schreiben und Übersetzen — alles offline.',
-    feat:[['Alles lesen','PDF, Word, Excel, PowerPoint, EPUB-eBooks, Bilder. Fließtext-Lesen, Nachtmodus, Vorlesen.'],['Mit OCR scannen','Automatische Kanten und durchsuchbarer Text, auch offline. Karte → Kontakt, Tabelle → Excel, Ausweis Vorder- und Rückseite in einem PDF.'],['PDF-Editor','Signieren, kommentieren, Formulare ausfüllen, markieren. Zusammenführen, teilen, komprimieren, mit AES-256 schützen, echt schwärzen.'],['Konvertieren','Fotos und Scans → PDF. Abfotografierte Tabelle → Excel. PDF → Text mit OCR.'],['Schreiben & erstellen','Echte Word-Dokumente, Tabellen mit Formeln, 22 fertige Vorlagen (Rechnung, Lebenslauf, Briefe…).'],['Offline übersetzen','Text, Fotos und PDFs ohne Internet übersetzen. Italienisch ⇄ Englisch inklusive.']],
-    privTitle:'Echter Datenschutz, kein Versprechen',
-    privText:'Bayran Office hat nicht einmal die Internet-Berechtigung — du kannst es selbst in den Android-Einstellungen prüfen. Kein Konto, keine Cloud, keine Werbung, kein Tracking. Alles, was du scannst, signierst und schreibst, bleibt auf deinem Telefon.',
-    shotsTitle:'Sieh genauer hin', shotsLead:'Eine klare Oberfläche, auf Deutsch und in 21 weiteren Sprachen.',
-    langsTitle:'In 22 Sprachen', langsText:'Oberfläche, Vorlagen und Dateinamen in 22 Sprachen lokalisiert.',
-    ctaStrip:'Bereit, deine Dokumente wirklich privat zu halten?', fPrivacy:'Datenschutz', fContact:'Kontakt'
-  },
-  pt:{ name:'Português',
-    h1a:'Os teus documentos.', h1b:'Só teus.',
-    heroSub:'A suíte de documentos e o editor de PDF que funciona sem internet. No teu telemóvel, ponto final.',
-    c1:'100% offline', c2:'Sem conta', c3:'Sem subscrições', cta:'Obter no Google Play',
-    featTitle:'Tudo para os teus documentos', featLead:'Uma só app para ler, digitalizar, assinar, converter, escrever e traduzir — tudo offline.',
-    feat:[['Lê tudo','PDF, Word, Excel, PowerPoint, livros EPUB, imagens. Leitura fluida, modo noturno, leitura em voz alta.'],['Digitaliza com OCR','Margens automáticas e texto pesquisável, mesmo offline. Cartão → contacto, tabela → Excel, ID frente e verso num PDF.'],['Editor de PDF','Assina, anota, preenche formulários, destaca. Une, divide, comprime, protege com AES-256, oculta a sério.'],['Converte','Fotos e digitalizações → PDF. Tabela fotografada → Excel. PDF → texto com OCR.'],['Escreve e cria','Documentos Word reais, folhas de cálculo com fórmulas, 22 modelos prontos (fatura, CV, cartas…).'],['Traduz offline','Traduz texto, fotos e PDF sem internet. Italiano ⇄ Inglês incluído.']],
-    privTitle:'Privacidade real, não uma promessa',
-    privText:'O Bayran Office nem sequer tem a permissão de internet — podes verificar tu mesmo nas definições do Android. Sem conta, sem nuvem, sem anúncios, sem rastreamento. Tudo o que digitalizas, assinas e escreves fica no teu telemóvel.',
-    shotsTitle:'Vê de perto', shotsLead:'Uma interface limpa, em português e mais 21 idiomas.',
-    langsTitle:'Em 22 idiomas', langsText:'Interface, modelos e nomes de ficheiro localizados em 22 idiomas.',
-    ctaStrip:'Pronto para manter os teus documentos verdadeiramente privados?', fPrivacy:'Política de privacidade', fContact:'Contacto'
-  },
-  pl:{ name:'Polski',
-    h1a:'Twoje dokumenty.', h1b:'Tylko Twoje.',
-    heroSub:'Pakiet dokumentów i edytor PDF, który działa bez internetu. Na Twoim telefonie, kropka.',
-    c1:'100% offline', c2:'Bez konta', c3:'Bez subskrypcji', cta:'Pobierz w Google Play',
-    featTitle:'Wszystko dla Twoich dokumentów', featLead:'Jedna aplikacja do czytania, skanowania, podpisywania, konwersji, pisania i tłumaczenia — wszystko offline.',
-    feat:[['Czytaj wszystko','PDF, Word, Excel, PowerPoint, e-booki EPUB, obrazy. Płynne czytanie, tryb nocny, czytanie na głos.'],['Skanuj z OCR','Automatyczne krawędzie i przeszukiwalny tekst, nawet offline. Wizytówka → kontakt, tabela → Excel, dowód awers i rewers w jednym PDF.'],['Edytor PDF','Podpisuj, adnotuj, wypełniaj formularze, zaznaczaj. Łącz, dziel, kompresuj, chroń AES-256, naprawdę zaczerniaj.'],['Konwertuj','Zdjęcia i skany → PDF. Sfotografowana tabela → Excel. PDF → tekst z OCR.'],['Pisz i twórz','Prawdziwe dokumenty Word, arkusze z formułami, 22 gotowe szablony (faktura, CV, listy…).'],['Tłumacz offline','Tłumacz tekst, zdjęcia i PDF bez internetu. Włoski ⇄ angielski w zestawie.']],
-    privTitle:'Prawdziwa prywatność, nie obietnica',
-    privText:'Bayran Office nie ma nawet uprawnienia do internetu — możesz to sam sprawdzić w ustawieniach Androida. Bez konta, bez chmury, bez reklam, bez śledzenia. Wszystko, co skanujesz, podpisujesz i piszesz, zostaje na Twoim telefonie.',
-    shotsTitle:'Przyjrzyj się z bliska', shotsLead:'Czysty interfejs, po polsku i w 21 innych językach.',
-    langsTitle:'W 22 językach', langsText:'Interfejs, szablony i nazwy plików w 22 językach.',
-    ctaStrip:'Gotowy, by naprawdę chronić swoje dokumenty?', fPrivacy:'Polityka prywatności', fContact:'Kontakt'
-  },
-  nl:{ name:'Nederlands',
-    h1a:'Jouw documenten.', h1b:'Alleen van jou.',
-    heroSub:'De documentensuite en PDF-editor die werkt zonder internet. Op je telefoon, punt uit.',
-    c1:'100% offline', c2:'Geen account', c3:'Geen abonnementen', cta:'Downloaden via Google Play',
-    featTitle:'Alles voor je documenten', featLead:'Eén app om te lezen, scannen, ondertekenen, converteren, schrijven en vertalen — allemaal offline.',
-    feat:[['Lees alles','PDF, Word, Excel, PowerPoint, EPUB-e-books, afbeeldingen. Vloeiend lezen, nachtmodus, voorlezen.'],['Scan met OCR','Automatische randen en doorzoekbare tekst, ook offline. Visitekaartje → contact, tabel → Excel, ID voor- en achterkant in één PDF.'],['PDF-editor','Onderteken, annoteer, vul formulieren in, markeer. Samenvoegen, splitsen, comprimeren, beschermen met AES-256, echt redigeren.'],['Converteer','Foto’s en scans → PDF. Gefotografeerde tabel → Excel. PDF → tekst met OCR.'],['Schrijf & maak','Echte Word-documenten, spreadsheets met formules, 22 kant-en-klare sjablonen (factuur, cv, brieven…).'],['Vertaal offline','Vertaal tekst, foto’s en PDF’s zonder internet. Italiaans ⇄ Engels inbegrepen.']],
-    privTitle:'Echte privacy, geen belofte',
-    privText:'Bayran Office heeft niet eens de internetmachtiging — je kunt het zelf controleren in de Android-instellingen. Geen account, geen cloud, geen advertenties, geen tracking. Alles wat je scant, ondertekent en schrijft, blijft op je telefoon.',
-    shotsTitle:'Bekijk het van dichtbij', shotsLead:'Een strakke interface, in het Nederlands en 21 andere talen.',
-    langsTitle:'In 22 talen', langsText:'Interface, sjablonen en bestandsnamen in 22 talen.',
-    ctaStrip:'Klaar om je documenten echt privé te houden?', fPrivacy:'Privacybeleid', fContact:'Contact'
-  },
-  tr:{ name:'Türkçe',
-    h1a:'Belgelerin.', h1b:'Yalnızca senin.',
-    heroSub:'İnternet olmadan çalışan belge paketi ve PDF düzenleyici. Telefonunda, nokta.',
-    c1:'%100 çevrimdışı', c2:'Hesapsız', c3:'Aboneliksiz', cta:'Google Play’den indir',
-    featTitle:'Belgelerin için her şey', featLead:'Okumak, taramak, imzalamak, dönüştürmek, yazmak ve çevirmek için tek uygulama — hepsi çevrimdışı.',
-    feat:[['Her şeyi oku','PDF, Word, Excel, PowerPoint, EPUB e-kitaplar, görseller. Akıcı okuma, gece modu, sesli okuma.'],['OCR ile tara','Otomatik kenarlar ve aranabilir metin, çevrimdışı bile. Kartvizit → kişi, tablo → Excel, kimlik ön-arka tek PDF’te.'],['PDF düzenleyici','İmzala, not al, form doldur, vurgula. Birleştir, böl, sıkıştır, AES-256 ile koru, gerçekten karart.'],['Dönüştür','Fotoğraf ve taramalar → PDF. Fotoğraflanan tablo → Excel. PDF → metin (OCR).'],['Yaz ve oluştur','Gerçek Word belgeleri, formüllü tablolar, 22 hazır şablon (fatura, özgeçmiş, mektup…).'],['Çevrimdışı çevir','Metin, fotoğraf ve PDF’yi internetsiz çevir. İtalyanca ⇄ İngilizce dahil.']],
-    privTitle:'Söz değil, gerçek gizlilik',
-    privText:'Bayran Office’in internet izni bile yok — Android ayarlarında kendin doğrulayabilirsin. Hesap yok, bulut yok, reklam yok, takip yok. Taradığın, imzaladığın ve yazdığın her şey telefonunda kalır.',
-    shotsTitle:'Yakından bak', shotsLead:'Sade bir arayüz, Türkçe ve 21 dilde daha.',
-    langsTitle:'22 dilde', langsText:'Arayüz, şablonlar ve dosya adları 22 dilde.',
-    ctaStrip:'Belgelerini gerçekten gizli tutmaya hazır mısın?', fPrivacy:'Gizlilik politikası', fContact:'İletişim'
-  },
-  ro:{ name:'Română',
-    h1a:'Documentele tale.', h1b:'Numai ale tale.',
-    heroSub:'Suita de documente și editorul PDF care funcționează fără internet. Pe telefonul tău, punct.',
-    c1:'100% offline', c2:'Fără cont', c3:'Fără abonamente', cta:'Descarcă din Google Play',
-    featTitle:'Tot pentru documentele tale', featLead:'O singură aplicație pentru a citi, scana, semna, converti, scrie și traduce — totul offline.',
-    feat:[['Citește orice','PDF, Word, Excel, PowerPoint, cărți EPUB, imagini. Citire fluidă, mod de noapte, citire cu voce tare.'],['Scanează cu OCR','Margini automate și text căutabil, chiar offline. Carte de vizită → contact, tabel → Excel, act față-verso într-un PDF.'],['Editor PDF','Semnează, adnotează, completează formulare, evidențiază. Îmbină, împarte, comprimă, protejează cu AES-256, redactează cu adevărat.'],['Convertește','Fotografii și scanări → PDF. Tabel fotografiat → Excel. PDF → text cu OCR.'],['Scrie și creează','Documente Word reale, foi de calcul cu formule, 22 de modele gata (factură, CV, scrisori…).'],['Traduce offline','Traduce text, fotografii și PDF fără internet. Italiană ⇄ Engleză incluse.']],
-    privTitle:'Confidențialitate reală, nu o promisiune',
-    privText:'Bayran Office nici măcar nu are permisiunea de internet — poți verifica tu însuți în setările Android. Fără cont, fără cloud, fără reclame, fără urmărire. Tot ce scanezi, semnezi și scrii rămâne pe telefonul tău.',
-    shotsTitle:'Privește de aproape', shotsLead:'O interfață curată, în română și alte 21 limbi.',
-    langsTitle:'În 22 limbi', langsText:'Interfață, modele și nume de fișiere în 22 limbi.',
-    ctaStrip:'Gata să-ți păstrezi documentele cu adevărat private?', fPrivacy:'Politica de confidențialitate', fContact:'Contact'
-  },
-  ru:{ name:'Русский',
-    h1a:'Ваши документы.', h1b:'Только ваши.',
-    heroSub:'Пакет для документов и редактор PDF, который работает без интернета. На вашем телефоне, и точка.',
-    c1:'100% офлайн', c2:'Без аккаунта', c3:'Без подписок', cta:'Установить в Google Play',
-    featTitle:'Всё для ваших документов', featLead:'Одно приложение, чтобы читать, сканировать, подписывать, конвертировать, писать и переводить — всё офлайн.',
-    feat:[['Читайте всё','PDF, Word, Excel, PowerPoint, книги EPUB, изображения. Плавное чтение, ночной режим, чтение вслух.'],['Сканируйте с OCR','Автоопределение краёв и поиск по тексту, даже офлайн. Визитка → контакт, таблица → Excel, удостоверение с двух сторон в одном PDF.'],['Редактор PDF','Подписывайте, комментируйте, заполняйте формы, выделяйте. Объединяйте, разделяйте, сжимайте, защищайте AES-256, по-настоящему затемняйте.'],['Конвертируйте','Фото и сканы → PDF. Сфотографированная таблица → Excel. PDF → текст с OCR.'],['Пишите и создавайте','Настоящие документы Word, таблицы с формулами, 22 готовых шаблона (счёт, резюме, письма…).'],['Переводите офлайн','Переводите текст, фото и PDF без интернета. Итальянский ⇄ английский включён.']],
-    privTitle:'Настоящая конфиденциальность, а не обещание',
-    privText:'У Bayran Office нет даже разрешения на интернет — вы можете сами проверить это в настройках Android. Без аккаунта, без облака, без рекламы, без отслеживания. Всё, что вы сканируете, подписываете и пишете, остаётся на вашем телефоне.',
-    shotsTitle:'Рассмотрите поближе', shotsLead:'Чистый интерфейс, на русском и ещё 21 языках.',
-    langsTitle:'На 22 языках', langsText:'Интерфейс, шаблоны и имена файлов на 22 языках.',
-    ctaStrip:'Готовы по-настоящему сохранить документы в тайне?', fPrivacy:'Политика конфиденциальности', fContact:'Контакты'
-  },
-  uk:{ name:'Українська',
-    h1a:'Ваші документи.', h1b:'Лише ваші.',
-    heroSub:'Пакет для документів і редактор PDF, що працює без інтернету. На вашому телефоні, і крапка.',
-    c1:'100% офлайн', c2:'Без акаунта', c3:'Без підписок', cta:'Встановити в Google Play',
-    featTitle:'Усе для ваших документів', featLead:'Один застосунок, щоб читати, сканувати, підписувати, конвертувати, писати й перекладати — усе офлайн.',
-    feat:[['Читайте все','PDF, Word, Excel, PowerPoint, книги EPUB, зображення. Плавне читання, нічний режим, читання вголос.'],['Скануйте з OCR','Автовизначення країв і пошук у тексті, навіть офлайн. Візитівка → контакт, таблиця → Excel, посвідчення з двох боків в одному PDF.'],['Редактор PDF','Підписуйте, коментуйте, заповнюйте форми, виділяйте. Об’єднуйте, розділяйте, стискайте, захищайте AES-256, по-справжньому затемнюйте.'],['Конвертуйте','Фото та скани → PDF. Сфотографована таблиця → Excel. PDF → текст з OCR.'],['Пишіть і створюйте','Справжні документи Word, таблиці з формулами, 22 готових шаблони (рахунок, резюме, листи…).'],['Перекладайте офлайн','Перекладайте текст, фото та PDF без інтернету. Італійська ⇄ англійська включена.']],
-    privTitle:'Справжня приватність, а не обіцянка',
-    privText:'Bayran Office не має навіть дозволу на інтернет — ви можете самі перевірити це в налаштуваннях Android. Без акаунта, без хмари, без реклами, без стеження. Усе, що ви скануєте, підписуєте та пишете, залишається на вашому телефоні.',
-    shotsTitle:'Розгляньте зблизька', shotsLead:'Чистий інтерфейс, українською та ще 21 мовами.',
-    langsTitle:'22 мовами', langsText:'Інтерфейс, шаблони та назви файлів 22 мовами.',
-    ctaStrip:'Готові по-справжньому зберегти документи приватними?', fPrivacy:'Політика конфіденційності', fContact:'Контакти'
-  },
-  id:{ name:'Bahasa Indonesia',
-    h1a:'Dokumenmu.', h1b:'Hanya milikmu.',
-    heroSub:'Suite dokumen dan editor PDF yang bekerja tanpa internet. Di teleponmu, titik.',
-    c1:'100% offline', c2:'Tanpa akun', c3:'Tanpa langganan', cta:'Dapatkan di Google Play',
-    featTitle:'Semua untuk dokumenmu', featLead:'Satu aplikasi untuk membaca, memindai, menandatangani, mengonversi, menulis, dan menerjemahkan — semua offline.',
-    feat:[['Baca semua','PDF, Word, Excel, PowerPoint, e-book EPUB, gambar. Membaca mengalir, mode malam, baca dengan suara.'],['Pindai dengan OCR','Tepi otomatis dan teks dapat dicari, bahkan offline. Kartu nama → kontak, tabel → Excel, KTP depan-belakang dalam satu PDF.'],['Editor PDF','Tanda tangani, beri catatan, isi formulir, sorot. Gabung, pisah, kompres, lindungi AES-256, hitamkan sungguhan.'],['Konversi','Foto dan pindaian → PDF. Tabel yang difoto → Excel. PDF → teks dengan OCR.'],['Tulis & buat','Dokumen Word asli, lembar kerja dengan rumus, 22 templat siap pakai (faktur, CV, surat…).'],['Terjemahkan offline','Terjemahkan teks, foto, dan PDF tanpa internet. Italia ⇄ Inggris termasuk.']],
-    privTitle:'Privasi nyata, bukan janji',
-    privText:'Bayran Office bahkan tidak punya izin internet — kamu bisa memeriksanya sendiri di pengaturan Android. Tanpa akun, tanpa cloud, tanpa iklan, tanpa pelacakan. Semua yang kamu pindai, tanda tangani, dan tulis tetap di teleponmu.',
-    shotsTitle:'Lihat lebih dekat', shotsLead:'Antarmuka bersih, dalam bahasa Indonesia dan 21 bahasa lain.',
-    langsTitle:'Dalam 22 bahasa', langsText:'Antarmuka, templat, dan nama file dalam 22 bahasa.',
-    ctaStrip:'Siap menjaga dokumenmu benar-benar pribadi?', fPrivacy:'Kebijakan privasi', fContact:'Kontak'
-  },
-  vi:{ name:'Tiếng Việt',
-    h1a:'Tài liệu của bạn.', h1b:'Chỉ của bạn.',
-    heroSub:'Bộ ứng dụng tài liệu và trình chỉnh sửa PDF hoạt động không cần internet. Trên điện thoại của bạn, chấm hết.',
-    c1:'100% ngoại tuyến', c2:'Không tài khoản', c3:'Không thuê bao', cta:'Tải trên Google Play',
-    featTitle:'Mọi thứ cho tài liệu của bạn', featLead:'Một ứng dụng để đọc, quét, ký, chuyển đổi, viết và dịch — tất cả ngoại tuyến.',
-    feat:[['Đọc mọi thứ','PDF, Word, Excel, PowerPoint, sách EPUB, hình ảnh. Đọc trôi chảy, chế độ ban đêm, đọc to.'],['Quét với OCR','Cạnh tự động và văn bản tìm kiếm được, kể cả ngoại tuyến. Danh thiếp → liên hệ, bảng → Excel, giấy tờ hai mặt trong một PDF.'],['Trình sửa PDF','Ký, chú thích, điền biểu mẫu, tô sáng. Ghép, tách, nén, bảo vệ AES-256, bôi đen thật sự.'],['Chuyển đổi','Ảnh và bản quét → PDF. Bảng chụp ảnh → Excel. PDF → văn bản với OCR.'],['Viết & tạo','Tài liệu Word thật, bảng tính có công thức, 22 mẫu sẵn (hóa đơn, CV, thư…).'],['Dịch ngoại tuyến','Dịch văn bản, ảnh và PDF không cần internet. Bao gồm Ý ⇄ Anh.']],
-    privTitle:'Quyền riêng tư thật sự, không phải lời hứa',
-    privText:'Bayran Office thậm chí không có quyền internet — bạn có thể tự kiểm tra trong cài đặt Android. Không tài khoản, không đám mây, không quảng cáo, không theo dõi. Mọi thứ bạn quét, ký và viết đều ở lại trên điện thoại của bạn.',
-    shotsTitle:'Xem cận cảnh', shotsLead:'Giao diện gọn gàng, bằng tiếng Việt và 21 ngôn ngữ khác.',
-    langsTitle:'Bằng 22 ngôn ngữ', langsText:'Giao diện, mẫu và tên tệp bằng 22 ngôn ngữ.',
-    ctaStrip:'Sẵn sàng giữ tài liệu của bạn thật sự riêng tư?', fPrivacy:'Chính sách quyền riêng tư', fContact:'Liên hệ'
-  },
-  ja:{ name:'日本語',
-    h1a:'あなたの書類は、', h1b:'あなただけのもの。',
-    heroSub:'インターネットなしで動く文書スイート兼PDFエディター。あなたのスマホの中で完結。',
-    c1:'100%オフライン', c2:'アカウント不要', c3:'サブスクなし', cta:'Google Play で手に入れる',
-    featTitle:'書類のためのすべて', featLead:'読む・スキャン・署名・変換・作成・翻訳を1つのアプリで——すべてオフライン。',
-    feat:[['なんでも読める','PDF、Word、Excel、PowerPoint、EPUB、画像。リフロー表示、夜間モード、読み上げ。'],['OCRでスキャン','自動の枠検出と検索できるテキスト、オフラインでも。名刺→連絡先、表→Excel、身分証の表裏を1つのPDFに。'],['PDFエディター','署名、注釈、フォーム入力、ハイライト。結合・分割・圧縮、AES-256で保護、本当に墨消し。'],['変換','写真・スキャン→PDF。撮影した表→Excel。PDF→テキスト（OCR）。'],['書く・作る','本物のWord文書、数式付きの表計算、すぐ使える22のテンプレート（請求書、履歴書、手紙…）。'],['オフライン翻訳','テキスト・写真・PDFをインターネットなしで翻訳。イタリア語⇄英語を含む。']],
-    privTitle:'約束ではなく、本物のプライバシー',
-    privText:'Bayran Office にはインターネット権限すらありません——Androidの設定で自分で確認できます。アカウントなし、クラウドなし、広告なし、追跡なし。スキャン・署名・作成したものはすべてスマホの中に留まります。',
-    shotsTitle:'近くで見る', shotsLead:'すっきりした画面、日本語ほか22言語。',
-    langsTitle:'22言語対応', langsText:'画面・テンプレート・ファイル名を22言語にローカライズ。',
-    ctaStrip:'あなたの書類を本当に守る準備はできましたか？', fPrivacy:'プライバシーポリシー', fContact:'お問い合わせ'
-  },
-  ko:{ name:'한국어',
-    h1a:'당신의 문서는', h1b:'오직 당신만의 것.',
-    heroSub:'인터넷 없이 작동하는 문서 모음이자 PDF 편집기. 당신의 휴대폰 안에서 끝.',
-    c1:'100% 오프라인', c2:'계정 불필요', c3:'구독 없음', cta:'Google Play에서 다운로드',
-    featTitle:'문서를 위한 모든 것', featLead:'읽기, 스캔, 서명, 변환, 작성, 번역을 하나의 앱으로 — 모두 오프라인.',
-    feat:[['무엇이든 읽기','PDF, Word, Excel, PowerPoint, EPUB 전자책, 이미지. 리플로우 읽기, 야간 모드, 소리 내어 읽기.'],['OCR로 스캔','자동 경계와 검색 가능한 텍스트, 오프라인에서도. 명함 → 연락처, 표 → Excel, 신분증 앞뒤를 하나의 PDF로.'],['PDF 편집기','서명, 주석, 양식 작성, 강조. 병합, 분할, 압축, AES-256 보호, 진짜 마스킹.'],['변환','사진과 스캔 → PDF. 촬영한 표 → Excel. PDF → 텍스트(OCR).'],['쓰기 & 만들기','진짜 Word 문서, 수식이 있는 스프레드시트, 바로 쓰는 22개 템플릿(청구서, 이력서, 편지…).'],['오프라인 번역','텍스트, 사진, PDF를 인터넷 없이 번역. 이탈리아어 ⇄ 영어 포함.']],
-    privTitle:'약속이 아닌, 진짜 개인정보 보호',
-    privText:'Bayran Office는 인터넷 권한조차 없습니다 — Android 설정에서 직접 확인할 수 있습니다. 계정 없음, 클라우드 없음, 광고 없음, 추적 없음. 스캔하고 서명하고 작성한 모든 것이 휴대폰 안에만 남습니다.',
-    shotsTitle:'가까이 보기', shotsLead:'깔끔한 인터페이스, 한국어 외 21개 언어.',
-    langsTitle:'22개 언어 지원', langsText:'인터페이스, 템플릿, 파일 이름을 22개 언어로 현지화.',
-    ctaStrip:'문서를 진짜로 비공개로 지킬 준비가 되셨나요?', fPrivacy:'개인정보 처리방침', fContact:'문의'
-  },
-  hi:{"name":"हिन्दी","h1a":"आपके दस्तावेज़।","h1b":"सिर्फ़ आपके।","heroSub":"दस्तावेज़ सूट और PDF एडिटर जो बिना इंटरनेट चलता है। बस आपके फ़ोन पर।","c1":"100% ऑफ़लाइन","c2":"कोई खाता नहीं","c3":"कोई सदस्यता नहीं","cta":"Google Play से पाएँ","featTitle":"आपके दस्तावेज़ों के लिए सब कुछ","featLead":"पढ़ने, स्कैन करने, हस्ताक्षर, बदलने, लिखने और अनुवाद के लिए एक ही ऐप — सब ऑफ़लाइन।","feat":[["सब कुछ पढ़ें","PDF, Word, Excel, PowerPoint, EPUB ई-बुक, चित्र। सहज पठन, नाइट मोड, ज़ोर से पढ़ना।"],["OCR से स्कैन","स्वतः किनारे और खोजने योग्य टेक्स्ट, ऑफ़लाइन भी। कार्ड → संपर्क, तालिका → Excel, ID आगे-पीछे एक PDF में।"],["PDF एडिटर","हस्ताक्षर, टिप्पणी, फ़ॉर्म भरें, हाइलाइट करें। जोड़ें, बाँटें, दबाएँ, AES-256 से सुरक्षित करें, सच में छिपाएँ।"],["बदलें","फ़ोटो और स्कैन → PDF। फ़ोटो खींची तालिका → Excel। PDF → OCR से टेक्स्ट।"],["लिखें और बनाएँ","असली Word दस्तावेज़, सूत्रों वाली स्प्रेडशीट, 22 तैयार टेम्पलेट (चालान, बायोडाटा, पत्र…)।"],["ऑफ़लाइन अनुवाद","बिना इंटरनेट टेक्स्ट, फ़ोटो और PDF का अनुवाद। इतालवी ⇄ अंग्रेज़ी शामिल।"]],"privTitle":"सच्ची निजता, सिर्फ़ वादा नहीं","privText":"Bayran Office के पास इंटरनेट की अनुमति तक नहीं है — आप Android सेटिंग्स में खुद जाँच सकते हैं। कोई खाता नहीं, कोई क्लाउड नहीं, कोई विज्ञापन नहीं, कोई ट्रैकिंग नहीं। जो कुछ आप स्कैन, हस्ताक्षर और लिखते हैं वह आपके फ़ोन पर ही रहता है।","shotsTitle":"क़रीब से देखें","shotsLead":"साफ़ इंटरफ़ेस, हिन्दी और 21 अन्य भाषाओं में।","langsTitle":"22 भाषाओं में","langsText":"इंटरफ़ेस, टेम्पलेट और फ़ाइल नाम 22 भाषाओं में स्थानीयकृत।","ctaStrip":"अपने दस्तावेज़ सच में सुरक्षित रखने को तैयार हैं?","fPrivacy":"गोपनीयता नीति","fContact":"संपर्क"},
-  bn:{"name":"বাংলা","h1a":"আপনার নথি।","h1b":"শুধু আপনার।","heroSub":"নথি স্যুট ও PDF এডিটর যা ইন্টারনেট ছাড়াই চলে। শুধু আপনার ফোনে।","c1":"১০০% অফলাইন","c2":"কোনো অ্যাকাউন্ট নয়","c3":"কোনো সাবস্ক্রিপশন নয়","cta":"Google Play-তে পান","featTitle":"আপনার নথির জন্য সবকিছু","featLead":"পড়া, স্ক্যান, স্বাক্ষর, রূপান্তর, লেখা ও অনুবাদের জন্য একটিই অ্যাপ — সব অফলাইন।","feat":[["সবকিছু পড়ুন","PDF, Word, Excel, PowerPoint, EPUB ই-বুক, ছবি। মসৃণ পড়া, নাইট মোড, উচ্চস্বরে পড়া।"],["OCR দিয়ে স্ক্যান","স্বয়ংক্রিয় প্রান্ত ও সন্ধানযোগ্য লেখা, অফলাইনেও। কার্ড → পরিচিতি, টেবিল → Excel, আইডি সামনে-পিছনে এক PDF-এ।"],["PDF এডিটর","স্বাক্ষর, টীকা, ফর্ম পূরণ, হাইলাইট। যোগ, ভাগ, সংকোচন, AES-256 সুরক্ষা, সত্যিই আড়াল।"],["রূপান্তর","ছবি ও স্ক্যান → PDF। তোলা টেবিল → Excel। PDF → OCR দিয়ে লেখা।"],["লিখুন ও তৈরি করুন","আসল Word নথি, সূত্রসহ স্প্রেডশিট, ২২টি প্রস্তুত টেমপ্লেট (চালান, জীবনবৃত্তান্ত, চিঠি…)।"],["অফলাইন অনুবাদ","ইন্টারনেট ছাড়াই লেখা, ছবি ও PDF অনুবাদ। ইতালীয় ⇄ ইংরেজি অন্তর্ভুক্ত।"]],"privTitle":"সত্যিকারের গোপনীয়তা, শুধু প্রতিশ্রুতি নয়","privText":"Bayran Office-এর ইন্টারনেট অনুমতিও নেই — আপনি Android সেটিংসে নিজে যাচাই করতে পারেন। কোনো অ্যাকাউন্ট নয়, ক্লাউড নয়, বিজ্ঞাপন নয়, ট্র্যাকিং নয়। যা কিছু স্ক্যান, স্বাক্ষর ও লেখেন সব আপনার ফোনেই থাকে।","shotsTitle":"কাছ থেকে দেখুন","shotsLead":"পরিচ্ছন্ন ইন্টারফেস, বাংলা ও আরও ২১টি ভাষায়।","langsTitle":"২২টি ভাষায়","langsText":"ইন্টারফেস, টেমপ্লেট ও ফাইলের নাম ২২টি ভাষায় স্থানীয়কৃত।","ctaStrip":"আপনার নথি সত্যিই নিরাপদ রাখতে প্রস্তুত?","fPrivacy":"গোপনীয়তা নীতি","fContact":"যোগাযোগ"},
-  mr:{"name":"मराठी","h1a":"तुमची कागदपत्रे.","h1b":"फक्त तुमची.","heroSub":"दस्तऐवज सूट आणि PDF एडिटर जो इंटरनेटशिवाय चालतो. फक्त तुमच्या फोनवर.","c1":"100% ऑफलाइन","c2":"खाते नाही","c3":"वर्गणी नाही","cta":"Google Play वर मिळवा","featTitle":"तुमच्या कागदपत्रांसाठी सर्व काही","featLead":"वाचन, स्कॅन, स्वाक्षरी, रूपांतर, लेखन आणि भाषांतरासाठी एकच अ‍ॅप — सर्व ऑफलाइन.","feat":[["सर्व काही वाचा","PDF, Word, Excel, PowerPoint, EPUB ई-बुक, चित्रे. सहज वाचन, नाईट मोड, मोठ्याने वाचन."],["OCR ने स्कॅन","स्वयंचलित कडा आणि शोधण्याजोगा मजकूर, ऑफलाइनही. कार्ड → संपर्क, तक्ता → Excel, ओळखपत्र पुढे-मागे एका PDF मध्ये."],["PDF एडिटर","स्वाक्षरी, टिप्पणी, फॉर्म भरा, ठळक करा. जोडा, विभाजा, दाबा, AES-256 ने सुरक्षित करा, खरोखर लपवा."],["रूपांतर","फोटो आणि स्कॅन → PDF. फोटो काढलेला तक्ता → Excel. PDF → OCR ने मजकूर."],["लिहा आणि तयार करा","खरे Word दस्तऐवज, सूत्रांसह स्प्रेडशीट, 22 तयार टेम्पलेट (पावती, बायोडेटा, पत्रे…)."],["ऑफलाइन भाषांतर","इंटरनेटशिवाय मजकूर, फोटो आणि PDF भाषांतर. इटालियन ⇄ इंग्रजी समाविष्ट."]],"privTitle":"खरी गोपनीयता, केवळ आश्वासन नाही","privText":"Bayran Office कडे इंटरनेट परवानगीही नाही — तुम्ही Android सेटिंग्जमध्ये स्वतः तपासू शकता. खाते नाही, क्लाउड नाही, जाहिराती नाहीत, ट्रॅकिंग नाही. तुम्ही जे स्कॅन, स्वाक्षरी आणि लिहिता ते तुमच्या फोनवरच राहते.","shotsTitle":"जवळून पाहा","shotsLead":"स्वच्छ इंटरफेस, मराठी आणि इतर 21 भाषांत.","langsTitle":"22 भाषांत","langsText":"इंटरफेस, टेम्पलेट आणि फाइल नावे 22 भाषांत स्थानिकीकृत.","ctaStrip":"तुमची कागदपत्रे खरोखर सुरक्षित ठेवायला तयार?","fPrivacy":"गोपनीयता धोरण","fContact":"संपर्क"},
-  te:{"name":"తెలుగు","h1a":"మీ పత్రాలు.","h1b":"మీవి మాత్రమే.","heroSub":"ఇంటర్నెట్ లేకుండా పనిచేసే డాక్యుమెంట్ సూట్ మరియు PDF ఎడిటర్. మీ ఫోన్‌లోనే.","c1":"100% ఆఫ్‌లైన్","c2":"ఖాతా అవసరం లేదు","c3":"సబ్‌స్క్రిప్షన్ లేదు","cta":"Google Play లో పొందండి","featTitle":"మీ పత్రాలకు అన్నీ","featLead":"చదవడం, స్కాన్, సంతకం, మార్చడం, రాయడం, అనువాదం — అన్నీ ఒకే యాప్‌లో, ఆఫ్‌లైన్.","feat":[["అన్నీ చదవండి","PDF, Word, Excel, PowerPoint, EPUB ఇ-బుక్‌లు, చిత్రాలు. సాఫీగా చదవడం, నైట్ మోడ్, గట్టిగా చదవడం."],["OCR తో స్కాన్","ఆటో అంచులు, వెతకగల టెక్స్ట్, ఆఫ్‌లైన్‌లోనూ. కార్డ్ → కాంటాక్ట్, పట్టిక → Excel, ID ముందు-వెనుక ఒకే PDFలో."],["PDF ఎడిటర్","సంతకం, గమనికలు, ఫారమ్‌లు నింపడం, హైలైట్. కలపడం, విభజన, కుదింపు, AES-256 రక్షణ, నిజంగా దాచడం."],["మార్చండి","ఫోటోలు, స్కాన్‌లు → PDF. ఫోటో తీసిన పట్టిక → Excel. PDF → OCR తో టెక్స్ట్."],["రాయండి, సృష్టించండి","నిజమైన Word పత్రాలు, ఫార్ములాలతో స్ప్రెడ్‌షీట్‌లు, 22 సిద్ధ టెంప్లేట్‌లు (ఇన్‌వాయిస్, రెజ్యూమె, లేఖలు…)."],["ఆఫ్‌లైన్ అనువాదం","ఇంటర్నెట్ లేకుండా టెక్స్ట్, ఫోటో, PDF అనువాదం. ఇటాలియన్ ⇄ ఇంగ్లీష్ చేర్చబడింది."]],"privTitle":"నిజమైన గోప్యత, కేవలం వాగ్దానం కాదు","privText":"Bayran Office కు ఇంటర్నెట్ అనుమతి కూడా లేదు — మీరు Android సెట్టింగ్‌లలో స్వయంగా తనిఖీ చేయవచ్చు. ఖాతా లేదు, క్లౌడ్ లేదు, ప్రకటనలు లేవు, ట్రాకింగ్ లేదు. మీరు స్కాన్, సంతకం, రాసేది అంతా మీ ఫోన్‌లోనే ఉంటుంది.","shotsTitle":"దగ్గరగా చూడండి","shotsLead":"శుభ్రమైన ఇంటర్‌ఫేస్, తెలుగు మరియు మరో 21 భాషల్లో.","langsTitle":"22 భాషల్లో","langsText":"ఇంటర్‌ఫేస్, టెంప్లేట్‌లు, ఫైల్ పేర్లు 22 భాషల్లో స్థానికీకరించబడ్డాయి.","ctaStrip":"మీ పత్రాలను నిజంగా భద్రంగా ఉంచడానికి సిద్ధమా?","fPrivacy":"గోప్యతా విధానం","fContact":"సంప్రదింపు"},
-  ta:{"name":"தமிழ்","h1a":"உங்கள் ஆவணங்கள்.","h1b":"உங்களுக்கு மட்டுமே.","heroSub":"இணையம் இல்லாமல் இயங்கும் ஆவணத் தொகுப்பு மற்றும் PDF எடிட்டர். உங்கள் தொலைபேசியில் மட்டுமே.","c1":"100% ஆஃப்லைன்","c2":"கணக்கு இல்லை","c3":"சந்தா இல்லை","cta":"Google Play இல் பெறுங்கள்","featTitle":"உங்கள் ஆவணங்களுக்கு அனைத்தும்","featLead":"படித்தல், ஸ்கேன், கையொப்பம், மாற்றம், எழுதுதல், மொழிபெயர்ப்பு — அனைத்தும் ஒரே செயலியில், ஆஃப்லைன்.","feat":[["அனைத்தையும் படியுங்கள்","PDF, Word, Excel, PowerPoint, EPUB மின்-புத்தகங்கள், படங்கள். மென்மையான வாசிப்பு, இரவு பயன்முறை, சத்தமாக வாசித்தல்."],["OCR மூலம் ஸ்கேன்","தானியங்கு விளிம்புகள், தேடக்கூடிய உரை, ஆஃப்லைனிலும். அட்டை → தொடர்பு, அட்டவணை → Excel, அடையாள அட்டை முன்-பின் ஒரே PDF இல்."],["PDF எடிட்டர்","கையொப்பம், குறிப்பு, படிவம் நிரப்பல், தனிப்படுத்தல். இணைத்தல், பிரித்தல், சுருக்கம், AES-256 பாதுகாப்பு, உண்மையாக மறைத்தல்."],["மாற்றுங்கள்","புகைப்படங்கள், ஸ்கேன் → PDF. படமெடுத்த அட்டவணை → Excel. PDF → OCR மூலம் உரை."],["எழுதுங்கள், உருவாக்குங்கள்","உண்மையான Word ஆவணங்கள், சூத்திரங்களுடன் விரிதாள்கள், 22 தயார் வார்ப்புருக்கள் (விலைப்பட்டியல், சுயவிவரம், கடிதங்கள்…)."],["ஆஃப்லைன் மொழிபெயர்ப்பு","இணையம் இல்லாமல் உரை, புகைப்படம், PDF மொழிபெயர்ப்பு. இத்தாலியன் ⇄ ஆங்கிலம் உள்ளடங்கும்."]],"privTitle":"உண்மையான தனியுரிமை, வெறும் வாக்குறுதி அல்ல","privText":"Bayran Office இடம் இணைய அனுமதி கூட இல்லை — நீங்களே Android அமைப்புகளில் சரிபார்க்கலாம். கணக்கு இல்லை, கிளவுட் இல்லை, விளம்பரம் இல்லை, கண்காணிப்பு இல்லை. நீங்கள் ஸ்கேன் செய்வது, கையொப்பமிடுவது, எழுதுவது அனைத்தும் உங்கள் தொலைபேசியிலேயே இருக்கும்.","shotsTitle":"நெருக்கமாகப் பாருங்கள்","shotsLead":"சுத்தமான இடைமுகம், தமிழ் மற்றும் மேலும் 21 மொழிகளில்.","langsTitle":"22 மொழிகளில்","langsText":"இடைமுகம், வார்ப்புருக்கள், கோப்புப் பெயர்கள் 22 மொழிகளில் உள்ளூர்மயமாக்கப்பட்டுள்ளன.","ctaStrip":"உங்கள் ஆவணங்களை உண்மையாகப் பாதுகாக்கத் தயாரா?","fPrivacy":"தனியுரிமைக் கொள்கை","fContact":"தொடர்பு"},
-  ar:{"name":"العربية","h1a":"مستنداتك.","h1b":"لك وحدك.","heroSub":"حزمة المستندات ومحرّر PDF الذي يعمل دون إنترنت. على هاتفك فقط.","c1":"100% دون اتصال","c2":"بلا حساب","c3":"بلا اشتراكات","cta":"احصل عليه من Google Play","featTitle":"كل ما تحتاجه لمستنداتك","featLead":"تطبيق واحد للقراءة والمسح والتوقيع والتحويل والكتابة والترجمة — كل ذلك دون اتصال.","feat":[["اقرأ كل شيء","PDF وWord وExcel وPowerPoint وكتب EPUB والصور. قراءة سلسة، الوضع الليلي، القراءة بصوت عالٍ."],["امسح مع OCR","حواف تلقائية ونص قابل للبحث، حتى دون اتصال. بطاقة → جهة اتصال، جدول → Excel، الهوية أمام وخلف في PDF واحد."],["محرّر PDF","وقّع، علّق، املأ النماذج، ظلّل. ادمج، قسّم، اضغط، احمِ بـ AES-256، أخفِ فعلاً."],["حوّل","صور ومسح → PDF. جدول مُصوَّر → Excel. PDF → نص عبر OCR."],["اكتب وأنشئ","مستندات Word حقيقية، جداول بمعادلات، 22 قالبًا جاهزًا (فاتورة، سيرة ذاتية، رسائل…)."],["ترجمة دون اتصال","ترجم النصوص والصور وملفات PDF دون إنترنت. الإيطالية ⇄ الإنجليزية مضمّنة."]],"privTitle":"خصوصية حقيقية، وليست وعدًا","privText":"لا يملك Bayran Office حتى إذن الإنترنت — يمكنك التحقق بنفسك في إعدادات Android. بلا حساب، بلا سحابة، بلا إعلانات، بلا تتبّع. كل ما تمسحه وتوقّعه وتكتبه يبقى على هاتفك.","shotsTitle":"انظر عن قرب","shotsLead":"واجهة نظيفة، بالعربية و21 لغة أخرى.","langsTitle":"بـ 22 لغة","langsText":"الواجهة والقوالب وأسماء الملفات مُترجمة إلى 22 لغة.","ctaStrip":"مستعد لإبقاء مستنداتك آمنة فعلاً؟","fPrivacy":"سياسة الخصوصية","fContact":"اتصل بنا"}
-};
-
-const EXTRA = {"it":[["Firma digitale e fatture","Firma i PDF, crea firme digitali (.p12) o firma da remoto col tuo provider. Apri e verifica file .p7m, fatture elettroniche e PDF firmati: ti dice chi ha firmato."],["Cassaforte con PIN","Metti i documenti sensibili in cassaforte: cifrati e protetti da PIN, solo sul tuo telefono."],["Organizza tutto","Cartelle, preferiti, etichette, ricerca e recenti: ritrovi ogni documento in un attimo."]],"en":[["Digital signatures & e-invoices","Sign PDFs, create digital signatures (.p12) or sign remotely with your provider. Open and verify .p7m files, e-invoices and signed PDFs — it tells you who signed."],["PIN-locked vault","Keep sensitive documents in a vault: encrypted and PIN-protected, only on your phone."],["Organize everything","Folders, favorites, tags, search and recents: find any document in seconds."]],"es":[["Firma digital y facturas","Firma PDF, crea firmas digitales (.p12) o firma en remoto con tu proveedor. Abre y verifica archivos .p7m, facturas electrónicas y PDF firmados: te dice quién firmó."],["Caja fuerte con PIN","Guarda los documentos sensibles en una caja fuerte: cifrados y protegidos con PIN, solo en tu teléfono."],["Organiza todo","Carpetas, favoritos, etiquetas, búsqueda y recientes: encuentra cualquier documento en segundos."]],"fr":[["Signature numérique et factures","Signez des PDF, créez des signatures numériques (.p12) ou signez à distance avec votre prestataire. Ouvrez et vérifiez les fichiers .p7m, factures électroniques et PDF signés : il vous dit qui a signé."],["Coffre-fort avec PIN","Rangez les documents sensibles dans un coffre-fort : chiffrés et protégés par PIN, sur votre téléphone seulement."],["Organisez tout","Dossiers, favoris, étiquettes, recherche et récents : retrouvez n’importe quel document en un instant."]],"de":[["Digitale Signatur & E-Rechnungen","PDFs signieren, digitale Signaturen (.p12) erstellen oder per Anbieter aus der Ferne signieren. .p7m-Dateien, E-Rechnungen und signierte PDFs öffnen und prüfen — zeigt, wer signiert hat."],["Tresor mit PIN","Sensible Dokumente im Tresor: verschlüsselt und PIN-geschützt, nur auf deinem Telefon."],["Alles organisieren","Ordner, Favoriten, Tags, Suche und Zuletzt: jedes Dokument in Sekunden finden."]],"pt":[["Assinatura digital e faturas","Assine PDF, crie assinaturas digitais (.p12) ou assine remotamente com o teu fornecedor. Abre e verifica ficheiros .p7m, faturas eletrónicas e PDF assinados: mostra quem assinou."],["Cofre com PIN","Guarda os documentos sensíveis num cofre: cifrados e protegidos por PIN, só no teu telemóvel."],["Organiza tudo","Pastas, favoritos, etiquetas, pesquisa e recentes: encontra qualquer documento num instante."]],"pl":[["Podpis cyfrowy i e-faktury","Podpisuj PDF-y, twórz podpisy cyfrowe (.p12) lub podpisuj zdalnie u dostawcy. Otwieraj i weryfikuj pliki .p7m, e-faktury i podpisane PDF-y — pokazuje, kto podpisał."],["Sejf z PIN-em","Trzymaj poufne dokumenty w sejfie: zaszyfrowane i chronione PIN-em, tylko na Twoim telefonie."],["Uporządkuj wszystko","Foldery, ulubione, etykiety, wyszukiwanie i ostatnie: znajdź każdy dokument w sekundę."]],"nl":[["Digitale handtekening & e-facturen","Onderteken pdf’s, maak digitale handtekeningen (.p12) of teken op afstand met je provider. Open en verifieer .p7m-bestanden, e-facturen en ondertekende pdf’s — je ziet wie ondertekende."],["Kluis met pincode","Bewaar gevoelige documenten in een kluis: versleuteld en met pincode beveiligd, alleen op je telefoon."],["Alles ordenen","Mappen, favorieten, labels, zoeken en recent: vind elk document in seconden."]],"tr":[["Dijital imza ve e-faturalar","PDF imzalayın, dijital imzalar (.p12) oluşturun veya sağlayıcınızla uzaktan imzalayın. .p7m dosyalarını, e-faturaları ve imzalı PDF’leri açıp doğrulayın — kimin imzaladığını gösterir."],["PIN’li kasa","Hassas belgeleri kasada tutun: şifreli ve PIN korumalı, yalnızca telefonunuzda."],["Her şeyi düzenle","Klasörler, favoriler, etiketler, arama ve son kullanılanlar: her belgeyi saniyede bulun."]],"ro":[["Semnătură digitală și facturi","Semnează PDF-uri, creează semnături digitale (.p12) sau semnează la distanță cu furnizorul tău. Deschide și verifică fișiere .p7m, facturi electronice și PDF-uri semnate: îți arată cine a semnat."],["Seif cu PIN","Ține documentele sensibile într-un seif: criptate și protejate cu PIN, doar pe telefonul tău."],["Organizează tot","Foldere, favorite, etichete, căutare și recente: găsești orice document într-o clipă."]],"ru":[["Цифровая подпись и э-счета","Подписывайте PDF, создавайте цифровые подписи (.p12) или подписывайте удалённо через провайдера. Открывайте и проверяйте файлы .p7m, электронные счета и подписанные PDF — видно, кто подписал."],["Сейф с PIN-кодом","Храните важные документы в сейфе: зашифрованы и защищены PIN-кодом, только на вашем телефоне."],["Всё по полочкам","Папки, избранное, метки, поиск и недавние: любой документ находится за секунды."]],"uk":[["Цифровий підпис і е-рахунки","Підписуйте PDF, створюйте цифрові підписи (.p12) або підписуйте віддалено через провайдера. Відкривайте й перевіряйте файли .p7m, електронні рахунки та підписані PDF — видно, хто підписав."],["Сейф з PIN-кодом","Тримайте важливі документи в сейфі: зашифровані та захищені PIN-кодом, лише на вашому телефоні."],["Усе впорядковано","Папки, обране, мітки, пошук і нещодавні: будь-який документ знаходиться за секунди."]],"id":[["Tanda tangan digital & e-faktur","Tanda tangani PDF, buat tanda tangan digital (.p12) atau tanda tangan jarak jauh lewat penyedia. Buka dan verifikasi berkas .p7m, e-faktur, dan PDF bertanda tangan — menampilkan siapa penandatangannya."],["Brankas ber-PIN","Simpan dokumen sensitif di brankas: terenkripsi dan dilindungi PIN, hanya di ponselmu."],["Atur semuanya","Folder, favorit, label, pencarian, dan terbaru: temukan dokumen apa pun dalam sekejap."]],"vi":[["Chữ ký số & hóa đơn điện tử","Ký PDF, tạo chữ ký số (.p12) hoặc ký từ xa với nhà cung cấp. Mở và xác minh tệp .p7m, hóa đơn điện tử và PDF đã ký — cho biết ai đã ký."],["Két sắt có mã PIN","Giữ tài liệu nhạy cảm trong két: mã hóa và bảo vệ bằng PIN, chỉ trên điện thoại của bạn."],["Sắp xếp mọi thứ","Thư mục, yêu thích, thẻ, tìm kiếm và gần đây: tìm mọi tài liệu trong vài giây."]],"ja":[["電子署名と電子請求書","PDFに署名、電子署名（.p12）の作成、プロバイダー経由のリモート署名。.p7mファイル・電子請求書・署名済みPDFを開いて検証し、署名者を表示します。"],["PIN金庫","重要な書類を金庫へ。暗号化してPINで保護、あなたの端末の中だけに。"],["すべてを整理","フォルダ・お気に入り・タグ・検索・最近使用。どの書類も数秒で見つかります。"]],"ko":[["전자 서명 및 전자 세금계산서","PDF 서명, 전자 서명(.p12) 생성 또는 제공업체를 통한 원격 서명. .p7m 파일, 전자 세금계산서, 서명된 PDF를 열고 검증 — 누가 서명했는지 알려줍니다."],["PIN 금고","민감한 문서를 금고에: 암호화하고 PIN으로 보호, 오직 내 휴대폰에만."],["모두 정리","폴더, 즐겨찾기, 태그, 검색, 최근 항목: 어떤 문서든 몇 초 만에 찾기."]],"hi":[["डिजिटल हस्ताक्षर और ई-चालान","PDF पर हस्ताक्षर करें, डिजिटल हस्ताक्षर (.p12) बनाएँ या अपने प्रदाता से रिमोट हस्ताक्षर करें। .p7m फ़ाइलें, ई-चालान और हस्ताक्षरित PDF खोलें और जाँचें — बताता है किसने हस्ताक्षर किए।"],["PIN वाली तिजोरी","संवेदनशील दस्तावेज़ तिजोरी में रखें: एन्क्रिप्टेड और PIN से सुरक्षित, सिर्फ़ आपके फ़ोन पर।"],["सब कुछ व्यवस्थित","फ़ोल्डर, पसंदीदा, टैग, खोज और हाल के: कोई भी दस्तावेज़ पल भर में खोजें।"]],"bn":[["ডিজিটাল স্বাক্ষর ও ই-চালান","PDF-এ স্বাক্ষর করুন, ডিজিটাল স্বাক্ষর (.p12) তৈরি করুন বা প্রদানকারীর মাধ্যমে দূর থেকে স্বাক্ষর করুন। .p7m ফাইল, ই-চালান ও স্বাক্ষরিত PDF খুলুন ও যাচাই করুন — কে স্বাক্ষর করেছে তা দেখায়।"],["PIN দেওয়া ভল্ট","সংবেদনশীল নথি ভল্টে রাখুন: এনক্রিপ্টেড ও PIN দিয়ে সুরক্ষিত, শুধু আপনার ফোনে।"],["সব গুছিয়ে রাখুন","ফোল্ডার, প্রিয়, ট্যাগ, অনুসন্ধান ও সাম্প্রতিক: যেকোনো নথি নিমেষে খুঁজুন।"]],"mr":[["डिजिटल स्वाक्षरी आणि ई-चलन","PDF वर स्वाक्षरी करा, डिजिटल स्वाक्षरी (.p12) तयार करा किंवा तुमच्या पुरवठादारामार्फत दूरस्थ स्वाक्षरी करा. .p7m फायली, ई-चलन आणि स्वाक्षरी केलेले PDF उघडा व तपासा — कोणी स्वाक्षरी केली ते दाखवते."],["PIN असलेली तिजोरी","संवेदनशील कागदपत्रे तिजोरीत ठेवा: एन्क्रिप्टेड आणि PIN ने सुरक्षित, फक्त तुमच्या फोनवर."],["सर्व व्यवस्थित","फोल्डर, आवडते, टॅग, शोध आणि अलीकडील: कोणतेही कागदपत्र क्षणात शोधा."]],"te":[["డిజిటల్ సంతకం & ఇ-ఇన్‌వాయిస్‌లు","PDFలపై సంతకం చేయండి, డిజిటల్ సంతకాలు (.p12) సృష్టించండి లేదా మీ ప్రొవైడర్‌తో రిమోట్‌గా సంతకం చేయండి. .p7m ఫైళ్లు, ఇ-ఇన్‌వాయిస్‌లు, సంతకం చేసిన PDFలను తెరిచి ధృవీకరించండి — ఎవరు సంతకం చేశారో చూపుతుంది."],["PIN వాల్ట్","సున్నితమైన పత్రాలను వాల్ట్‌లో ఉంచండి: ఎన్‌క్రిప్ట్ చేసి PINతో రక్షితం, మీ ఫోన్‌లో మాత్రమే."],["అన్నీ చక్కగా","ఫోల్డర్‌లు, ఇష్టమైనవి, ట్యాగ్‌లు, శోధన, ఇటీవలివి: ఏ పత్రాన్నైనా క్షణాల్లో కనుగొనండి."]],"ta":[["மின் கையொப்பம் & மின்-விலைப்பட்டியல்","PDF-களில் கையொப்பமிடுங்கள், டிஜிட்டல் கையொப்பங்களை (.p12) உருவாக்குங்கள் அல்லது உங்கள் வழங்குநர் மூலம் தொலைவிலிருந்து கையொப்பமிடுங்கள். .p7m கோப்புகள், மின்-விலைப்பட்டியல்கள், கையொப்பமிட்ட PDF-களைத் திறந்து சரிபார்க்கவும் — யார் கையொப்பமிட்டார் எனக் காட்டும்."],["PIN பெட்டகம்","முக்கியமான ஆவணங்களைப் பெட்டகத்தில் வைக்கவும்: மறையாக்கம் + PIN பாதுகாப்பு, உங்கள் தொலைபேசியில் மட்டும்."],["அனைத்தையும் ஒழுங்கு","கோப்புறைகள், பிடித்தவை, குறிச்சொற்கள், தேடல், சமீபத்தியவை: எந்த ஆவணத்தையும் நொடியில் கண்டறியுங்கள்."]],"ar":[["التوقيع الرقمي والفواتير الإلكترونية","وقّع ملفات PDF، وأنشئ توقيعات رقمية (.p12) أو وقّع عن بُعد عبر مزوّدك. افتح وتحقّق من ملفات .p7m والفواتير الإلكترونية وملفات PDF الموقّعة — يُظهر لك من وقّع."],["خزنة برقم PIN","احفظ المستندات الحساسة في خزنة: مشفّرة ومحمية برقم PIN، على هاتفك فقط."],["نظّم كل شيء","مجلدات ومفضّلة ووسوم وبحث وأخيرة: اعثر على أي مستند في ثوانٍ."]]};
-const SHOT = { it:'it', en:'en', es:'es', fr:'fr', de:'de', pt:'pt', pl:'pl', nl:'nl', tr:'tr', ro:'ro', ru:'ru', uk:'uk', id:'id', vi:'vi', ja:'ja', ko:'ko', hi:'hi', bn:'bn', mr:'mr', te:'te', ta:'ta', ar:'ar' };
-function render(code){
-  const d = LANG[code] || LANG.en;
-  document.documentElement.lang = code; document.documentElement.dir = (code==='ar'?'rtl':'ltr');
-  document.querySelectorAll('[data-t]').forEach(el=>{ const k=el.getAttribute('data-t'); if(d[k]!=null) el.textContent=d[k]; });
-  const fg = document.getElementById('features');
-  fg.innerHTML = (d.feat.concat(EXTRA[code]||[])).map((f,i)=>'<div class="card"><div class="ic">'+iconSvg(i)+'</div><h3>'+f[0]+'</h3><p>'+f[1]+'</p></div>').join('');
-  const s = SHOT[code] || 'en';
-  document.getElementById('heroShot').src = 'img/01-home-'+s+'.png';
-  const pv = document.getElementById('promoVid');
-  if(pv){ const nv='video/promo-'+code+'.mp4'; if(pv.getAttribute('src')!==nv){ pv.src=nv; pv.load(); pv.play().catch(function(){}); } }
-  const soon = SOON[code] || SOON.en;
-  document.querySelectorAll('.badges').forEach(el=>el.innerHTML = badgeMarkup(soon, code));
-  document.getElementById('curflag').src = 'img/flags/'+code+'.png';
-  document.getElementById('curlang').textContent = (LANG[code]||LANG.en).name;
-  document.querySelectorAll('#langmenu .lmi').forEach(el=>el.classList.toggle('on', el.dataset.c===code));
-  document.getElementById('fcookie').textContent = '🔒 ' + (COOKIE[code] || COOKIE.en);
-}
-(function init(){
-  const menu = document.getElementById('langmenu'), sel = document.getElementById('langsel'), btn = document.getElementById('langbtn');
-  menu.innerHTML = Object.keys(LANG).map(c=>'<button class="lmi" data-c="'+c+'" role="menuitem"><img class="flag" src="img/flags/'+c+'.png" alt="">'+LANG[c].name+'</button>').join('');
-  btn.addEventListener('click', e=>{ e.stopPropagation(); const open=sel.classList.toggle('open'); btn.setAttribute('aria-expanded', open); });
-  menu.addEventListener('click', e=>{ const it=e.target.closest('.lmi'); if(!it) return; render(it.dataset.c); sel.classList.remove('open'); });
-  document.addEventListener('click', ()=>sel.classList.remove('open'));
-  let pref = (navigator.language||'en').slice(0,2).toLowerCase();
-  if(!LANG[pref]) pref='en';
-  render(pref);
-})();
-</script>
-</body></html>
+</body>
+</html>
