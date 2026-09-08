@@ -19,7 +19,9 @@
   /* header */
   header{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
   .hbar{display:flex;align-items:center;gap:14px;height:68px}
-  .brand{display:flex;align-items:center}
+  .brand{display:flex;align-items:center;text-decoration:none;
+         transition:opacity .12s}
+  .brand:hover{opacity:.78}
   .brand .hlogo{height:46px;width:auto}
   .spacer{flex:1}
   /* selettore lingua personalizzato (con bandiere) */
@@ -156,7 +158,9 @@
 </style></head>
 <body>
 <header><div class="wrap hbar">
-  <div class="brand"><img class="hlogo" src="img/bayranlab-logo.png" alt="BayranLab Software"></div>
+  <!-- Il logo della casa torna alla pagina d'ingresso: e' l'unico modo, da
+       qui, per arrivare agli altri software. -->
+  <a class="brand" href="../" aria-label="BayranLab Software — torna alla pagina principale"><img class="hlogo" src="img/bayranlab-logo.png" alt="BayranLab Software"></a>
   <div class="spacer"></div>
   <div class="langsel" id="langsel">
     <button class="langbtn" id="langbtn" aria-haspopup="true" aria-expanded="false">
