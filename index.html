@@ -10,30 +10,34 @@
 <meta property="og:description" content="Bayran Cleaner per Mac, Bayran Office per iOS e Android, Bayran Nimbus sul web.">
 <meta property="og:image" content="https://bayranlabsoftware.github.io/img/logo-dog.png">
 <style>
+  /* Una tavolozza sola, scura. La pagina non segue piu' il tema del sistema:
+     lo sfondo blu profondo e' una scelta, non una variante, e tenere due
+     tavolozze avrebbe voluto dire cambiare ogni colore in due punti. */
   :root {
-    --ink: #13242a;
-    --muted: #5b7683;
-    --line: #dbe7ec;
-    --card: #ffffff;
-    --bg: #f4f9fb;
-    --blu: #1f7aa8;
-    --ciano: #41abd0;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --ink: #eef6fa; --muted: #9db4c0; --line: rgba(255,255,255,.12);
-      --card: #12242e; --bg: #0b1720;
-    }
+    color-scheme: dark;
+    --ink: #eef6fa;
+    --muted: #9db4c0;
+    --line: rgba(255,255,255,.13);
+    --card: #102232;
+    --bg: #071626;
+    --blu: #3f9fd0;
+    --ciano: #5ec4e4;
   }
   * { box-sizing: border-box; }
   body {
-    margin: 0; min-height: 100vh; background: var(--bg); color: var(--ink);
+    margin: 0; min-height: 100vh; background-color: var(--bg); color: var(--ink);
     font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     display: flex; flex-direction: column; align-items: center;
     padding: 0 22px 60px;
-    /* alone del marchio, appena accennato */
-    background-image: radial-gradient(900px 460px at 50% -140px,
-                      color-mix(in srgb, var(--ciano) 20%, transparent), transparent 70%);
+    /* Due sfumature sovrapposte: l'alone del marchio in alto, e sotto una
+       discesa dal blu al quasi nero. background-attachment fisso perche' la
+       discesa valga sull'altezza dello SCHERMO e non del documento: senza,
+       su una pagina lunga la parte bassa resterebbe uniforme. */
+    background-image:
+      radial-gradient(1000px 520px at 50% -150px,
+                      color-mix(in srgb, var(--ciano) 26%, transparent), transparent 70%),
+      linear-gradient(180deg, #0d2740 0%, #0a1c2e 45%, #061421 100%);
+    background-attachment: fixed;
   }
 
   /* ---------------- testata: il marchio e basta ---------------- */
@@ -98,8 +102,7 @@
            align-items: center; justify-content: space-between; gap: 12px; }
   .dove { font-size: 12.5px; color: var(--muted); border: 1px solid var(--line);
           border-radius: 20px; padding: 3px 11px; white-space: nowrap; }
-  .vai { font-weight: 600; color: var(--blu); white-space: nowrap; }
-  @media (prefers-color-scheme: dark) { .vai { color: var(--ciano); } }
+  .vai { font-weight: 600; color: var(--ciano); white-space: nowrap; }
   .scheda:hover .vai .freccia { transform: translateX(4px); }
   .freccia { display: inline-block; transition: transform .18s ease; }
 
@@ -111,14 +114,12 @@
   @media (max-width: 440px) { .fwrap { grid-template-columns: 1fr; } }
   .fcol h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .09em;
              color: var(--ink); opacity: .75; font-weight: 700; margin: 0 0 12px; }
-  .fcol a, .fcol .flink { display: block; padding: 4px 0; color: var(--blu);
+  .fcol a, .fcol .flink { display: block; padding: 4px 0; color: var(--ciano);
                           text-decoration: none; }
-  @media (prefers-color-scheme: dark) { .fcol a, .fcol .flink { color: var(--ciano); } }
   .fcol a:hover, .fcol .flink:hover { text-decoration: underline; }
   .flink { background: none; border: 0; font: inherit; cursor: pointer; text-align: left; }
   .fmarchio { font-size: 16px; font-weight: 700; color: var(--ink); }
-  .fmarchio b { color: var(--blu); }
-  @media (prefers-color-scheme: dark) { .fmarchio b { color: var(--ciano); } }
+  .fmarchio b { color: var(--ciano); }
   .fnota { margin: 10px 0 0; font-size: 13px; }
   .fbottom { margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--line);
              font-size: 12.5px; opacity: .8; }
@@ -137,13 +138,11 @@
   .cookielist li { display: flex; align-items: center; gap: 10px; font-size: 14.5px; }
   .cookielist b { min-width: 26px; height: 26px; border-radius: 8px; flex: 0 0 auto;
                   background: color-mix(in srgb, var(--ciano) 20%, transparent);
-                  color: var(--blu); display: inline-flex; align-items: center;
+                  color: var(--ciano); display: inline-flex; align-items: center;
                   justify-content: center; font-size: 13px; }
-  @media (prefers-color-scheme: dark) { .cookielist b { color: var(--ciano); } }
   .cookiefoot { display: flex; align-items: center; justify-content: space-between;
                 gap: 14px; flex-wrap: wrap; }
-  .cookiefoot a { color: var(--blu); font-weight: 600; text-decoration: none; }
-  @media (prefers-color-scheme: dark) { .cookiefoot a { color: var(--ciano); } }
+  .cookiefoot a { color: var(--ciano); font-weight: 600; text-decoration: none; }
   .cookieok { background: var(--blu); color: #fff; border: 0; border-radius: 10px;
               padding: 10px 24px; font: inherit; font-weight: 700; cursor: pointer; }
   .cookieok:hover { filter: brightness(1.08); }
