@@ -11,6 +11,10 @@
     --ink: #eef6fa; --muted: #9db4c0; --line: rgba(255,255,255,.13);
     --card: #102232; --bg: #071626; --blu: #3f9fd0; --ciano: #5ec4e4;
     --verde: #34a06a;
+    /* Lunghezza di riga unica per tutto il testo corrente. Prima erano
+       tre — claim 640, paragrafi 660, nota a tutta larghezza — e in una
+       pagina sola si vedeva. */
+    --testo: 660px;
   }
   * { box-sizing: border-box; }
   body {
@@ -33,7 +37,7 @@
 
   header.hero { padding: 34px 0 8px; }
   h1 { font-size: 46px; line-height: 1.08; margin: 0 0 10px; letter-spacing: -.6px; }
-  .claim { font-size: 21px; color: #d7e6ee; margin: 0 0 20px; max-width: 640px; }
+  .claim { font-size: 21px; color: #d7e6ee; margin: 0 0 20px; max-width: var(--testo); }
   .stato { display: inline-flex; align-items: center; gap: 8px; font-size: 13px;
            border: 1px solid var(--line); border-radius: 20px; padding: 5px 14px;
            color: var(--muted); }
@@ -42,7 +46,7 @@
 
   h2 { font-size: 24px; margin: 56px 0 12px; letter-spacing: -.3px; }
   p { color: #cfe0e9; }
-  .lead { max-width: 660px; }
+  .lead { max-width: var(--testo); }
 
   .tre { display: grid; gap: 16px; grid-template-columns: repeat(3, 1fr); margin-top: 18px; }
   @media (max-width: 760px) { .tre { grid-template-columns: 1fr; } }
@@ -69,7 +73,10 @@
   .tessera:focus-visible { outline: 3px solid var(--ciano); outline-offset: 3px; }
   .tessera img { max-width: 100%; max-height: 100%; width: auto; height: auto;
                  display: block; border-radius: 6px; }
-  figcaption { color: var(--muted); font-size: 13.5px; margin-top: 8px; }
+  /* min-height di due righe: se su uno schermo stretto una didascalia va a
+     capo, i riquadri sotto non si sfalsano. */
+  figcaption { color: var(--muted); font-size: 13.5px; margin-top: 8px;
+               min-height: 2.7em; }
 
   /* ingranditore */
   .zoom { position: fixed; inset: 0; z-index: 90; display: flex; align-items: center;
@@ -85,7 +92,8 @@
   .zoom .chiudi:hover { border-color: var(--ciano); }
 
   .nota { margin-top: 16px; font-size: 13.5px; color: var(--muted);
-          border-left: 2px solid var(--line); padding-left: 14px; }
+          border-left: 2px solid var(--line); padding-left: 14px;
+          max-width: var(--testo); }
 
   .chiusura { margin-top: 64px; padding-top: 22px; border-top: 1px solid var(--line);
               color: var(--muted); font-size: 14px; }
@@ -141,13 +149,13 @@
       <button type="button" class="tessera" aria-label="Ingrandisci: la schermata iniziale">
         <img src="img/fb-home.png?v=2" alt="La schermata iniziale di FoodBridge">
       </button>
-      <figcaption>La home: catalogo per categoria, aste dei fornitori e acquisti di gruppo.</figcaption>
+      <figcaption>La home: catalogo, aste e acquisti di gruppo.</figcaption>
     </figure>
     <figure>
       <button type="button" class="tessera" aria-label="Ingrandisci: il confronto fra fornitori">
         <img src="img/fb-confronto.png?v=2" alt="Il confronto fra fornitori">
       </button>
-      <figcaption>Confronto fornitori: fino a quattro affiancati, con prezzi, tempi e certificazioni.</figcaption>
+      <figcaption>Confronto fornitori, fino a quattro affiancati.</figcaption>
     </figure>
     <figure>
       <button type="button" class="tessera" aria-label="Ingrandisci: l'area del compratore">
@@ -159,7 +167,7 @@
       <button type="button" class="tessera" aria-label="Ingrandisci: l'elenco degli ordini">
         <img src="img/fb-ordini.png?v=2" alt="L'elenco degli ordini">
       </button>
-      <figcaption>Gli ordini, con lo stato di ognuno.</figcaption>
+      <figcaption>Gli ordini, con il loro stato.</figcaption>
     </figure>
   </div>
   <p class="nota">Schermate della demo: i prodotti, i fornitori e le cifre sono dati di
