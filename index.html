@@ -45,6 +45,24 @@
      piu' sotto: il marchio sale, le schede restano dov'erano. Toglierli e
      basta non servirebbe a niente, perche' la fila sta sotto al marchio nel
      flusso e salirebbe insieme a lui, lasciando la distanza identica. */
+  /* Il collegamento in alto a destra sta FUORI dal flusso: messo dentro
+     spingerebbe in basso marchio e schede, e i 38px guadagnati sopra al
+     marchio sono serviti proprio a non farlo. Assoluto e non fisso, cosi'
+     scorre con la pagina invece di restarle appiccicato davanti. */
+  .barra { position: absolute; top: 20px; right: 22px; z-index: 2; }
+  .barra a { display: inline-block; text-decoration: none; font-size: 13.5px;
+             color: var(--ciano); border: 1px solid var(--line);
+             border-radius: 20px; padding: 7px 16px;
+             transition: border-color .15s, background-color .15s; }
+  .barra a:hover { border-color: color-mix(in srgb, var(--ciano) 55%, var(--line));
+                   background: color-mix(in srgb, var(--ciano) 8%, transparent); }
+  .barra a:focus-visible { outline: 3px solid var(--ciano); outline-offset: 3px; }
+  /* Su schermo stretto il marchio arriva quasi in cima e il collegamento gli
+     finirebbe addosso: li' torna nel flusso, sopra al marchio. */
+  @media (max-width: 560px) {
+    .barra { position: static; align-self: flex-end; padding-top: 14px; }
+  }
+
   header { text-align: center; padding: 36px 0 8px; }
   header .cane {
     width: 168px; height: 168px; display: block; margin: 0 auto 22px;
@@ -147,7 +165,7 @@
            border-top: 1px solid rgba(255,255,255,.09); text-align: left; }
   footer { align-self: stretch; margin: 74px -22px -60px; }
   footer .fwrap { max-width: 1400px; margin: 0 auto; padding: 44px 22px 30px; }
-  .fcols { display: grid; gap: 30px 26px; grid-template-columns: 1.7fr 1.2fr 1fr 1fr; }
+  .fcols { display: grid; gap: 30px 26px; grid-template-columns: 1.7fr 1.5fr 1fr 1fr; }
   @media (max-width: 900px) { .fcols { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 520px) { .fcols { grid-template-columns: 1fr; } }
   .fbrand { display: flex; align-items: center; gap: 9px; font-weight: 700;
@@ -166,7 +184,11 @@
      di allungare la lista. Su schermo stretto le colonne non ci stanno e
      l'elenco torna a scendere e basta. */
   .flista { display: grid; grid-auto-flow: column; grid-template-rows: repeat(3, auto);
-            gap: 0 24px; justify-content: start; }
+            gap: 0 20px; justify-content: start; }
+  /* Un nome di prodotto non si spezza a meta': "Bayran Cleaner" andava a capo
+     e la colonna diventava alta il doppio, con "Bayran" sopra e "Cleaner"
+     sotto. Per questo la colonna e' anche piu' larga di prima. */
+  .flista a { white-space: nowrap; }
   @media (max-width: 520px) { .flista { grid-auto-flow: row;
                                         grid-template-rows: none; } }
   .fbottom { margin-top: 32px; padding-top: 18px;
@@ -200,6 +222,10 @@
 </style>
 </head>
 <body>
+
+<nav class="barra" aria-label="Secondaria">
+  <a href="chisono/">Chi sono</a>
+</nav>
 
 <header>
   <h1>BayranLab Software</h1>
