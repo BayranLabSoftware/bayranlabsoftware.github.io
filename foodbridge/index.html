@@ -51,15 +51,38 @@
   .punto h3 { margin: 0 0 7px; font-size: 16.5px; }
   .punto p { margin: 0; font-size: 14.5px; color: var(--muted); }
 
-  /* galleria: larghe sopra, verticali sotto */
-  .larghe { display: grid; gap: 18px; grid-template-columns: 1fr 1fr; margin-top: 18px; }
-  .alte   { display: grid; gap: 18px; grid-template-columns: 1fr 1fr; margin-top: 18px;
-            max-width: 620px; }
-  @media (max-width: 760px) { .larghe, .alte { grid-template-columns: 1fr; } }
+  /* Galleria a riquadri IDENTICI. Le schermate hanno forme diverse — due da
+     desktop, larghe, e due da telefono, alte — e messe a dimensione naturale
+     davano una griglia sbilenca. Ogni riquadro ha la stessa forma e l'immagine
+     ci sta dentro intera, centrata: si perde qualche pixel di grandezza, ma la
+     griglia e' simmetrica e si legge come una cosa sola. La lettura vera la
+     da' l'ingranditore: si preme e l'immagine si apre grande. */
+  .galleria { display: grid; gap: 18px; grid-template-columns: 1fr 1fr; margin-top: 18px; }
+  @media (max-width: 760px) { .galleria { grid-template-columns: 1fr; } }
   figure { margin: 0; }
-  figure img { width: 100%; height: auto; display: block; border-radius: 12px;
-               border: 1px solid var(--line); background: #fff; }
+  .tessera { width: 100%; aspect-ratio: 4 / 3; display: flex; align-items: center;
+             justify-content: center; overflow: hidden; padding: 14px;
+             background: #0b1d2c; border: 1px solid var(--line); border-radius: 12px;
+             cursor: zoom-in; transition: border-color .15s, transform .15s; }
+  .tessera:hover, .tessera:focus-visible { border-color: var(--ciano);
+                                           transform: translateY(-2px); }
+  .tessera:focus-visible { outline: 3px solid var(--ciano); outline-offset: 3px; }
+  .tessera img { max-width: 100%; max-height: 100%; width: auto; height: auto;
+                 display: block; border-radius: 6px; }
   figcaption { color: var(--muted); font-size: 13.5px; margin-top: 8px; }
+
+  /* ingranditore */
+  .zoom { position: fixed; inset: 0; z-index: 90; display: flex; align-items: center;
+          justify-content: center; padding: 28px; background: rgba(4,14,24,.92);
+          cursor: zoom-out; }
+  .zoom[hidden] { display: none; }
+  .zoom img { max-width: 100%; max-height: 100%; border-radius: 10px;
+              box-shadow: 0 30px 80px rgba(0,0,0,.6); }
+  .zoom .chiudi { position: absolute; top: 18px; right: 20px; background: none;
+                  border: 1px solid var(--line); color: var(--ink); border-radius: 10px;
+                  width: 40px; height: 40px; font-size: 20px; cursor: pointer;
+                  line-height: 1; }
+  .zoom .chiudi:hover { border-color: var(--ciano); }
 
   .nota { margin-top: 16px; font-size: 13.5px; color: var(--muted);
           border-left: 2px solid var(--line); padding-left: 14px; }
@@ -113,23 +136,29 @@
   </div>
 
   <h2>Come si presenta</h2>
-  <div class="larghe">
+  <div class="galleria">
     <figure>
-      <img src="img/fb-home.png" alt="La schermata iniziale di FoodBridge">
+      <button type="button" class="tessera" aria-label="Ingrandisci: la schermata iniziale">
+        <img src="img/fb-home.png" alt="La schermata iniziale di FoodBridge">
+      </button>
       <figcaption>La home: catalogo per categoria, aste dei fornitori e acquisti di gruppo.</figcaption>
     </figure>
     <figure>
-      <img src="img/fb-confronto.png" alt="Il confronto fra fornitori">
+      <button type="button" class="tessera" aria-label="Ingrandisci: il confronto fra fornitori">
+        <img src="img/fb-confronto.png" alt="Il confronto fra fornitori">
+      </button>
       <figcaption>Confronto fornitori: fino a quattro affiancati, con prezzi, tempi e certificazioni.</figcaption>
     </figure>
-  </div>
-  <div class="alte">
     <figure>
-      <img src="img/fb-dashboard.png" alt="L'area personale del compratore">
+      <button type="button" class="tessera" aria-label="Ingrandisci: l'area del compratore">
+        <img src="img/fb-dashboard.png" alt="L'area personale del compratore">
+      </button>
       <figcaption>L'area del compratore.</figcaption>
     </figure>
     <figure>
-      <img src="img/fb-ordini.png" alt="L'elenco degli ordini">
+      <button type="button" class="tessera" aria-label="Ingrandisci: l'elenco degli ordini">
+        <img src="img/fb-ordini.png" alt="L'elenco degli ordini">
+      </button>
       <figcaption>Gli ordini, con lo stato di ognuno.</figcaption>
     </figure>
   </div>
@@ -148,5 +177,46 @@
   </div>
 
 </div>
+
+<div class="zoom" id="zoom" hidden role="dialog" aria-modal="true" aria-label="Schermata ingrandita">
+  <button type="button" class="chiudi" id="zoomChiudi" aria-label="Chiudi">&times;</button>
+  <img id="zoomImg" src="" alt="">
+</div>
+
+<script>
+/* Ingranditore: la stessa immagine gia' scaricata, mostrata a piena pagina.
+   Niente libreria e niente secondo file da caricare. Al ritorno il fuoco
+   torna sul riquadro premuto, altrimenti chi naviga da tastiera lo perde. */
+(function ingranditore() {
+  const strato = document.getElementById('zoom');
+  const dentro = document.getElementById('zoomImg');
+  let premuto = null;
+
+  function apri(bottone) {
+    const img = bottone.querySelector('img');
+    dentro.src = img.getAttribute('src');
+    dentro.alt = img.getAttribute('alt') || '';
+    premuto = bottone;
+    strato.hidden = false;
+    document.getElementById('zoomChiudi').focus();
+  }
+  function chiudi() {
+    strato.hidden = true;
+    dentro.removeAttribute('src');
+    if (premuto) premuto.focus();
+  }
+
+  document.querySelectorAll('.tessera').forEach(function (b) {
+    b.addEventListener('click', function () { apri(b); });
+  });
+  document.getElementById('zoomChiudi').addEventListener('click', chiudi);
+  strato.addEventListener('click', function (e) {
+    if (e.target === strato || e.target === dentro) chiudi();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !strato.hidden) chiudi();
+  });
+})();
+</script>
 </body>
 </html>
