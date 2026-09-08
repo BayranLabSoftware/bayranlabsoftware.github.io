@@ -101,7 +101,50 @@
   .scheda:hover .vai .freccia { transform: translateX(4px); }
   .freccia { display: inline-block; transition: transform .18s ease; }
 
-  footer { margin-top: 52px; color: var(--muted); font-size: 13px; text-align: center; }
+  /* ---------------- footer ---------------- */
+  footer { width: 100%; max-width: 940px; margin-top: 64px; padding-top: 30px;
+           border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+  .fwrap { display: grid; gap: 28px 26px; grid-template-columns: 1.6fr 1fr 1fr 1fr; }
+  @media (max-width: 760px) { .fwrap { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 440px) { .fwrap { grid-template-columns: 1fr; } }
+  .fcol h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .09em;
+             color: var(--ink); opacity: .75; font-weight: 700; margin: 0 0 12px; }
+  .fcol a, .fcol .flink { display: block; padding: 4px 0; color: var(--blu);
+                          text-decoration: none; }
+  @media (prefers-color-scheme: dark) { .fcol a, .fcol .flink { color: var(--ciano); } }
+  .fcol a:hover, .fcol .flink:hover { text-decoration: underline; }
+  .flink { background: none; border: 0; font: inherit; cursor: pointer; text-align: left; }
+  .fmarchio { font-size: 16px; font-weight: 700; color: var(--ink); }
+  .fmarchio b { color: var(--blu); }
+  @media (prefers-color-scheme: dark) { .fmarchio b { color: var(--ciano); } }
+  .fnota { margin: 10px 0 0; font-size: 13px; }
+  .fbottom { margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--line);
+             font-size: 12.5px; opacity: .8; }
+
+  /* ---------------- pannello cookie ---------------- */
+  .cookiewrap { position: fixed; inset: 0; z-index: 60; display: flex;
+                align-items: center; justify-content: center; padding: 22px;
+                background: rgba(6,22,30,.55); }
+  .cookiewrap[hidden] { display: none; }
+  .cookiepanel { background: var(--card); color: var(--ink); border-radius: 16px;
+                 max-width: 420px; width: 100%; padding: 26px 26px 20px;
+                 border: 1px solid var(--line);
+                 box-shadow: 0 24px 60px rgba(0,0,0,.32); }
+  .cookiepanel h2 { font-size: 19px; font-weight: 800; margin: 0 0 14px; }
+  .cookielist { list-style: none; margin: 0 0 18px; padding: 0; display: grid; gap: 8px; }
+  .cookielist li { display: flex; align-items: center; gap: 10px; font-size: 14.5px; }
+  .cookielist b { min-width: 26px; height: 26px; border-radius: 8px; flex: 0 0 auto;
+                  background: color-mix(in srgb, var(--ciano) 20%, transparent);
+                  color: var(--blu); display: inline-flex; align-items: center;
+                  justify-content: center; font-size: 13px; }
+  @media (prefers-color-scheme: dark) { .cookielist b { color: var(--ciano); } }
+  .cookiefoot { display: flex; align-items: center; justify-content: space-between;
+                gap: 14px; flex-wrap: wrap; }
+  .cookiefoot a { color: var(--blu); font-weight: 600; text-decoration: none; }
+  @media (prefers-color-scheme: dark) { .cookiefoot a { color: var(--ciano); } }
+  .cookieok { background: var(--blu); color: #fff; border: 0; border-radius: 10px;
+              padding: 10px 24px; font: inherit; font-weight: 700; cursor: pointer; }
+  .cookieok:hover { filter: brightness(1.08); }
 </style>
 </head>
 <body>
@@ -138,7 +181,72 @@
   </a>
 </main>
 
-<footer>BayranLab Software</footer>
+<footer>
+  <div class="fwrap">
+
+    <div class="fcol">
+      <div class="fmarchio"><b>Bayran</b>Lab Software</div>
+      <p class="fnota">🔒 Nessun cookie · Nessun tracciamento</p>
+    </div>
+
+    <nav class="fcol">
+      <h3>Software</h3>
+      <a href="bayrancleaner/">Bayran Cleaner</a>
+      <a href="bayranoffice/">Bayran Office</a>
+    </nav>
+
+    <nav class="fcol">
+      <h3>Contatti</h3>
+      <a href="mailto:bayranlabsoftware@gmail.com">bayranlabsoftware@gmail.com</a>
+    </nav>
+
+    <nav class="fcol">
+      <h3>Note legali</h3>
+      <!-- La privacy policy esiste solo per Bayran Office, quindi lo dice.
+           Chiamarla "Privacy policy" e basta la farebbe sembrare valida anche
+           per Bayran Cleaner, che non ne ha una. -->
+      <a href="https://bayranlabsoftware.github.io/BayranOfficePrivacyPolicy/">Privacy policy — Bayran Office</a>
+      <button type="button" class="flink" id="cookiebtn">Cookie</button>
+    </nav>
+
+  </div>
+  <div class="fbottom">© 2026 BayranLab Software. Tutti i diritti riservati.</div>
+</footer>
+
+<!-- Stesso pannello della pagina di Bayran Office, e per la stessa ragione:
+     non chiede un consenso perche' non c'e' niente da consentire. Questa
+     pagina non ha nemmeno uno script oltre a queste poche righe, non scrive
+     cookie, non usa la memoria del browser e non contatta terze parti. Si
+     apre dal footer e non da solo: un avviso che compare da solo dovrebbe poi
+     ricordarsi di essere stato chiuso, e per ricordarlo dovrebbe scrivere nel
+     browser proprio l'unico dato che qui non si scrive. -->
+<div class="cookiewrap" id="cookiewrap" hidden>
+  <div class="cookiepanel" role="dialog" aria-modal="true" aria-labelledby="cookieh">
+    <h2 id="cookieh">Nessun cookie · Nessun tracciamento</h2>
+    <ul class="cookielist">
+      <li><b>0</b> cookie</li>
+      <li><b>0</b> localStorage · sessionStorage</li>
+      <li><b>0</b> analytics</li>
+      <li><b>0</b> richieste a terze parti</li>
+    </ul>
+    <div class="cookiefoot">
+      <a href="https://bayranlabsoftware.github.io/BayranOfficePrivacyPolicy/">Privacy policy</a>
+      <button type="button" class="cookieok" id="cookieok">OK</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function pannelloCookie(){
+  const w = document.getElementById('cookiewrap');
+  const apri = () => { w.hidden = false; document.getElementById('cookieok').focus(); };
+  const chiudi = () => { w.hidden = true; document.getElementById('cookiebtn').focus(); };
+  document.getElementById('cookiebtn').addEventListener('click', apri);
+  document.getElementById('cookieok').addEventListener('click', chiudi);
+  w.addEventListener('click', e => { if (e.target === w) chiudi(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !w.hidden) chiudi(); });
+})();
+</script>
 
 </body>
 </html>
