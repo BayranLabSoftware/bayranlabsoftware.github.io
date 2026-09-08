@@ -113,11 +113,13 @@
   .vetrina .telefono { width: 124px; height: auto; }
 
   .testo { padding: 20px 22px 22px; display: flex; flex-direction: column;
-           gap: 7px; flex: 1; }
+           gap: 7px; flex: 1; text-align: center; align-items: center; }
   .nome { font-size: 21px; font-weight: 700; letter-spacing: -.2px; }
   .claim { color: var(--muted); }
+  /* pillola e freccia accostate al centro invece che spinte ai due bordi */
   .piede { margin-top: auto; padding-top: 14px; display: flex;
-           align-items: center; justify-content: space-between; gap: 12px; }
+           align-items: center; justify-content: center; gap: 14px;
+           flex-wrap: wrap; }
   .dove { font-size: 12.5px; color: var(--muted); border: 1px solid var(--line);
           border-radius: 20px; padding: 3px 11px; white-space: nowrap; }
   .vai { font-weight: 600; color: var(--ciano); white-space: nowrap; }
@@ -158,6 +160,8 @@
                   background: color-mix(in srgb, var(--ciano) 20%, transparent);
                   color: var(--ciano); display: inline-flex; align-items: center;
                   justify-content: center; font-size: 13px; }
+  .cookiealtro { font-size: 13px; color: var(--muted); margin: 0 0 16px;
+                 padding-top: 12px; border-top: 1px solid var(--line); }
   .cookiefoot { display: flex; align-items: center; justify-content: space-between;
                 gap: 14px; flex-wrap: wrap; }
   .cookiefoot a { color: var(--ciano); font-weight: 600; text-decoration: none; }
@@ -269,11 +273,17 @@
   <div class="cookiepanel" role="dialog" aria-modal="true" aria-labelledby="cookieh">
     <h2 id="cookieh">Nessun cookie · Nessun tracciamento</h2>
     <ul class="cookielist">
-      <li><b>0</b> cookie</li>
-      <li><b>0</b> localStorage · sessionStorage</li>
-      <li><b>0</b> analytics</li>
-      <li><b>0</b> richieste a terze parti</li>
+      <li><b>✓</b> nessun cookie</li>
+      <li><b>✓</b> questa pagina non scrive nulla nel browser</li>
+      <li><b>✓</b> nessuna statistica</li>
+      <li><b>✓</b> nessuna richiesta a terze parti</li>
     </ul>
+    <!-- La memoria del browser vale per l'INTERO indirizzo, non per la singola
+         pagina: Bayran Nimbus salva due preferenze e da qui risultano presenti
+         lo stesso. Dichiarare "zero" sarebbe falso per chi lo ha aperto. -->
+    <p class="cookiealtro">Bayran Nimbus, che sta su questo stesso indirizzo,
+    salva due preferenze nel browser: sono spiegate nella
+    <a href="nimbus/privacy/">sua informativa</a>.</p>
     <div class="cookiefoot">
       <a href="privacy/">Privacy policy del sito</a>
       <button type="button" class="cookieok" id="cookieok">OK</button>

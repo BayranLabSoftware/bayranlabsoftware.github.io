@@ -109,10 +109,49 @@
           max-width: var(--testo); padding-top: 14px;
           border-top: 1px solid var(--line); }
 
-  .chiusura { margin-top: 64px; padding-top: 22px; border-top: 1px solid var(--line);
-              color: var(--muted); font-size: 14px; }
-  .chiusura a { color: var(--ciano); text-decoration: none; }
-  .chiusura a:hover { text-decoration: underline; }
+  /* footer con la stessa struttura delle altre pagine del sito */
+  footer { margin-top: 64px; padding-top: 30px; border-top: 1px solid var(--line);
+           color: var(--muted); font-size: 14px; text-align: left; }
+  .fwrap { display: grid; gap: 28px 26px; grid-template-columns: 1.6fr 1fr 1fr 1fr; }
+  @media (max-width: 760px) { .fwrap { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 440px) { .fwrap { grid-template-columns: 1fr; } }
+  .fcol h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .09em;
+             color: var(--ink); opacity: .75; font-weight: 700; margin: 0 0 12px;
+             min-height: 1em; }
+  .fcol h3:empty::after { content: "\00a0"; }
+  .fcol a, .fcol .flink { display: block; padding: 4px 0; color: var(--ciano);
+                          text-decoration: none; }
+  .fcol a:hover, .fcol .flink:hover { text-decoration: underline; }
+  .flink { background: none; border: 0; font: inherit; cursor: pointer; text-align: left; }
+  .fmarchio { font-size: 16px; font-weight: 700; color: var(--ink); }
+  .fmarchio b { color: var(--ciano); }
+  .fnota { margin: 10px 0 0; font-size: 13px; }
+  .fbottom { margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--line);
+             font-size: 12.5px; opacity: .8; }
+
+  /* pannello cookie, come sulle altre pagine */
+  .cookiewrap { position: fixed; inset: 0; z-index: 95; display: flex;
+                align-items: center; justify-content: center; padding: 22px;
+                background: rgba(6,22,30,.6); }
+  .cookiewrap[hidden] { display: none; }
+  .cookiepanel { background: var(--card); color: var(--ink); border-radius: 16px;
+                 max-width: 430px; width: 100%; padding: 26px 26px 20px;
+                 border: 1px solid var(--line); text-align: left;
+                 box-shadow: 0 24px 60px rgba(0,0,0,.4); }
+  .cookiepanel h2 { font-size: 19px; font-weight: 800; margin: 0 0 14px; }
+  .cookielist { list-style: none; margin: 0 0 16px; padding: 0; display: grid; gap: 8px; }
+  .cookielist li { display: flex; align-items: center; gap: 10px; font-size: 14.5px; }
+  .cookielist b { min-width: 26px; height: 26px; border-radius: 8px; flex: 0 0 auto;
+                  background: color-mix(in srgb, var(--ciano) 20%, transparent);
+                  color: var(--ciano); display: inline-flex; align-items: center;
+                  justify-content: center; font-size: 13px; }
+  .cookiealtro { font-size: 13px; color: var(--muted); margin: 0 0 16px;
+                 padding-top: 12px; border-top: 1px solid var(--line); }
+  .cookiefoot { display: flex; align-items: center; justify-content: space-between;
+                gap: 14px; flex-wrap: wrap; }
+  .cookiefoot a { color: var(--ciano); font-weight: 600; text-decoration: none; }
+  .cookieok { background: var(--blu); color: #fff; border: 0; border-radius: 10px;
+              padding: 10px 24px; font: inherit; font-weight: 700; cursor: pointer; }
 </style>
 </head>
 <body>
@@ -194,11 +233,51 @@
   quindi non ci sono fornitori né ordini veri — quello che si vede nelle schermate è
   una dimostrazione.</p>
 
-  <div class="chiusura">
-    Un progetto di <a href="../"><b>BayranLab Software</b></a> ·
-    <a href="mailto:bayranlabsoftware@gmail.com">bayranlabsoftware@gmail.com</a>
-  </div>
+  <footer>
+    <div class="fwrap">
+      <div class="fcol">
+        <div class="fmarchio"><b>Bayran</b>Lab Software</div>
+        <p class="fnota">🔒 Nessun cookie · Nessun tracciamento</p>
+      </div>
+      <nav class="fcol">
+        <h3>Software</h3>
+        <a href="../bayrancleaner/">Bayran Cleaner</a>
+        <a href="../bayranoffice/">Bayran Office</a>
+        <a href="../nimbus/">Bayran Nimbus</a>
+        <a href="../foodbridge/">FoodBridge</a>
+      </nav>
+      <nav class="fcol">
+        <h3>Contatti</h3>
+        <a href="mailto:bayranlabsoftware@gmail.com">bayranlabsoftware@gmail.com</a>
+      </nav>
+      <nav class="fcol">
+        <h3></h3>
+        <a href="../privacy/">Privacy policy del sito</a>
+        <button type="button" class="flink" id="cookiebtn">Cookie</button>
+      </nav>
+    </div>
+    <div class="fbottom">© 2026 BayranLab Software. Tutti i diritti riservati.</div>
+  </footer>
 
+</div>
+
+<div class="cookiewrap" id="cookiewrap" hidden role="dialog" aria-modal="true" aria-labelledby="cookieh">
+  <div class="cookiepanel">
+    <h2 id="cookieh">Nessun cookie · Nessun tracciamento</h2>
+    <ul class="cookielist">
+      <li><b>✓</b> nessun cookie</li>
+      <li><b>✓</b> questa pagina non scrive nulla nel browser</li>
+      <li><b>✓</b> nessuna statistica</li>
+      <li><b>✓</b> nessuna richiesta a terze parti</li>
+    </ul>
+    <p class="cookiealtro">Bayran Nimbus, che sta su questo stesso indirizzo,
+    salva due preferenze nel browser: sono spiegate nella
+    <a href="../nimbus/privacy/">sua informativa</a>.</p>
+    <div class="cookiefoot">
+      <a href="../privacy/">Privacy policy del sito</a>
+      <button type="button" class="cookieok" id="cookieok">OK</button>
+    </div>
+  </div>
 </div>
 
 <div class="zoom" id="zoom" hidden role="dialog" aria-modal="true" aria-label="Schermata ingrandita">
@@ -207,6 +286,16 @@
 </div>
 
 <script>
+(function pannelloCookie(){
+  const w = document.getElementById('cookiewrap');
+  const apri = () => { w.hidden = false; document.getElementById('cookieok').focus(); };
+  const chiudi = () => { w.hidden = true; document.getElementById('cookiebtn').focus(); };
+  document.getElementById('cookiebtn').addEventListener('click', apri);
+  document.getElementById('cookieok').addEventListener('click', chiudi);
+  w.addEventListener('click', e => { if (e.target === w) chiudi(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !w.hidden) chiudi(); });
+})();
+
 /* Ingranditore: la stessa immagine gia' scaricata, mostrata a piena pagina.
    Niente libreria e niente secondo file da caricare. Al ritorno il fuoco
    torna sul riquadro premuto, altrimenti chi naviga da tastiera lo perde. */

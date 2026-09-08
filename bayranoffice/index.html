@@ -142,6 +142,7 @@
   .cookielist li{display:flex;align-items:center;gap:10px;font-size:14.5px}
   .cookielist b{min-width:26px;height:26px;border-radius:8px;background:#e6f5f1;color:#0d6e64;
     display:inline-flex;align-items:center;justify-content:center;font-size:13px;flex:0 0 auto}
+  .cookiealtro{font-size:13px;color:var(--ink2);margin:0 0 16px;padding-top:12px;border-top:1px solid var(--line)}
   .cookiefoot{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
   .cookiefoot a{color:#0d6e64;font-weight:600}
   .cookieok{background:#0d6e64;color:#fff;border:0;border-radius:10px;padding:10px 24px;
@@ -276,11 +277,12 @@
   <div class="cookiepanel" role="dialog" aria-modal="true" aria-labelledby="cookieh">
     <h3 id="cookieh"></h3>
     <ul class="cookielist">
-      <li><b>0</b> cookie</li>
-      <li><b>0</b> localStorage · sessionStorage</li>
-      <li><b>0</b> analytics</li>
-      <li><b>0</b> <span class="cookie3p">third-party</span></li>
+      <li><b>✓</b> nessun cookie</li>
+      <li><b>✓</b> questa pagina non scrive nulla nel browser</li>
+      <li><b>✓</b> nessuna statistica</li>
+      <li><b>✓</b> nessuna richiesta a terze parti</li>
     </ul>
+    <p class="cookiealtro">Bayran Nimbus, che sta su questo stesso indirizzo, salva due preferenze nel browser: sono spiegate nella <a href="../nimbus/privacy/">sua informativa</a>.</p>
     <div class="cookiefoot">
       <a href="https://bayranlabsoftware.github.io/BayranOfficePrivacyPolicy/" data-t="fPrivacy"></a>
       <button type="button" class="cookieok" id="cookieok">OK</button>
