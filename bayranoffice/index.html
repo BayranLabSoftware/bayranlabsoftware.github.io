@@ -123,6 +123,12 @@
      tutte dalla stessa riga. */
   .fcol h3:empty::after{content:"\00a0"}
   .fcol a,.fcol .flink{display:block;padding:5px 0;color:#9fe6d8}
+  /* L'elenco dei prodotti scende per colonne di tre, come sulle altre pagine:
+     alla quarta voce si apre una colonna nuova invece di allungare la lista.
+     Su schermo stretto le colonne non ci stanno e torna a scendere e basta. */
+  .flista{display:grid;grid-auto-flow:column;grid-template-rows:repeat(3,auto);
+    gap:0 22px;justify-content:start}
+  @media(max-width:520px){ .flista{grid-auto-flow:row;grid-template-rows:none} }
   .flink{background:none;border:0;font:inherit;cursor:pointer;text-align:inherit}
   .flink:hover{text-decoration:underline}
   .fclaim{margin:12px 0 10px;opacity:.85;line-height:1.5}
@@ -242,7 +248,15 @@
     <nav class="fcol">
       <h3>BayranLab Software</h3>
       <a href="../">BayranLab Software</a>
-      <a href="../bayrancleaner/">Bayran Cleaner</a>
+      <!-- I nomi dei prodotti sono nomi propri: aggiungerli non porta stringhe
+           nuove da tradurre in 22 lingue. -->
+      <div class="flista">
+        <a href="../bayrancleaner/">Bayran Cleaner</a>
+        <a href="../bayranoffice/">Bayran Office</a>
+        <a href="../nimbus/">Bayran Nimbus</a>
+        <a href="../foodbridge/">FoodBridge</a>
+        <a href="../faresy/">FaReSy</a>
+      </div>
       <a href="https://play.google.com/store/apps/details?id=com.bayran.office">Google Play</a>
       <a href="https://apps.apple.com/app/id6795818217">App Store</a>
     </nav>
