@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chi sono — BayranLab Software</title>
+<meta name="description" content="Chi c'e' dietro BayranLab Software.">
+<style>
+  :root {
+    color-scheme: dark;
+    --ink: #eef6fa; --muted: #9db4c0; --line: rgba(255,255,255,.13);
+    --card: #102232; --bg: #071626; --blu: #3f9fd0; --ciano: #5ec4e4;
+    --verde: #34a06a; --giallo: #e0a53c;
+    /* Stessa lunghezza di riga di FoodBridge: le due pagine di presentazione
+       si leggono una dopo l'altra e devono avere la stessa misura. */
+    --testo: 660px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background-color: var(--bg); color: var(--ink);
+    font: 16px/1.62 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    background-image:
+      radial-gradient(1000px 520px at 50% -150px,
+                      color-mix(in srgb, var(--ciano) 26%, transparent), transparent 70%),
+      linear-gradient(180deg, #0d2740 0%, #0a1c2e 45%, #061421 100%);
+    background-attachment: fixed;
+  }
+  /* Questa pagina e' corta: senza, la fascia del piede resta a mezz'aria con
+     il fondo della pagina sotto. Il corpo si allunga fino alla finestra e la
+     colonna del testo si prende lo spazio avanzato, spingendo il piede in
+     fondo; su una pagina lunga non cambia niente. */
+  body { min-height: 100vh; display: flex; flex-direction: column; }
+  .wrap { max-width: 940px; margin: 0 auto; padding: 0 22px 80px;
+          text-align: center; width: 100%; flex: 1 0 auto; }
+  footer { flex: 0 0 auto; }
+
+  /* barra: stesse misure di Cleaner, Office e FoodBridge */
+  .topbar { height: 68px; display: flex; align-items: center;
+            justify-content: flex-start; text-align: left; }
+  .topbar .brand { display: flex; align-items: center; text-decoration: none;
+                   transition: opacity .12s; }
+  .topbar .brand:hover { opacity: .78; }
+  .topbar .brand img { height: 46px; width: auto; display: block; }
+
+  header.hero { padding: 34px 0 8px; }
+  h1 { font-size: 40px; line-height: 1.1; margin: 0 0 26px; letter-spacing: -.5px; }
+  p { color: #cfe0e9; }
+
+  /* Foto a sinistra, testo a destra; su schermo stretto uno sotto l'altro.
+     La colonna della foto non si stringe: e' una misura, non una proporzione. */
+  .scheda { display: grid; gap: 30px; grid-template-columns: 300px 1fr;
+            align-items: start; text-align: left; margin-top: 10px; }
+  @media (max-width: 760px) { .scheda { grid-template-columns: 1fr; } }
+
+  .ritratto { width: 100%; aspect-ratio: 4 / 5; border-radius: 16px;
+              object-fit: cover; display: block; border: 1px solid var(--line); }
+
+  /* I due riquadri tratteggiati sono segnaposto: spariscono quando arrivano
+     la foto e il testo veri. */
+  .daFare { border: 1px dashed var(--giallo); color: var(--giallo);
+            background: rgba(224,165,60,.06); border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center; padding: 20px; font-size: 14px; line-height: 1.5; }
+  .daFare.foto { width: 100%; aspect-ratio: 4 / 5; }
+  .daFare.testo { min-height: 220px; }
+
+  /* ---------------- il piede ----------------
+     Fascia a se', come sulla pagina di Bayran Office: fondo proprio, un poco
+     piu' chiaro della pagina, e larghezza piena. Dentro, il contenuto si
+     incolonna con quello che sta sopra. */
+  footer { background: #0a2233; color: #9db4c0; font-size: 14px;
+           border-top: 1px solid rgba(255,255,255,.09); text-align: left; }
+  footer .fwrap { max-width: 940px; margin: 0 auto; padding: 44px 22px 30px; }
+  .fcols { display: grid; gap: 30px 26px; grid-template-columns: 1.7fr 1.5fr 1fr 1fr; }
+  @media (max-width: 900px) { .fcols { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 520px) { .fcols { grid-template-columns: 1fr; } }
+  .fbrand { display: flex; align-items: center; gap: 9px; font-weight: 700;
+            color: #eaf6f4; font-size: 16px; }
+  .fbrand img { width: 26px; height: 26px; border-radius: 7px; }
+  .fbrand b { color: #5ec4e4; }
+  .fcol h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .09em;
+             color: #7fa8bd; font-weight: 700; margin: 0 0 12px; min-height: 1em; }
+  .fcol a, .fcol .flink { display: block; padding: 5px 0; color: #5ec4e4;
+                          text-decoration: none; }
+  .fcol a:hover, .fcol .flink:hover { text-decoration: underline; }
+  .flink { background: none; border: 0; font: inherit; cursor: pointer;
+           text-align: inherit; }
+  .fnota { margin: 12px 0 0; font-size: 13px; opacity: .85; }
+  /* Al massimo tre voci per colonna: la quarta apre una colonna nuova invece
+     di allungare la lista. Su schermo stretto le colonne non ci stanno e
+     l'elenco torna a scendere e basta. */
+  .flista { display: grid; grid-auto-flow: column; grid-template-rows: repeat(3, auto);
+            gap: 0 20px; justify-content: start; }
+  /* Un nome di prodotto non si spezza a meta': "Bayran Cleaner" andava a capo
+     e la colonna diventava alta il doppio, con "Bayran" sopra e "Cleaner"
+     sotto. Per questo la colonna e' anche piu' larga di prima. */
+  .flista a { white-space: nowrap; }
+  @media (max-width: 520px) { .flista { grid-auto-flow: row;
+                                        grid-template-rows: none; } }
+  .fbottom { margin-top: 32px; padding-top: 18px;
+             border-top: 1px solid rgba(255,255,255,.10);
+             font-size: 12.5px; opacity: .72; }
+
+  /* pannello cookie, come sulle altre pagine */
+  .cookiewrap { position: fixed; inset: 0; z-index: 95; display: flex;
+                align-items: center; justify-content: center; padding: 22px;
+                background: rgba(6,22,30,.6); }
+  .cookiewrap[hidden] { display: none; }
+  .cookiepanel { background: var(--card); color: var(--ink); border-radius: 16px;
+                 max-width: 430px; width: 100%; padding: 26px 26px 20px;
+                 border: 1px solid var(--line); text-align: left;
+                 box-shadow: 0 24px 60px rgba(0,0,0,.4); }
+  .cookiepanel h2 { font-size: 19px; font-weight: 800; margin: 0 0 14px; }
+  .cookielist { list-style: none; margin: 0 0 16px; padding: 0; display: grid; gap: 8px; }
+  .cookielist li { display: flex; align-items: center; gap: 10px; font-size: 14.5px; }
+  .cookielist b { min-width: 26px; height: 26px; border-radius: 8px; flex: 0 0 auto;
+                  background: color-mix(in srgb, var(--ciano) 20%, transparent);
+                  color: var(--ciano); display: inline-flex; align-items: center;
+                  justify-content: center; font-size: 13px; }
+  .cookiealtro { font-size: 13px; color: var(--muted); margin: 0 0 16px;
+                 padding-top: 12px; border-top: 1px solid var(--line); }
+  .cookiefoot { display: flex; align-items: center; justify-content: space-between;
+                gap: 14px; flex-wrap: wrap; }
+  .cookiefoot a { color: var(--ciano); font-weight: 600; text-decoration: none; }
+  .cookieok { background: var(--blu); color: #fff; border: 0; border-radius: 10px;
+              padding: 10px 24px; font: inherit; font-weight: 700; cursor: pointer; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <a class="brand" href="../" aria-label="BayranLab Software — torna alla pagina principale">
+      <img src="../img/bayranlab-logo.png" alt="BayranLab Software">
+    </a>
+  </div>
+
+  <header class="hero">
+    <h1>Chi sono</h1>
+  </header>
+
+  <div class="scheda">
+    <div class="daFare foto">foto da mettere</div>
+    <div class="daFare testo">descrizione da scrivere</div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="fwrap">
+    <div class="fcols">
+
+      <div class="fcol">
+        <div class="fbrand"><img src="../img/logo-dog.png" alt=""><span><b>Bayran</b>Lab Software</span></div>
+        <p class="fnota">🔒 Nessun cookie · Nessun tracciamento</p>
+      </div>
+
+      <nav class="fcol">
+        <h3>Software</h3>
+        <div class="flista">
+          <a href="../bayrancleaner/">Bayran Cleaner</a>
+          <a href="../bayranoffice/">Bayran Office</a>
+          <a href="../nimbus/">Bayran Nimbus</a>
+          <a href="../foodbridge/">FoodBridge</a>
+          <a href="../faresy/">FaReSy</a>
+        </div>
+      </nav>
+
+      <nav class="fcol">
+        <h3>Contatti</h3>
+        <a href="mailto:bayranlabsoftware@gmail.com">bayranlabsoftware@gmail.com</a>
+      </nav>
+
+      <nav class="fcol">
+        <h3>Note legali</h3>
+        <!-- Ogni prodotto rimanda alla propria informativa: trattano cose
+             diverse. Quella del sito copre solo le pagine informative. -->
+        <a href="../privacy/">Privacy policy del sito</a>
+        <button type="button" class="flink" id="cookiebtn">Cookie</button>
+      </nav>
+
+    </div>
+    <div class="fbottom">© 2026 BayranLab Software. Tutti i diritti riservati.</div>
+  </div>
+</footer>
+
+<div class="cookiewrap" id="cookiewrap" hidden role="dialog" aria-modal="true" aria-labelledby="cookieh">
+  <div class="cookiepanel">
+    <h2 id="cookieh">Nessun cookie · Nessun tracciamento</h2>
+    <ul class="cookielist">
+      <li><b>✓</b> nessun cookie</li>
+      <li><b>✓</b> questa pagina non scrive nulla nel browser</li>
+      <li><b>✓</b> nessuna statistica</li>
+      <li><b>✓</b> nessuna richiesta a terze parti</li>
+    </ul>
+    <p class="cookiealtro">Bayran Nimbus, che sta su questo stesso indirizzo,
+    salva due preferenze nel browser: sono spiegate nella
+    <a href="../nimbus/privacy/">sua informativa</a>.</p>
+    <div class="cookiefoot">
+      <a href="../privacy/">Privacy policy del sito</a>
+      <button type="button" class="cookieok" id="cookieok">OK</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+(function pannelloCookie(){
+  const w = document.getElementById('cookiewrap');
+  const apri = () => { w.hidden = false; document.getElementById('cookieok').focus(); };
+  const chiudi = () => { w.hidden = true; document.getElementById('cookiebtn').focus(); };
+  document.getElementById('cookiebtn').addEventListener('click', apri);
+  document.getElementById('cookieok').addEventListener('click', chiudi);
+  w.addEventListener('click', e => { if (e.target === w) chiudi(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !w.hidden) chiudi(); });
+})();
+</script>
+</body>
+</html>
