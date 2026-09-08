@@ -61,6 +61,11 @@
   /* ---------------- le schede dei software ---------------- */
   main {
     width: 100%; max-width: 1400px; margin-top: 92px;
+    /* Su uno schermo alto la pagina e' piu' corta della finestra: senza
+       questo, la fascia del piede resta a meta' altezza con il fondo della
+       pagina sotto. Il margine automatico si mangia lo spazio avanzato e
+       spinge il piede in fondo; quando la pagina e' lunga vale zero. */
+    margin-bottom: auto;
     display: grid; gap: 18px; grid-template-columns: repeat(5, 1fr);
   }
   /* Sotto i 1040px l'ingrandimento non ha senso: quattro schede in fila
@@ -134,23 +139,39 @@
   .scheda:hover .vai .freccia { transform: translateX(4px); }
   .freccia { display: inline-block; transition: transform .18s ease; }
 
-  /* ---------------- footer ---------------- */
-  footer { width: 100%; max-width: 980px; margin-top: 64px; padding-top: 30px;
-           border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
-  .fwrap { display: grid; gap: 28px 26px; grid-template-columns: 1.6fr 1fr 1fr 1fr; }
-  @media (max-width: 760px) { .fwrap { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 440px) { .fwrap { grid-template-columns: 1fr; } }
+  /* ---------------- il piede ----------------
+     Fascia a se', come sulla pagina di Bayran Office: fondo proprio, un poco
+     piu' chiaro della pagina, e larghezza piena. Dentro, il contenuto si
+     incolonna con quello che sta sopra. */
+  footer { background: #0a2233; color: #9db4c0; font-size: 14px;
+           border-top: 1px solid rgba(255,255,255,.09); text-align: left; }
+  footer { align-self: stretch; margin: 74px -22px -60px; }
+  footer .fwrap { max-width: 1400px; margin: 0 auto; padding: 44px 22px 30px; }
+  .fcols { display: grid; gap: 30px 26px; grid-template-columns: 1.7fr 1.2fr 1fr 1fr; }
+  @media (max-width: 900px) { .fcols { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 520px) { .fcols { grid-template-columns: 1fr; } }
+  .fbrand { display: flex; align-items: center; gap: 9px; font-weight: 700;
+            color: #eaf6f4; font-size: 16px; }
+  .fbrand img { width: 26px; height: 26px; border-radius: 7px; }
+  .fbrand b { color: #5ec4e4; }
   .fcol h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .09em;
-             color: var(--ink); opacity: .75; font-weight: 700; margin: 0 0 12px; }
-  .fcol a, .fcol .flink { display: block; padding: 4px 0; color: var(--ciano);
+             color: #7fa8bd; font-weight: 700; margin: 0 0 12px; min-height: 1em; }
+  .fcol a, .fcol .flink { display: block; padding: 5px 0; color: #5ec4e4;
                           text-decoration: none; }
   .fcol a:hover, .fcol .flink:hover { text-decoration: underline; }
-  .flink { background: none; border: 0; font: inherit; cursor: pointer; text-align: left; }
-  .fmarchio { font-size: 16px; font-weight: 700; color: var(--ink); }
-  .fmarchio b { color: var(--ciano); }
-  .fnota { margin: 10px 0 0; font-size: 13px; }
-  .fbottom { margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--line);
-             font-size: 12.5px; opacity: .8; }
+  .flink { background: none; border: 0; font: inherit; cursor: pointer;
+           text-align: inherit; }
+  .fnota { margin: 12px 0 0; font-size: 13px; opacity: .85; }
+  /* Al massimo tre voci per colonna: la quarta apre una colonna nuova invece
+     di allungare la lista. Su schermo stretto le colonne non ci stanno e
+     l'elenco torna a scendere e basta. */
+  .flista { display: grid; grid-auto-flow: column; grid-template-rows: repeat(3, auto);
+            gap: 0 24px; justify-content: start; }
+  @media (max-width: 520px) { .flista { grid-auto-flow: row;
+                                        grid-template-rows: none; } }
+  .fbottom { margin-top: 32px; padding-top: 18px;
+             border-top: 1px solid rgba(255,255,255,.10);
+             font-size: 12.5px; opacity: .72; }
 
   /* ---------------- pannello cookie ---------------- */
   .cookiewrap { position: fixed; inset: 0; z-index: 60; display: flex;
@@ -250,37 +271,41 @@
 
 <footer>
   <div class="fwrap">
+    <div class="fcols">
 
-    <div class="fcol">
-      <div class="fmarchio"><b>Bayran</b>Lab Software</div>
-      <p class="fnota">🔒 Nessun cookie · Nessun tracciamento</p>
+      <div class="fcol">
+        <div class="fbrand"><img src="img/logo-dog.png" alt=""><span><b>Bayran</b>Lab Software</span></div>
+        <p class="fnota">🔒 Nessun cookie · Nessun tracciamento</p>
+      </div>
+
+      <nav class="fcol">
+        <h3>Software</h3>
+        <div class="flista">
+          <a href="bayrancleaner/">Bayran Cleaner</a>
+          <a href="bayranoffice/">Bayran Office</a>
+          <a href="nimbus/">Bayran Nimbus</a>
+          <a href="foodbridge/">FoodBridge</a>
+          <a href="faresy/">FaReSy</a>
+        </div>
+      </nav>
+
+      <nav class="fcol">
+        <h3>Contatti</h3>
+        <a href="mailto:bayranlabsoftware@gmail.com">bayranlabsoftware@gmail.com</a>
+      </nav>
+
+      <nav class="fcol">
+        <h3>Note legali</h3>
+        <!-- Questa e' l'informativa DEL SITO. Quelle dei software sono
+             separate perche' trattano cose diverse, e stanno ognuna sulla
+             pagina del proprio prodotto. -->
+        <a href="privacy/">Privacy policy del sito</a>
+        <button type="button" class="flink" id="cookiebtn">Cookie</button>
+      </nav>
+
     </div>
-
-    <nav class="fcol">
-      <h3>Software</h3>
-      <a href="bayrancleaner/">Bayran Cleaner</a>
-      <a href="bayranoffice/">Bayran Office</a>
-      <a href="nimbus/">Bayran Nimbus</a>
-      <a href="foodbridge/">FoodBridge</a>
-      <a href="faresy/">FaReSy</a>
-    </nav>
-
-    <nav class="fcol">
-      <h3>Contatti</h3>
-      <a href="mailto:bayranlabsoftware@gmail.com">bayranlabsoftware@gmail.com</a>
-    </nav>
-
-    <nav class="fcol">
-      <h3>Note legali</h3>
-      <!-- Questa e' l'informativa DEL SITO. Quelle dei due software sono
-           separate perche' trattano cose diverse, e stanno ognuna sulla
-           pagina del proprio prodotto. -->
-      <a href="privacy/">Privacy policy del sito</a>
-      <button type="button" class="flink" id="cookiebtn">Cookie</button>
-    </nav>
-
+    <div class="fbottom">© 2026 BayranLab Software. Tutti i diritti riservati.</div>
   </div>
-  <div class="fbottom">© 2026 BayranLab Software. Tutti i diritti riservati.</div>
 </footer>
 
 <!-- Stesso pannello della pagina di Bayran Office, e per la stessa ragione:

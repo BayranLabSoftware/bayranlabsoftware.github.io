@@ -109,25 +109,38 @@
           max-width: var(--testo); padding-top: 14px;
           border-top: 1px solid var(--line); }
 
-  /* footer con la stessa struttura delle altre pagine del sito */
-  footer { margin-top: 64px; padding-top: 30px; border-top: 1px solid var(--line);
-           color: var(--muted); font-size: 14px; text-align: left; }
-  .fwrap { display: grid; gap: 28px 26px; grid-template-columns: 1.6fr 1fr 1fr 1fr; }
-  @media (max-width: 760px) { .fwrap { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 440px) { .fwrap { grid-template-columns: 1fr; } }
+  /* ---------------- il piede ----------------
+     Fascia a se', come sulla pagina di Bayran Office: fondo proprio, un poco
+     piu' chiaro della pagina, e larghezza piena. Dentro, il contenuto si
+     incolonna con quello che sta sopra. */
+  footer { background: #0a2233; color: #9db4c0; font-size: 14px;
+           border-top: 1px solid rgba(255,255,255,.09); text-align: left; }
+  footer .fwrap { max-width: 940px; margin: 0 auto; padding: 44px 22px 30px; }
+  .fcols { display: grid; gap: 30px 26px; grid-template-columns: 1.7fr 1.2fr 1fr 1fr; }
+  @media (max-width: 900px) { .fcols { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 520px) { .fcols { grid-template-columns: 1fr; } }
+  .fbrand { display: flex; align-items: center; gap: 9px; font-weight: 700;
+            color: #eaf6f4; font-size: 16px; }
+  .fbrand img { width: 26px; height: 26px; border-radius: 7px; }
+  .fbrand b { color: #5ec4e4; }
   .fcol h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .09em;
-             color: var(--ink); opacity: .75; font-weight: 700; margin: 0 0 12px;
-             min-height: 1em; }
-  .fcol h3:empty::after { content: "\00a0"; }
-  .fcol a, .fcol .flink { display: block; padding: 4px 0; color: var(--ciano);
+             color: #7fa8bd; font-weight: 700; margin: 0 0 12px; min-height: 1em; }
+  .fcol a, .fcol .flink { display: block; padding: 5px 0; color: #5ec4e4;
                           text-decoration: none; }
   .fcol a:hover, .fcol .flink:hover { text-decoration: underline; }
-  .flink { background: none; border: 0; font: inherit; cursor: pointer; text-align: left; }
-  .fmarchio { font-size: 16px; font-weight: 700; color: var(--ink); }
-  .fmarchio b { color: var(--ciano); }
-  .fnota { margin: 10px 0 0; font-size: 13px; }
-  .fbottom { margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--line);
-             font-size: 12.5px; opacity: .8; }
+  .flink { background: none; border: 0; font: inherit; cursor: pointer;
+           text-align: inherit; }
+  .fnota { margin: 12px 0 0; font-size: 13px; opacity: .85; }
+  /* Al massimo tre voci per colonna: la quarta apre una colonna nuova invece
+     di allungare la lista. Su schermo stretto le colonne non ci stanno e
+     l'elenco torna a scendere e basta. */
+  .flista { display: grid; grid-auto-flow: column; grid-template-rows: repeat(3, auto);
+            gap: 0 24px; justify-content: start; }
+  @media (max-width: 520px) { .flista { grid-auto-flow: row;
+                                        grid-template-rows: none; } }
+  .fbottom { margin-top: 32px; padding-top: 18px;
+             border-top: 1px solid rgba(255,255,255,.10);
+             font-size: 12.5px; opacity: .72; }
 
   /* pannello cookie, come sulle altre pagine */
   .cookiewrap { position: fixed; inset: 0; z-index: 95; display: flex;
@@ -233,34 +246,47 @@
   quindi non ci sono fornitori né ordini veri — quello che si vede nelle schermate è
   una dimostrazione.</p>
 
-  <footer>
-    <div class="fwrap">
+
+</div>
+
+<footer>
+  <div class="fwrap">
+    <div class="fcols">
+
       <div class="fcol">
-        <div class="fmarchio"><b>Bayran</b>Lab Software</div>
+        <div class="fbrand"><img src="../img/logo-dog.png" alt=""><span><b>Bayran</b>Lab Software</span></div>
         <p class="fnota">🔒 Nessun cookie · Nessun tracciamento</p>
       </div>
+
       <nav class="fcol">
         <h3>Software</h3>
-        <a href="../bayrancleaner/">Bayran Cleaner</a>
-        <a href="../bayranoffice/">Bayran Office</a>
-        <a href="../nimbus/">Bayran Nimbus</a>
-        <a href="../foodbridge/">FoodBridge</a>
-        <a href="../faresy/">FaReSy</a>
+        <div class="flista">
+          <a href="../bayrancleaner/">Bayran Cleaner</a>
+          <a href="../bayranoffice/">Bayran Office</a>
+          <a href="../nimbus/">Bayran Nimbus</a>
+          <a href="../foodbridge/">FoodBridge</a>
+          <a href="../faresy/">FaReSy</a>
+        </div>
       </nav>
+
       <nav class="fcol">
         <h3>Contatti</h3>
         <a href="mailto:bayranlabsoftware@gmail.com">bayranlabsoftware@gmail.com</a>
       </nav>
+
       <nav class="fcol">
-        <h3></h3>
+        <h3>Note legali</h3>
+        <!-- Questa e' l'informativa DEL SITO. Quelle dei software sono
+             separate perche' trattano cose diverse, e stanno ognuna sulla
+             pagina del proprio prodotto. -->
         <a href="../privacy/">Privacy policy del sito</a>
         <button type="button" class="flink" id="cookiebtn">Cookie</button>
       </nav>
+
     </div>
     <div class="fbottom">© 2026 BayranLab Software. Tutti i diritti riservati.</div>
-  </footer>
-
-</div>
+  </div>
+</footer>
 
 <div class="cookiewrap" id="cookiewrap" hidden role="dialog" aria-modal="true" aria-labelledby="cookieh">
   <div class="cookiepanel">
