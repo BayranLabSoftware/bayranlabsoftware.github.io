@@ -26,10 +26,15 @@
       linear-gradient(180deg, #0d2740 0%, #0a1c2e 45%, #061421 100%);
     background-attachment: fixed;
   }
-  .wrap { max-width: 940px; margin: 0 auto; padding: 0 22px 80px; }
+  .wrap { max-width: 940px; margin: 0 auto; padding: 0 22px 80px;
+          text-align: center; }
 
   /* barra: stesse misure di Cleaner e Office */
-  .topbar { height: 68px; display: flex; align-items: center; }
+  /* La barra resta allineata a sinistra anche se la pagina e' centrata:
+     il logo sta nello stesso punto delle pagine di Cleaner e Office, e
+     spostarlo qui spezzerebbe la continuita' passando da un sito all'altro. */
+  .topbar { height: 68px; display: flex; align-items: center;
+            justify-content: flex-start; text-align: left; }
   .topbar .brand { display: flex; align-items: center; text-decoration: none;
                    transition: opacity .12s; }
   .topbar .brand:hover { opacity: .78; }
@@ -37,7 +42,8 @@
 
   header.hero { padding: 34px 0 8px; }
   h1 { font-size: 46px; line-height: 1.08; margin: 0 0 10px; letter-spacing: -.6px; }
-  .claim { font-size: 21px; color: #d7e6ee; margin: 0 0 20px; max-width: var(--testo); }
+  .claim { font-size: 21px; color: #d7e6ee; margin: 0 auto 20px;
+           max-width: var(--testo); }
   .stato { display: inline-flex; align-items: center; gap: 8px; font-size: 13px;
            border: 1px solid var(--line); border-radius: 20px; padding: 5px 14px;
            color: var(--muted); }
@@ -46,12 +52,13 @@
 
   h2 { font-size: 24px; margin: 56px 0 12px; letter-spacing: -.3px; }
   p { color: #cfe0e9; }
-  .lead { max-width: var(--testo); }
+  /* il blocco si centra nella pagina, non solo il testo dentro */
+  .lead { max-width: var(--testo); margin-left: auto; margin-right: auto; }
 
   .tre { display: grid; gap: 16px; grid-template-columns: repeat(3, 1fr); margin-top: 18px; }
   @media (max-width: 760px) { .tre { grid-template-columns: 1fr; } }
   .punto { background: var(--card); border: 1px solid var(--line);
-           border-radius: 14px; padding: 20px; }
+           border-radius: 14px; padding: 20px; text-align: center; }
   .punto h3 { margin: 0 0 7px; font-size: 16.5px; }
   .punto p { margin: 0; font-size: 14.5px; color: var(--muted); }
 
@@ -91,9 +98,9 @@
                   line-height: 1; }
   .zoom .chiudi:hover { border-color: var(--ciano); }
 
-  .nota { margin-top: 16px; font-size: 13.5px; color: var(--muted);
-          border-left: 2px solid var(--line); padding-left: 14px;
-          max-width: var(--testo); }
+  .nota { margin: 18px auto 0; font-size: 13.5px; color: var(--muted);
+          max-width: var(--testo); padding-top: 14px;
+          border-top: 1px solid var(--line); }
 
   .chiusura { margin-top: 64px; padding-top: 22px; border-top: 1px solid var(--line);
               color: var(--muted); font-size: 14px; }
