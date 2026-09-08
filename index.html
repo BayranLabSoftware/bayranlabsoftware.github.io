@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BayranLab Software</title>
-<meta name="description" content="I software di BayranLab Software: Bayran Cleaner per Mac e Bayran Office per iPhone e iPad.">
+<meta name="description" content="I software di BayranLab Software: Bayran Cleaner per Mac, Bayran Office per iOS e Android, Bayran Nimbus sul web.">
 <link rel="icon" href="img/logo-dog.png">
 <meta property="og:title" content="BayranLab Software">
-<meta property="og:description" content="Bayran Cleaner per Mac, Bayran Office per iPhone e iPad.">
+<meta property="og:description" content="Bayran Cleaner per Mac, Bayran Office per iOS e Android, Bayran Nimbus sul web.">
 <meta property="og:image" content="https://bayranlabsoftware.github.io/img/logo-dog.png">
 <style>
   :root {
@@ -50,12 +50,13 @@
     clip: rect(0 0 0 0); white-space: nowrap;
   }
 
-  /* ---------------- le due schede ---------------- */
+  /* ---------------- le schede dei software ---------------- */
   main {
-    width: 100%; max-width: 940px; margin-top: 54px;
-    display: grid; gap: 22px; grid-template-columns: repeat(2, 1fr);
+    width: 100%; max-width: 1180px; margin-top: 54px;
+    display: grid; gap: 22px; grid-template-columns: repeat(3, 1fr);
   }
-  @media (max-width: 760px) { main { grid-template-columns: 1fr; } }
+  @media (max-width: 1000px) { main { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 700px)  { main { grid-template-columns: 1fr; } }
 
   .scheda {
     display: flex; flex-direction: column; text-decoration: none; color: inherit;
@@ -86,6 +87,7 @@
   }
   .vetrina img { border-radius: 8px 8px 0 0; box-shadow: 0 12px 30px rgba(0,0,0,.38); }
   .vetrina .mac { width: 86%; height: auto; }
+  .vetrina .web { width: 86%; height: auto; }
   .vetrina .telefono { width: 124px; height: auto; }
 
   .testo { padding: 20px 22px 22px; display: flex; flex-direction: column;
@@ -102,7 +104,7 @@
   .freccia { display: inline-block; transition: transform .18s ease; }
 
   /* ---------------- footer ---------------- */
-  footer { width: 100%; max-width: 940px; margin-top: 64px; padding-top: 30px;
+  footer { width: 100%; max-width: 1180px; margin-top: 64px; padding-top: 30px;
            border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
   .fwrap { display: grid; gap: 28px 26px; grid-template-columns: 1.6fr 1fr 1fr 1fr; }
   @media (max-width: 760px) { .fwrap { grid-template-columns: 1fr 1fr; } }
@@ -179,6 +181,18 @@
       </div>
     </div>
   </a>
+
+  <a class="scheda" href="nimbus/">
+    <div class="vetrina"><img class="web" src="img/card-nimbus.png" alt="La pagina di Bayran Nimbus"></div>
+    <div class="testo">
+      <div class="nome">Bayran Nimbus</div>
+      <div class="claim">Simula eventi catastrofici su un globo 3D.</div>
+      <div class="piede">
+        <span class="dove">Web</span>
+        <span class="vai">Vai <span class="freccia">→</span></span>
+      </div>
+    </div>
+  </a>
 </main>
 
 <footer>
@@ -193,6 +207,7 @@
       <h3>Software</h3>
       <a href="bayrancleaner/">Bayran Cleaner</a>
       <a href="bayranoffice/">Bayran Office</a>
+      <a href="nimbus/">Bayran Nimbus</a>
     </nav>
 
     <nav class="fcol">
