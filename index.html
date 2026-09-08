@@ -41,7 +41,11 @@
   }
 
   /* ---------------- testata: il marchio e basta ---------------- */
-  header { text-align: center; padding: 74px 0 8px; }
+  /* I 38px tolti qui sopra sono gli stessi aggiunti al margine della fila,
+     piu' sotto: il marchio sale, le schede restano dov'erano. Toglierli e
+     basta non servirebbe a niente, perche' la fila sta sotto al marchio nel
+     flusso e salirebbe insieme a lui, lasciando la distanza identica. */
+  header { text-align: center; padding: 36px 0 8px; }
   header .cane {
     width: 168px; height: 168px; display: block; margin: 0 auto 22px;
     filter: drop-shadow(0 12px 30px color-mix(in srgb, var(--blu) 26%, transparent));
@@ -56,7 +60,7 @@
 
   /* ---------------- le schede dei software ---------------- */
   main {
-    width: 100%; max-width: 1240px; margin-top: 54px;
+    width: 100%; max-width: 1400px; margin-top: 92px;
     display: grid; gap: 18px; grid-template-columns: repeat(4, 1fr);
   }
   /* Sotto i 1040px l'ingrandimento non ha senso: quattro schede in fila
@@ -64,7 +68,11 @@
      dispositivo a sfioramento il passaggio del cursore non esiste. Si torna
      alla griglia, che li' funziona meglio. */
   @media (max-width: 1040px) { main { grid-template-columns: repeat(2, 1fr);
-                                      max-width: 980px; } }
+                                      max-width: 980px;
+                                      /* qui l'ingrandimento e' spento: senza
+                                         schede che crescono verso l'alto, i
+                                         92px sarebbero un buco e basta */
+                                      margin-top: 54px; } }
   @media (max-width: 700px)  { main { grid-template-columns: 1fr; } }
 
   .scheda {
@@ -221,7 +229,7 @@
       <div class="nome">FoodBridge</div>
       <div class="claim">Marketplace B2B per ristoranti e forniture.</div>
       <div class="piede">
-        <span class="dove">Web</span>
+        <span class="dove">Showcase</span>
         <span class="vai">Vai <span class="freccia">→</span></span>
       </div>
     </div>
@@ -301,15 +309,25 @@
   const finemouse = window.matchMedia('(hover: hover) and (pointer: fine)');
   const menoMoto = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  const MAX = 1.18;     // quanto cresce quella sotto il cursore
-  // Il raggio deve superare la distanza fra i centri di due schede (~315px),
-  // altrimenti le vicine restano ferme e non c'e' nessuna onda: con 260 si
-  // ingrandiva soltanto quella puntata.
-  const RAGGIO = 700;
+  const MAX = 1.60;     // quanto cresce quella sotto il cursore
+  // Il raggio non e' un numero fisso ma un multiplo della distanza fra i
+  // centri di due schede: cosi' l'onda ha sempre la stessa forma, che le
+  // schede in fila siano quattro o cinque. Con un raggio fisso il passo
+  // cambia sotto (354px in quattro, 284px in cinque) e la scheda in fondo
+  // finisce dentro o fuori dall'onda a seconda di quante ce ne sono: a
+  // 1400px in quattro restava del tutto immobile. A 2,5 passi la vicina
+  // cresce circa un terzo di quella puntata, e quella dopo appena si muove.
+  const PASSI = 2.5;
+  function raggio() {
+    if (schede.length < 2) return 1;
+    const a = schede[0].getBoundingClientRect(), b = schede[1].getBoundingClientRect();
+    return Math.max(1, (b.left + b.width / 2) - (a.left + a.width / 2)) * PASSI;
+  }
 
   function attiva() {
     return finemouse.matches && !menoMoto.matches &&
-           window.getComputedStyle(riga).gridTemplateColumns.split(' ').length === 4;
+           window.getComputedStyle(riga).gridTemplateColumns.split(' ').length
+             === schede.length;
   }
   function spegni() {
     riga.classList.remove('dock');
@@ -318,6 +336,7 @@
   function muovi(e) {
     if (!attiva()) { spegni(); return; }
     riga.classList.add('dock');
+    const RAGGIO = raggio();
     schede.forEach(s => {
       const r = s.getBoundingClientRect();
       const d = Math.abs(e.clientX - (r.left + r.width / 2));
