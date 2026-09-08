@@ -63,6 +63,9 @@
   .punto h3 { margin: 0 0 7px; font-size: 16.5px; }
   .punto p { margin: 0; font-size: 14.5px; color: var(--muted); }
 
+  .filmato { width: 100%; height: auto; display: block; margin-top: 18px;
+             background: #0b1d2c; border: 1px solid var(--line); border-radius: 12px; }
+
   /* Qui i disegni sono larghi e pieni di scritte piccole: incolonnarli a due
      per riga come su FoodBridge li renderebbe illeggibili. Uno sotto l'altro,
      tutti della stessa larghezza, restano simmetrici e si leggono. Premendoli
@@ -189,6 +192,20 @@
     </div>
   </div>
 
+  <h2>Il tracciamento, in dodici secondi</h2>
+  <video class="filmato" id="filmato" controls muted loop playsinline
+         preload="metadata" poster="img/tracciamento-poster.jpg?v=1"
+         aria-label="Dimostrazione del tracciamento: riquadri che seguono i soggetti,
+                     numero di traccia e identità decisa per traccia">
+    <source src="img/tracciamento.mp4?v=1" type="video/mp4">
+  </video>
+  <p class="nota">La scena è costruita: sono fotografie che attraversano uno sfondo
+  disegnato, non un filmato di sorveglianza. Serve a mettere alla prova il rilevamento,
+  l'inseguimento e la decisione per traccia anche con più soggetti in campo insieme. Il
+  riconoscimento ha lavorato sui fotogrammi originali; <strong>qui i volti sono coperti
+  da un mosaico</strong>, perché su una pagina pubblica non ci si mette la faccia di
+  nessuno.</p>
+
   <h2>Come è fatto</h2>
   <div class="galleria">
     <figure>
@@ -297,6 +314,18 @@
   document.getElementById('cookieok').addEventListener('click', chiudi);
   w.addEventListener('click', e => { if (e.target === w) chiudi(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !w.hidden) chiudi(); });
+})();
+
+/* Il filmato parte da solo, ma solo per chi non ha chiesto meno animazioni al
+   sistema: per questo l'attributo non sta nel markup ma si accende qui. Se il
+   browser rifiuta la riproduzione automatica resta il pulsante, che c'e'
+   comunque. */
+(function filmato() {
+  const v = document.getElementById('filmato');
+  if (!v || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  v.autoplay = true;
+  const p = v.play();
+  if (p) p.catch(function () {});
 })();
 
 /* Ingranditore: la stessa immagine gia' scaricata, mostrata a piena pagina.
