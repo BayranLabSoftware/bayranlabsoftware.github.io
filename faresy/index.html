@@ -157,7 +157,7 @@
     <img class="insegna" src="img/faresy-banner.svg?v=1" alt="FaReSy — Face Recognition Surveillance System">
     <p class="claim">Riconoscimento facciale per la videosorveglianza, costruito
     attorno a una regola: la macchina propone, una persona decide.</p>
-    <span class="stato"><i></i> Sistema completo · non in produzione</span>
+    <span class="stato"><i></i> Sistema completo · in prova su un impianto vero</span>
   </header>
 
   <h2>Il problema</h2>
@@ -206,7 +206,39 @@
   da un mosaico</strong>, perché su una pagina pubblica non ci si mette la faccia di
   nessuno.</p>
 
-  <h2>Come è fatto</h2>
+  <h2>Com'è davvero</h2>
+  <div class="galleria">
+    <figure>
+      <button type="button" class="tessera" aria-label="Ingrandisci: il riepilogo">
+        <img src="img/app-riepilogo.png?v=1" alt="Il riepilogo del sistema, con i conteggi delle ultime 24 ore">
+      </button>
+      <figcaption>Il riepilogo: nodi e telecamere in linea, eventi delle ultime 24 ore divisi
+      fra noti e sconosciuti, tentativi con una foto o uno schermo, e quanti eventi restano da
+      verificare.</figcaption>
+    </figure>
+    <figure>
+      <button type="button" class="tessera" aria-label="Ingrandisci: verifica e accuratezza">
+        <img src="img/app-verifica.png?v=1" alt="La schermata di verifica: un verdetto per gruppo di volti simili">
+      </button>
+      <figcaption>Verifica e accuratezza: gli eventi arrivano raggruppati per volti simili e si
+      dà un verdetto per gruppo. Da quei verdetti nasce la misura dell'errore — quante volte
+      riconosce chi non è, e quante volte non riconosce chi è — telecamera per telecamera.</figcaption>
+    </figure>
+    <figure>
+      <button type="button" class="tessera" aria-label="Ingrandisci: la taratura delle telecamere">
+        <img src="img/app-taratura.png?v=1" alt="La taratura di una telecamera contro la pianta del locale">
+      </button>
+      <figcaption>La taratura: si segnano gli stessi punti sulla foto della telecamera e sulla
+      pianta, e da lì il sistema sa dove poggiano i piedi di chi inquadra. L'errore residuo è
+      scritto in centimetri, e ogni telecamera dice se è tarata bene o va rifatta.</figcaption>
+    </figure>
+  </div>
+  <p class="nota">Sono schermate del sistema che gira davvero, non disegni. <strong>I volti sono
+  coperti e i nomi sostituiti con nomi inventati</strong>: le persone in quell'archivio sono
+  vere e non c'entrano niente con questo sito. La pianta è sfocata per la stessa ragione — è la
+  planimetria di un locale esistente.</p>
+
+  <h2>Come funziona dentro</h2>
   <div class="galleria">
     <figure>
       <button type="button" class="tessera" aria-label="Ingrandisci: la catena di riconoscimento">
@@ -217,14 +249,6 @@
       e finisce comunque davanti a una persona prima di diventare qualcosa.</figcaption>
     </figure>
     <figure>
-      <button type="button" class="tessera" aria-label="Ingrandisci: la postazione dell'operatore">
-        <img src="img/faresy-dashboard.svg?v=1" alt="La postazione dell'operatore, con le segnalazioni da rivedere">
-      </button>
-      <figcaption>La postazione dell'operatore: le segnalazioni in attesa, le telecamere
-      dal vivo e il pulsante che ferma tutto. Ogni segnalazione si conferma, si scarta
-      o si porta avanti — non si ignora.</figcaption>
-    </figure>
-    <figure>
       <button type="button" class="tessera" aria-label="Ingrandisci: le difese del sistema">
         <img src="img/faresy-features.svg?v=1" alt="Le difese del sistema: cifratura, ruoli, registro firmato">
       </button>
@@ -233,9 +257,6 @@
       demografici.</figcaption>
     </figure>
   </div>
-  <p class="nota">Le immagini mostrano l'architettura e l'interfaccia del sistema. I nomi
-  e i numeri che si leggono nelle schermate sono inventati: non sono persone, e su questo
-  sito non c'è nessun dato biometrico.</p>
 
   <h2>Le regole che si è dato</h2>
   <p class="lead">I dati biometrici stanno fra le categorie particolari del GDPR (Art. 9)
@@ -247,10 +268,10 @@
   giuridico per trattare quei dati lo porta chi lo installa</strong>, non chi lo scrive.</p>
 
   <h2>A che punto è</h2>
-  <p class="lead">FaReSy è un <strong>sistema completo</strong>, con 226 prove automatiche
-  che girano a ogni modifica. <strong>Non è in produzione</strong>: non c'è nessuna
-  installazione attiva, nessuna telecamera collegata, nessun archivio di volti in
-  funzione. Questa pagina è una presentazione — il software non si scarica da qui.</p>
+  <p class="lead">FaReSy è un <strong>sistema completo</strong> ed è stato messo alla prova
+  su un impianto vero: sei telecamere, un archivio di quasi quindicimila eventi e una misura
+  dell'errore fatta a mano, evento per evento. <strong>Non è un prodotto in vendita</strong>:
+  da qui non si scarica niente, e questa pagina è una presentazione.</p>
 
   <footer>
     <div class="fwrap">
