@@ -116,7 +116,7 @@
   footer { background: #0a2233; color: #9db4c0; font-size: 14px;
            border-top: 1px solid rgba(255,255,255,.09); text-align: left; }
   footer .fwrap { max-width: 940px; margin: 0 auto; padding: 44px 22px 30px; }
-  .fcols { display: grid; gap: 30px 26px; grid-template-columns: 1.7fr 1.2fr 1fr 1fr; }
+  .fcols { display: grid; gap: 30px 26px; grid-template-columns: 1.7fr 1.5fr 1fr 1fr; }
   @media (max-width: 900px) { .fcols { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 520px) { .fcols { grid-template-columns: 1fr; } }
   .fbrand { display: flex; align-items: center; gap: 9px; font-weight: 700;
@@ -135,7 +135,11 @@
      di allungare la lista. Su schermo stretto le colonne non ci stanno e
      l'elenco torna a scendere e basta. */
   .flista { display: grid; grid-auto-flow: column; grid-template-rows: repeat(3, auto);
-            gap: 0 24px; justify-content: start; }
+            gap: 0 20px; justify-content: start; }
+  /* Un nome di prodotto non si spezza a meta': "Bayran Cleaner" andava a capo
+     e la colonna diventava alta il doppio, con "Bayran" sopra e "Cleaner"
+     sotto. Per questo la colonna e' anche piu' larga di prima. */
+  .flista a { white-space: nowrap; }
   @media (max-width: 520px) { .flista { grid-auto-flow: row;
                                         grid-template-rows: none; } }
   .fbottom { margin-top: 32px; padding-top: 18px;

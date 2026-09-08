@@ -111,7 +111,7 @@
   /* Tracce esplicite, non auto-fit: con auto-fit la quarta colonna cadeva su
      una seconda riga e lasciava un buco in mezzo al footer. Qui le soglie
      sono due e si vedono. */
-  .fcols{display:grid;gap:30px 26px;grid-template-columns:1.7fr 1fr 1fr 1fr}
+  .fcols{display:grid;gap:30px 26px;grid-template-columns:1.7fr 1.3fr 1fr 1fr}
   @media(max-width:900px){ .fcols{grid-template-columns:1fr 1fr} }
   @media(max-width:520px){ .fcols{grid-template-columns:1fr} }
   .fcol-brand{max-width:420px}
@@ -127,7 +127,9 @@
      alla quarta voce si apre una colonna nuova invece di allungare la lista.
      Su schermo stretto le colonne non ci stanno e torna a scendere e basta. */
   .flista{display:grid;grid-auto-flow:column;grid-template-rows:repeat(3,auto);
-    gap:0 22px;justify-content:start}
+    gap:0 20px;justify-content:start}
+  /* Un nome di prodotto non si spezza a meta'. */
+  .flista a{white-space:nowrap}
   @media(max-width:520px){ .flista{grid-auto-flow:row;grid-template-rows:none} }
   .flink{background:none;border:0;font:inherit;cursor:pointer;text-align:inherit}
   .flink:hover{text-decoration:underline}
