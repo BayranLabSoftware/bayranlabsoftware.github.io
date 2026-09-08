@@ -81,16 +81,21 @@
   .ctaStrip .wrap{padding:56px 22px}
   .ctaStrip h2{font-size:30px;font-weight:800;margin-bottom:20px}
   /* store badges (immagini ufficiali) */
-  .badges{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end}
+  /* Stessa altezza per tutti e due, una regola sola. Prima erano 58 e 52 e
+     stonavano: il PNG di Google arrivava con 41px di margine trasparente per
+     lato, quindi a 58px il disegno se ne vedeva alto 39, mentre il badge
+     Apple, tagliato al vivo, a 52px se ne vedeva alto 52. Il margine e' stato
+     tolto dal file: ora l'altezza dichiarata e' l'altezza che si vede.
+     L'aria attorno la mette il gap del contenitore.
+     Restano di larghezza diversa perche' le proporzioni ufficiali dei due
+     badge sono diverse (3.36 contro 2.99): pareggiare anche quella vorrebbe
+     dire deformarne uno. Le linee guida di entrambi gli store parlano di
+     altezza, ed e' l'altezza che l'occhio confronta. */
+  .badges{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
   .badge-img{position:relative;display:inline-flex;align-items:center;text-decoration:none}
   .badge-img > img{display:block;height:52px;width:auto}
-  .badge-img.gp > img{height:58px}
   .badge-img[href]{transition:transform .12s,filter .12s}
   .badge-img[href]:hover{filter:brightness(1.08);transform:translateY(-1px)}
-  .badge-img.soon{flex-direction:column;align-items:center;gap:7px}
-  .badge-img.soon > img{opacity:.6}
-  .soonlbl{background:#ffc107;color:#181818;font-weight:800;font-size:11px;font-style:normal;
-    padding:4px 12px;border-radius:999px;white-space:nowrap;box-shadow:0 2px 9px rgba(0,0,0,.25);letter-spacing:.01em}
   /* flags */
   .flag{width:22px;height:15px;border-radius:3px;object-fit:cover;margin-right:8px;box-shadow:0 0 0 1px rgba(0,0,0,.08);flex:0 0 auto}
   .langgrid span{display:inline-flex;align-items:center}
@@ -193,11 +198,15 @@ const ICONS = [
 ];
 function iconSvg(i){ const parts=ICONS[i].split('|'); return '<svg viewBox="0 0 24 24">'+parts.map(p=>'<path d="'+p+'"/>').join('')+'</svg>'; }
 
-const SOON = { it:'Presto disponibile', en:'Coming soon', es:'Próximamente', fr:'Bientôt disponible', de:'Demnächst verfügbar', pt:'Brevemente', pl:'Wkrótce', nl:'Binnenkort', tr:'Yakında', ro:'În curând', ru:'Скоро', uk:'Незабаром', id:'Segera hadir', vi:'Sắp ra mắt', ja:'近日公開', ko:'곧 출시', hi:'जल्द उपलब्ध', bn:'শীঘ্রই আসছে', mr:'लवकरच येत आहे', te:'త్వరలో', ta:'விரைவில்', ar:'قريبًا' };
 const COOKIE = { it:'Nessun cookie · Nessun tracciamento', en:'No cookies · No tracking', es:'Sin cookies · Sin seguimiento', fr:'Aucun cookie · Aucun pistage', de:'Keine Cookies · Kein Tracking', pt:'Sem cookies · Sem rastreamento', pl:'Bez cookies · Bez śledzenia', nl:'Geen cookies · Geen tracking', tr:'Çerez yok · Takip yok', ro:'Fără cookie-uri · Fără urmărire', ru:'Без cookie · Без отслеживания', uk:'Без cookie · Без стеження', id:'Tanpa cookie · Tanpa pelacakan', vi:'Không cookie · Không theo dõi', ja:'Cookieなし · トラッキングなし', ko:'쿠키 없음 · 추적 없음', hi:'कोई कुकी नहीं · कोई ट्रैकिंग नहीं', bn:'কোনো কুকি নয় · কোনো ট্র্যাকিং নয়', mr:'कुकीज नाहीत · ट्रॅकिंग नाही', te:'కుకీలు లేవు · ట్రాకింగ్ లేదు', ta:'குக்கீகள் இல்லை · கண்காணிப்பு இல்லை', ar:'بلا كوكيز · بلا تتبّع' };
-function badgeMarkup(soon, code){
+/* L'indirizzo Google porta la lingua della pagina (hl=). Quello Apple no, e
+   non e' una dimenticanza: Apple divide per PAESE, non per lingua, e la
+   pagina qui sceglie una lingua fra 22. Tradurre 'it' in un paese sarebbe
+   un'invenzione ('en' quale sarebbe?). Senza codice paese l'App Store manda
+   ognuno al proprio negozio da solo, che e' esattamente quel che serve. */
+function badgeMarkup(code){
   return '<a class="badge-img gp" href="https://play.google.com/store/apps/details?id=com.bayran.office&hl='+code+'" aria-label="Google Play"><img src="img/gplay.png" alt="Get it on Google Play"></a>'
-    +'<span class="badge-img soon" aria-label="App Store"><em class="soonlbl">'+soon+'</em><img src="img/appstore.svg" alt="App Store"></span>';
+    +'<a class="badge-img as" href="https://apps.apple.com/app/id6795818217" aria-label="App Store"><img src="img/appstore.svg" alt="Download on the App Store"></a>';
 }
 
 const LANG = {
@@ -431,8 +440,7 @@ function render(code){
   document.getElementById('heroShot').src = 'img/01-home-'+s+'.png';
   const pv = document.getElementById('promoVid');
   if(pv){ const nv='video/promo-'+code+'.mp4'; if(pv.getAttribute('src')!==nv){ pv.src=nv; pv.load(); pv.play().catch(function(){}); } }
-  const soon = SOON[code] || SOON.en;
-  document.querySelectorAll('.badges').forEach(el=>el.innerHTML = badgeMarkup(soon, code));
+  document.querySelectorAll('.badges').forEach(el=>el.innerHTML = badgeMarkup(code));
   document.getElementById('curflag').src = 'img/flags/'+code+'.png';
   document.getElementById('curlang').textContent = (LANG[code]||LANG.en).name;
   document.querySelectorAll('#langmenu .lmi').forEach(el=>el.classList.toggle('on', el.dataset.c===code));
