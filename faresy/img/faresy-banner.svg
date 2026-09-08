@@ -1,0 +1,271 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="300" viewBox="0 0 900 300">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#020617;stop-opacity:1"/>
+      <stop offset="40%" style="stop-color:#0f172a;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#020617;stop-opacity:1"/>
+    </linearGradient>
+
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1"/>
+      <stop offset="50%" style="stop-color:#818cf8;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1"/>
+    </linearGradient>
+
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#1e40af;stop-opacity:1"/>
+    </linearGradient>
+
+    <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#22d3ee;stop-opacity:1"/>
+    </linearGradient>
+
+    <filter id="glow" x="-15%" y="-15%" width="130%" height="130%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="softGlow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <clipPath id="shieldClip">
+      <path d="M 0,-52 L 40,-38 L 40,10 Q 40,42 0,56 Q -40,42 -40,10 L -40,-38 Z"/>
+    </clipPath>
+
+    <!-- Subtle grid pattern -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.4"/>
+    </pattern>
+
+    <!-- Dot pattern -->
+    <pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="10" cy="10" r="0.7" fill="#1e293b"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="300" fill="url(#bgGrad)"/>
+
+  <!-- Grid overlay (very subtle) -->
+  <rect width="900" height="300" fill="url(#dots)" opacity="0.6"/>
+
+  <!-- Top accent line -->
+  <rect x="0" y="0" width="900" height="3" fill="url(#accentGrad)" opacity="0.8"/>
+
+  <!-- Subtle radial light behind shield -->
+  <circle cx="150" cy="150" r="100" fill="#3b82f6" opacity="0.04"/>
+
+  <!-- ═══════════════ SHIELD ICON ═══════════════ -->
+  <g transform="translate(150, 148)">
+
+    <!-- Outer glow ring -->
+    <circle cx="0" cy="2" r="68" stroke="#3b82f6" stroke-width="0.5" fill="none" opacity="0.2"/>
+
+    <!-- Shield shape -->
+    <path d="M 0,-52 L 40,-38 L 40,10 Q 40,42 0,56 Q -40,42 -40,10 L -40,-38 Z"
+          fill="none" stroke="url(#shieldGrad)" stroke-width="2.5" opacity="0.9"/>
+
+    <!-- Inner shield fill -->
+    <path d="M 0,-48 L 36,-35 L 36,9 Q 36,38 0,52 Q -36,38 -36,9 L -36,-35 Z"
+          fill="#3b82f6" fill-opacity="0.08"/>
+
+    <!-- Face silhouette inside shield -->
+    <g fill="none" stroke="#94a3b8" stroke-width="1.4">
+      <!-- Head outline -->
+      <ellipse cx="0" cy="-4" rx="20" ry="24" opacity="0.6"/>
+      <!-- Eyes -->
+      <ellipse cx="-7" cy="-10" rx="3.5" ry="2.5" opacity="0.7"/>
+      <ellipse cx="7" cy="-10" rx="3.5" ry="2.5" opacity="0.7"/>
+      <!-- Nose -->
+      <line x1="0" y1="-6" x2="0" y2="2" opacity="0.4"/>
+      <!-- Mouth -->
+      <path d="M -5,8 Q 0,12 5,8" opacity="0.5"/>
+    </g>
+
+    <!-- Biometric scan points -->
+    <g fill="#3b82f6" opacity="0.8">
+      <circle cx="-7" cy="-10" r="1.8"/>
+      <circle cx="7"  cy="-10" r="1.8"/>
+      <circle cx="0"  cy="-2"  r="1.3"/>
+      <circle cx="-5" cy="8"   r="1.3"/>
+      <circle cx="5"  cy="8"   r="1.3"/>
+      <circle cx="-16" cy="-4" r="1.0"/>
+      <circle cx="16"  cy="-4" r="1.0"/>
+      <circle cx="0"   cy="-28" r="1.0"/>
+      <circle cx="-12" cy="18" r="1.0"/>
+      <circle cx="12"  cy="18" r="1.0"/>
+    </g>
+
+    <!-- Scan connection mesh -->
+    <g stroke="#3b82f6" stroke-width="0.4" opacity="0.25">
+      <line x1="-7" y1="-10" x2="7" y2="-10"/>
+      <line x1="-7" y1="-10" x2="0" y2="-2"/>
+      <line x1="7" y1="-10" x2="0" y2="-2"/>
+      <line x1="0" y1="-2" x2="-5" y2="8"/>
+      <line x1="0" y1="-2" x2="5" y2="8"/>
+      <line x1="-5" y1="8" x2="5" y2="8"/>
+      <line x1="-16" y1="-4" x2="-7" y2="-10"/>
+      <line x1="16" y1="-4" x2="7" y2="-10"/>
+      <line x1="0" y1="-28" x2="-7" y2="-10"/>
+      <line x1="0" y1="-28" x2="7" y2="-10"/>
+      <line x1="-12" y1="18" x2="-5" y2="8"/>
+      <line x1="12" y1="18" x2="5" y2="8"/>
+    </g>
+
+    <!-- Targeting corners -->
+    <g stroke="#3b82f6" stroke-width="1.5" fill="none" opacity="0.6">
+      <polyline points="-26,-30 -26,-22 -18,-22"/>
+      <polyline points="26,-30 26,-22 18,-22"/>
+      <polyline points="-26,26 -26,18 -18,18"/>
+      <polyline points="26,26 26,18 18,18"/>
+    </g>
+
+    <!-- Shield checkmark (compliance indicator) -->
+    <g transform="translate(24, 34)">
+      <circle cx="0" cy="0" r="9" fill="#1e40af" stroke="#3b82f6" stroke-width="1"/>
+      <polyline points="-4,0 -1,3 4,-3" stroke="#22d3ee" stroke-width="1.8" fill="none"/>
+    </g>
+  </g>
+
+  <!-- ═══════════════ TITLE BLOCK ═══════════════ -->
+
+  <!-- Main wordmark -->
+  <text x="480" y="108"
+        font-family="'SF Pro Display', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+        font-size="72" font-weight="800"
+        fill="#f8fafc"
+        filter="url(#glow)"
+        text-anchor="middle"
+        letter-spacing="4">FaReSy</text>
+
+  <!-- Gradient underline -->
+  <rect x="325" y="118" width="310" height="2.5" rx="1" fill="url(#accentGrad)" opacity="0.7"/>
+
+  <!-- Subtitle -->
+  <text x="480" y="148"
+        font-family="'SF Pro Display', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+        font-size="13" font-weight="600"
+        fill="#64748b"
+        text-anchor="middle"
+        letter-spacing="4.5">FACE RECOGNITION SURVEILLANCE SYSTEM</text>
+
+  <!-- ═══════════════ FEATURE CHIPS (Row 1) ═══════════════ -->
+  <g transform="translate(480, 175)">
+    <!-- Chip: ENSEMBLE AI -->
+    <rect x="-230" y="0" width="108" height="24" rx="12"
+          fill="#3b82f6" fill-opacity="0.1" stroke="#3b82f6" stroke-width="0.8" stroke-opacity="0.4"/>
+    <text x="-176" y="16"
+          font-family="'SF Pro Text', 'Segoe UI', sans-serif" font-size="9" font-weight="700"
+          fill="#60a5fa" text-anchor="middle" letter-spacing="1.5">ENSEMBLE AI</text>
+
+    <!-- Chip: REAL-TIME -->
+    <rect x="-110" y="0" width="96" height="24" rx="12"
+          fill="#3b82f6" fill-opacity="0.1" stroke="#3b82f6" stroke-width="0.8" stroke-opacity="0.4"/>
+    <text x="-62" y="16"
+          font-family="'SF Pro Text', 'Segoe UI', sans-serif" font-size="9" font-weight="700"
+          fill="#60a5fa" text-anchor="middle" letter-spacing="1.5">REAL-TIME</text>
+
+    <!-- Chip: ANTI-SPOOFING -->
+    <rect x="-2" y="0" width="120" height="24" rx="12"
+          fill="#3b82f6" fill-opacity="0.1" stroke="#3b82f6" stroke-width="0.8" stroke-opacity="0.4"/>
+    <text x="58" y="16"
+          font-family="'SF Pro Text', 'Segoe UI', sans-serif" font-size="9" font-weight="700"
+          fill="#60a5fa" text-anchor="middle" letter-spacing="1.5">ANTI-SPOOFING</text>
+
+    <!-- Chip: HUMAN-IN-LOOP -->
+    <rect x="130" y="0" width="120" height="24" rx="12"
+          fill="#3b82f6" fill-opacity="0.1" stroke="#3b82f6" stroke-width="0.8" stroke-opacity="0.4"/>
+    <text x="190" y="16"
+          font-family="'SF Pro Text', 'Segoe UI', sans-serif" font-size="9" font-weight="700"
+          fill="#60a5fa" text-anchor="middle" letter-spacing="1.5">HUMAN-IN-LOOP</text>
+  </g>
+
+  <!-- ═══════════════ FEATURE CHIPS (Row 2) ═══════════════ -->
+  <g transform="translate(480, 207)">
+    <!-- Chip: AES-256 ENCRYPTED -->
+    <rect x="-230" y="0" width="136" height="24" rx="12"
+          fill="#10b981" fill-opacity="0.08" stroke="#10b981" stroke-width="0.7" stroke-opacity="0.4"/>
+    <text x="-162" y="16"
+          font-family="'SF Pro Text', 'Segoe UI', sans-serif" font-size="9" font-weight="700"
+          fill="#34d399" text-anchor="middle" letter-spacing="1.2">AES-256 ENCRYPTED</text>
+
+    <!-- Chip: RBAC + MFA -->
+    <rect x="-82" y="0" width="96" height="24" rx="12"
+          fill="#10b981" fill-opacity="0.08" stroke="#10b981" stroke-width="0.7" stroke-opacity="0.4"/>
+    <text x="-34" y="16"
+          font-family="'SF Pro Text', 'Segoe UI', sans-serif" font-size="9" font-weight="700"
+          fill="#34d399" text-anchor="middle" letter-spacing="1.2">RBAC + MFA</text>
+
+    <!-- Chip: AUDIT CHAIN -->
+    <rect x="26" y="0" width="108" height="24" rx="12"
+          fill="#10b981" fill-opacity="0.08" stroke="#10b981" stroke-width="0.7" stroke-opacity="0.4"/>
+    <text x="80" y="16"
+          font-family="'SF Pro Text', 'Segoe UI', sans-serif" font-size="9" font-weight="700"
+          fill="#34d399" text-anchor="middle" letter-spacing="1.2">AUDIT CHAIN</text>
+
+    <!-- Chip: EU AI ACT -->
+    <rect x="146" y="0" width="104" height="24" rx="12"
+          fill="#10b981" fill-opacity="0.08" stroke="#10b981" stroke-width="0.7" stroke-opacity="0.4"/>
+    <text x="198" y="16"
+          font-family="'SF Pro Text', 'Segoe UI', sans-serif" font-size="9" font-weight="700"
+          fill="#34d399" text-anchor="middle" letter-spacing="1.2">EU AI ACT</text>
+  </g>
+
+  <!-- ═══════════════ VERSION & STATUS ═══════════════ -->
+  <g transform="translate(790, 28)">
+    <rect x="0" y="0" width="72" height="22" rx="11" fill="#10b981" fill-opacity="0.12" stroke="#10b981" stroke-width="0.7"/>
+    <circle cx="14" cy="11" r="3.5" fill="#10b981" opacity="0.9"/>
+    <text x="42" y="15" font-family="'SF Pro Text', 'Segoe UI', sans-serif" font-size="10" font-weight="700"
+          fill="#10b981" text-anchor="middle" letter-spacing="0.5">v2.0</text>
+  </g>
+
+  <!-- ═══════════════ BOTTOM BAR ═══════════════ -->
+
+  <!-- Bottom separator -->
+  <line x1="60" y1="268" x2="840" y2="268" stroke="#1e293b" stroke-width="0.5"/>
+
+  <!-- Bottom tagline -->
+  <text x="450" y="286"
+        font-family="'SF Pro Text', 'Segoe UI', sans-serif"
+        font-size="10" font-weight="500"
+        fill="#334155"
+        text-anchor="middle"
+        letter-spacing="2.5">Enterprise Face Recognition  |  Built on DeepFace  |  Law Enforcement Grade</text>
+
+  <!-- Bottom accent line -->
+  <rect x="0" y="297" width="900" height="3" fill="url(#accentGrad)" opacity="0.6"/>
+
+  <!-- ═══════════════ SIDE DECORATIONS ═══════════════ -->
+
+  <!-- Left vertical accent -->
+  <rect x="0" y="60" width="2" height="180" fill="url(#shieldGrad)" opacity="0.15"/>
+
+  <!-- Right vertical accent -->
+  <rect x="898" y="60" width="2" height="180" fill="url(#shieldGrad)" opacity="0.15"/>
+
+  <!-- Top-left corner mark -->
+  <g opacity="0.3">
+    <rect x="0" y="3" width="3" height="24" fill="#3b82f6"/>
+    <rect x="0" y="3" width="24" height="3" fill="#3b82f6"/>
+  </g>
+  <!-- Top-right corner mark -->
+  <g opacity="0.3">
+    <rect x="897" y="3" width="3" height="24" fill="#3b82f6"/>
+    <rect x="876" y="3" width="24" height="3" fill="#3b82f6"/>
+  </g>
+  <!-- Bottom-left corner mark -->
+  <g opacity="0.3">
+    <rect x="0" y="273" width="3" height="24" fill="#3b82f6"/>
+    <rect x="0" y="294" width="24" height="3" fill="#3b82f6"/>
+  </g>
+  <!-- Bottom-right corner mark -->
+  <g opacity="0.3">
+    <rect x="897" y="273" width="3" height="24" fill="#3b82f6"/>
+    <rect x="876" y="294" width="24" height="3" fill="#3b82f6"/>
+  </g>
+
+</svg>

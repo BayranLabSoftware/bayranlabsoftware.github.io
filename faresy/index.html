@@ -3,17 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FoodBridge — BayranLab Software</title>
-<meta name="description" content="FoodBridge: marketplace B2B per food & beverage e forniture professionali. Un progetto BayranLab Software.">
+<title>FaReSy — BayranLab Software</title>
+<meta name="description" content="FaReSy: riconoscimento facciale per la videosorveglianza, con revisione umana obbligatoria e registro firmato. Un progetto BayranLab Software.">
 <style>
   :root {
     color-scheme: dark;
     --ink: #eef6fa; --muted: #9db4c0; --line: rgba(255,255,255,.13);
     --card: #102232; --bg: #071626; --blu: #3f9fd0; --ciano: #5ec4e4;
     --verde: #34a06a;
-    /* Lunghezza di riga unica per tutto il testo corrente. Prima erano
-       tre — claim 640, paragrafi 660, nota a tutta larghezza — e in una
-       pagina sola si vedeva. */
+    /* Stessa lunghezza di riga di FoodBridge: le due pagine di presentazione
+       si leggono una dopo l'altra e devono avere la stessa misura. */
     --testo: 660px;
   }
   * { box-sizing: border-box; }
@@ -29,10 +28,7 @@
   .wrap { max-width: 940px; margin: 0 auto; padding: 0 22px 80px;
           text-align: center; }
 
-  /* barra: stesse misure di Cleaner e Office */
-  /* La barra resta allineata a sinistra anche se la pagina e' centrata:
-     il logo sta nello stesso punto delle pagine di Cleaner e Office, e
-     spostarlo qui spezzerebbe la continuita' passando da un sito all'altro. */
+  /* barra: stesse misure di Cleaner, Office e FoodBridge */
   .topbar { height: 68px; display: flex; align-items: center;
             justify-content: flex-start; text-align: left; }
   .topbar .brand { display: flex; align-items: center; text-decoration: none;
@@ -41,14 +37,13 @@
   .topbar .brand img { height: 46px; width: auto; display: block; }
 
   header.hero { padding: 34px 0 8px; }
-  /* Il nome e' dentro il marchio, che e' un'immagine: il testo deve
-     esistere lo stesso per chi legge con la voce e per i motori di
-     ricerca. Stessa scelta della pagina d'ingresso. */
+  /* Il nome sta dentro l'insegna, che e' un'immagine: il testo deve esistere
+     lo stesso per chi legge con la voce e per i motori di ricerca. */
   h1 { position: absolute; width: 1px; height: 1px; overflow: hidden;
        clip: rect(0 0 0 0); white-space: nowrap; }
-  .marchio { width: min(420px, 82vw); height: auto; display: block;
-             margin: 0 auto 18px;
-             filter: drop-shadow(0 14px 34px rgba(0,0,0,.45)); }
+  .insegna { width: 100%; max-width: 760px; height: auto; display: block;
+             margin: 0 auto 22px; border-radius: 14px;
+             box-shadow: 0 18px 44px rgba(0,0,0,.45); }
   .claim { font-size: 21px; color: #d7e6ee; margin: 0 auto 20px;
            max-width: var(--testo); }
   .stato { display: inline-flex; align-items: center; gap: 8px; font-size: 13px;
@@ -59,7 +54,6 @@
 
   h2 { font-size: 24px; margin: 56px 0 12px; letter-spacing: -.3px; }
   p { color: #cfe0e9; }
-  /* il blocco si centra nella pagina, non solo il testo dentro */
   .lead { max-width: var(--testo); margin-left: auto; margin-right: auto; }
 
   .tre { display: grid; gap: 16px; grid-template-columns: repeat(3, 1fr); margin-top: 18px; }
@@ -69,28 +63,20 @@
   .punto h3 { margin: 0 0 7px; font-size: 16.5px; }
   .punto p { margin: 0; font-size: 14.5px; color: var(--muted); }
 
-  /* Galleria a riquadri IDENTICI. Le schermate hanno forme diverse — due da
-     desktop, larghe, e due da telefono, alte — e messe a dimensione naturale
-     davano una griglia sbilenca. Ogni riquadro ha la stessa forma e l'immagine
-     ci sta dentro intera, centrata: si perde qualche pixel di grandezza, ma la
-     griglia e' simmetrica e si legge come una cosa sola. La lettura vera la
-     da' l'ingranditore: si preme e l'immagine si apre grande. */
-  .galleria { display: grid; gap: 18px; grid-template-columns: 1fr 1fr; margin-top: 18px; }
-  @media (max-width: 760px) { .galleria { grid-template-columns: 1fr; } }
+  /* Qui i disegni sono larghi e pieni di scritte piccole: incolonnarli a due
+     per riga come su FoodBridge li renderebbe illeggibili. Uno sotto l'altro,
+     tutti della stessa larghezza, restano simmetrici e si leggono. Premendoli
+     si aprono a piena pagina. */
+  .galleria { display: grid; gap: 26px; grid-template-columns: 1fr; margin-top: 18px; }
   figure { margin: 0; }
-  .tessera { width: 100%; aspect-ratio: 4 / 3; display: flex; align-items: center;
-             justify-content: center; overflow: hidden; padding: 14px;
+  .tessera { width: 100%; display: block; overflow: hidden; padding: 0;
              background: #0b1d2c; border: 1px solid var(--line); border-radius: 12px;
              cursor: zoom-in; transition: border-color .15s, transform .15s; }
   .tessera:hover, .tessera:focus-visible { border-color: var(--ciano);
                                            transform: translateY(-2px); }
   .tessera:focus-visible { outline: 3px solid var(--ciano); outline-offset: 3px; }
-  .tessera img { max-width: 100%; max-height: 100%; width: auto; height: auto;
-                 display: block; border-radius: 6px; }
-  /* min-height di due righe: se su uno schermo stretto una didascalia va a
-     capo, i riquadri sotto non si sfalsano. */
-  figcaption { color: var(--muted); font-size: 13.5px; margin-top: 8px;
-               min-height: 2.7em; }
+  .tessera img { width: 100%; height: auto; display: block; }
+  figcaption { color: var(--muted); font-size: 13.5px; margin-top: 8px; }
 
   /* ingranditore */
   .zoom { position: fixed; inset: 0; z-index: 90; display: flex; align-items: center;
@@ -164,74 +150,90 @@
   </div>
 
   <header class="hero">
-    <h1>FoodBridge</h1>
-    <img class="marchio" src="img/foodbridge-logo.svg?v=1" alt="FoodBridge">
-    <p class="claim">Il marketplace B2B dove ristoranti, hotel e catering comprano
-    food &amp; beverage e forniture professionali da più fornitori, con un solo ordine.</p>
-    <span class="stato"><i></i> MVP completo · non ancora in produzione</span>
+    <h1>FaReSy</h1>
+    <img class="insegna" src="img/faresy-banner.svg?v=1" alt="FaReSy — Face Recognition Surveillance System">
+    <p class="claim">Riconoscimento facciale per la videosorveglianza, costruito
+    attorno a una regola: la macchina propone, una persona decide.</p>
+    <span class="stato"><i></i> Sistema completo · non in produzione</span>
   </header>
 
   <h2>Il problema</h2>
-  <p class="lead">Chi gestisce una cucina compra da una decina di fornitori diversi,
-  ognuno col suo listino, il suo minimo d'ordine e il suo giro di consegna. Confrontare
-  i prezzi significa telefonare; ordinare significa ripetere la stessa operazione dieci
-  volte; e capire quanto si è speso davvero, a fine mese, significa mettere in fila
-  altrettante fatture.</p>
+  <p class="lead">Confrontare i volti ripresi da una telecamera con un elenco di
+  persone da cercare è un lavoro che si fa guardando i fotogrammi uno per uno. I
+  sistemi che lo automatizzano di solito rispondono sì o no e basta: non dicono
+  quanto sono sicuri, non dicono su quale fotogramma hanno deciso, e non lasciano
+  traccia di chi ha guardato cosa. Ma il riconoscimento biometrico è dato ad alto
+  rischio per il regolamento europeo sull'intelligenza artificiale, e un sistema
+  che non sa spiegare come è arrivato a un nome non è utilizzabile: né in
+  un'indagine, né davanti a chi dovrà giudicarla.</p>
 
-  <h2>Cosa fa FoodBridge</h2>
+  <h2>Cosa fa FaReSy</h2>
   <div class="tre">
     <div class="punto">
-      <h3>Confronta i fornitori</h3>
-      <p>Prezzi, tempi di consegna, minimi d'ordine e certificazioni affiancati, invece
-      che sparsi fra listini e telefonate.</p>
+      <h3>Due modelli, un voto solo</h3>
+      <p>ArcFace e Facenet512 calcolano due impronte diverse dello stesso volto e
+      votano. Se non sono d'accordo non c'è riscontro: lo sbaglio di un modello,
+      da solo, non diventa un nome.</p>
     </div>
     <div class="punto">
-      <h3>Un ordine solo, più fornitori</h3>
-      <p>Il carrello raccoglie prodotti di fornitori diversi e li porta a un unico
-      checkout, con pagamento protetto fino alla consegna.</p>
+      <h3>Prima si scarta, poi si riconosce</h3>
+      <p>Un controllo scarta foto, schermi e maschere; un filtro di qualità scarta
+      i fotogrammi mossi, storti o troppo piccoli. Su un'immagine che non regge il
+      sistema si ferma, invece di tirare a indovinare.</p>
     </div>
     <div class="punto">
-      <h3>Tutto in un posto</h3>
-      <p>Ordini, stati di spedizione, fatture e spesa del mese in un'unica area, invece
-      che in dieci portali e una cartella di email.</p>
+      <h3>Niente si muove da solo</h3>
+      <p>Ogni riscontro diventa una segnalazione che un operatore deve confermare,
+      scartare o portare avanti, scrivendo il perché. Ogni passaggio finisce in un
+      registro firmato, che non si riscrive a cose fatte.</p>
     </div>
   </div>
 
-  <h2>Come si presenta</h2>
+  <h2>Come è fatto</h2>
   <div class="galleria">
     <figure>
-      <button type="button" class="tessera" aria-label="Ingrandisci: la schermata iniziale">
-        <img src="img/fb-home.png?v=2" alt="La schermata iniziale di FoodBridge">
+      <button type="button" class="tessera" aria-label="Ingrandisci: la catena di riconoscimento">
+        <img src="img/faresy-pipeline.svg?v=1" alt="La catena di riconoscimento, dalla telecamera al registro firmato">
       </button>
-      <figcaption>La home: catalogo, aste e acquisti di gruppo.</figcaption>
+      <figcaption>Dalla telecamera al registro: ogni fotogramma passa per il controllo
+      anti-inganno, il filtro di qualità, i due modelli, il voto e la calibratura —
+      e finisce comunque davanti a una persona prima di diventare qualcosa.</figcaption>
     </figure>
     <figure>
-      <button type="button" class="tessera" aria-label="Ingrandisci: il confronto fra fornitori">
-        <img src="img/fb-confronto.png?v=2" alt="Il confronto fra fornitori">
+      <button type="button" class="tessera" aria-label="Ingrandisci: la postazione dell'operatore">
+        <img src="img/faresy-dashboard.svg?v=1" alt="La postazione dell'operatore, con le segnalazioni da rivedere">
       </button>
-      <figcaption>Confronto fornitori, fino a quattro affiancati.</figcaption>
+      <figcaption>La postazione dell'operatore: le segnalazioni in attesa, le telecamere
+      dal vivo e il pulsante che ferma tutto. Ogni segnalazione si conferma, si scarta
+      o si porta avanti — non si ignora.</figcaption>
     </figure>
     <figure>
-      <button type="button" class="tessera" aria-label="Ingrandisci: l'area del compratore">
-        <img src="img/fb-dashboard.png?v=2" alt="L'area personale del compratore">
+      <button type="button" class="tessera" aria-label="Ingrandisci: le difese del sistema">
+        <img src="img/faresy-features.svg?v=1" alt="Le difese del sistema: cifratura, ruoli, registro firmato">
       </button>
-      <figcaption>L'area del compratore.</figcaption>
-    </figure>
-    <figure>
-      <button type="button" class="tessera" aria-label="Ingrandisci: l'elenco degli ordini">
-        <img src="img/fb-ordini.png?v=2" alt="L'elenco degli ordini">
-      </button>
-      <figcaption>Gli ordini, con il loro stato.</figcaption>
+      <figcaption>Quello che sta sotto: dati cifrati a riposo, quattro ruoli separati con
+      secondo fattore, registro a prova di manomissione e prove di equità sui gruppi
+      demografici.</figcaption>
     </figure>
   </div>
-  <p class="nota">Schermate della demo: i prodotti, i fornitori e le cifre sono dati di
-  esempio, non attività reale.</p>
+  <p class="nota">Le immagini mostrano l'architettura e l'interfaccia del sistema. I nomi
+  e i numeri che si leggono nelle schermate sono inventati: non sono persone, e su questo
+  sito non c'è nessun dato biometrico.</p>
+
+  <h2>Le regole che si è dato</h2>
+  <p class="lead">I dati biometrici stanno fra le categorie particolari del GDPR (Art. 9)
+  e il regolamento europeo sull'intelligenza artificiale li mette fra i sistemi ad alto
+  rischio (Art. 6, Allegato III). FaReSy è costruito attorno a quei vincoli invece di
+  aggiungerli dopo: revisione umana obbligatoria prima di qualunque azione, cifratura dei
+  dati a riposo, ruoli separati con secondo fattore, registro firmato e prove di equità
+  fra gruppi demografici. Una cosa il software non può darla: <strong>il fondamento
+  giuridico per trattare quei dati lo porta chi lo installa</strong>, non chi lo scrive.</p>
 
   <h2>A che punto è</h2>
-  <p class="lead">FoodBridge è un <strong>MVP completo</strong>: le funzioni descritte
-  qui sopra esistono e si possono provare. <strong>Non è ancora in produzione</strong>,
-  quindi non ci sono fornitori né ordini veri — quello che si vede nelle schermate è
-  una dimostrazione.</p>
+  <p class="lead">FaReSy è un <strong>sistema completo</strong>, con 226 prove automatiche
+  che girano a ogni modifica. <strong>Non è in produzione</strong>: non c'è nessuna
+  installazione attiva, nessuna telecamera collegata, nessun archivio di volti in
+  funzione. Questa pagina è una presentazione — il software non si scarica da qui.</p>
 
   <footer>
     <div class="fwrap">
@@ -281,7 +283,7 @@
   </div>
 </div>
 
-<div class="zoom" id="zoom" hidden role="dialog" aria-modal="true" aria-label="Schermata ingrandita">
+<div class="zoom" id="zoom" hidden role="dialog" aria-modal="true" aria-label="Immagine ingrandita">
   <button type="button" class="chiudi" id="zoomChiudi" aria-label="Chiudi">&times;</button>
   <img id="zoomImg" src="" alt="">
 </div>
@@ -298,8 +300,8 @@
 })();
 
 /* Ingranditore: la stessa immagine gia' scaricata, mostrata a piena pagina.
-   Niente libreria e niente secondo file da caricare. Al ritorno il fuoco
-   torna sul riquadro premuto, altrimenti chi naviga da tastiera lo perde. */
+   Niente libreria e niente secondo file da caricare. Al ritorno il fuoco torna
+   sul riquadro premuto, altrimenti chi naviga da tastiera lo perde. */
 (function ingranditore() {
   const strato = document.getElementById('zoom');
   const dentro = document.getElementById('zoomImg');
