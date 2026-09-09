@@ -5,122 +5,84 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bayran WinCleaner — BayranLab Software</title>
 <meta name="description" content="Bayran WinCleaner: pulizia onesta per Windows. Le scansioni partono su richiesta e ogni cosa rimossa resta recuperabile.">
+<link rel="icon" href="img/logo.png">
 <style>
-  :root {
-    color-scheme: dark;
-    --ink: #eef6fa; --muted: #9db4c0; --line: rgba(255,255,255,.13);
-    --card: #102232; --bg: #071626; --blu: #3f9fd0; --ciano: #5ec4e4;
-    --verde: #34a06a;
-    /* Stessa lunghezza di riga di FoodBridge: le due pagine di presentazione
-       si leggono una dopo l'altra e devono avere la stessa misura. */
-    --testo: 660px;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0; background-color: var(--bg); color: var(--ink);
-    font: 16px/1.62 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-    background-image:
-      radial-gradient(1000px 520px at 50% -150px,
-                      color-mix(in srgb, var(--ciano) 26%, transparent), transparent 70%),
-      linear-gradient(180deg, #0d2740 0%, #0a1c2e 45%, #061421 100%);
-    background-attachment: fixed;
-  }
-  .wrap { max-width: 940px; margin: 0 auto; padding: 0 22px 80px;
-          text-align: center; }
+  /* Stessa veste della pagina di Bayran Cleaner: e' lo stesso programma su un
+     altro sistema, e due estetiche diverse lo facevano sembrare due prodotti
+     di due case diverse. Fondo, alone, marchio, titolo in due colori e tasti a
+     pillola sono quelli di la'. */
+  * { margin: 0; box-sizing: border-box; }
+  body { font: 16px/1.6 -apple-system, "SF Pro Text", "Segoe UI", sans-serif;
+         color: #eaf2f7; background: #0d1119; -webkit-font-smoothing: antialiased;
+         text-align: center; overflow-x: hidden; }
+  a { color: #5ec4e4; }
+  #ambiente { position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background:
+      radial-gradient(1100px 700px at 50% 12%, rgba(31,111,156,.26) 0%, transparent 62%),
+      radial-gradient(900px 900px at 85% 90%, rgba(31,111,156,.12) 0%, transparent 58%),
+      #0d1119; }
 
-  /* barra: stesse misure di Cleaner, Office e FoodBridge */
-  .topbar { height: 68px; display: flex; align-items: center;
-            justify-content: flex-start; text-align: left; }
+  .topbar { position: absolute; top: 0; left: 0; right: 0; z-index: 20;
+            height: 68px; display: flex; align-items: center; }
+  .topbar .wrap { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 22px;
+                  display: flex; align-items: center; }
   .topbar .brand { display: flex; align-items: center; text-decoration: none;
                    transition: opacity .12s; }
   .topbar .brand:hover { opacity: .78; }
   .topbar .brand img { height: 46px; width: auto; display: block; }
 
-  header.hero { padding: 34px 0 8px; }
-  /* Qui il nome e' scritto, non disegnato: nessuna insegna da mostrare al suo
-     posto, quindi il titolo si vede. */
-  h1 { font-size: 40px; line-height: 1.1; margin: 0 0 18px; letter-spacing: -.5px; }
-  .insegna { width: 100%; max-width: 760px; height: auto; display: block;
-             margin: 0 auto 22px; border-radius: 14px;
-             box-shadow: 0 18px 44px rgba(0,0,0,.45); }
-  .claim { font-size: 21px; color: #d7e6ee; margin: 0 auto 20px;
-           max-width: var(--testo); }
-  .stato { display: inline-flex; align-items: center; gap: 8px; font-size: 13px;
-           border: 1px solid var(--line); border-radius: 20px; padding: 5px 14px;
-           color: var(--muted); }
-  .stato i { width: 7px; height: 7px; border-radius: 50%; background: var(--verde);
-             display: block; }
+  .hero { padding: 130px 22px 0; }
+  .hero img.logo { width: 132px; height: 132px; object-fit: contain;
+          filter: drop-shadow(0 12px 34px rgba(65,171,208,.4)); }
+  h1 { font-size: clamp(36px, 6.5vw, 58px); font-weight: 800;
+       letter-spacing: -1.2px; margin: 18px 0 8px; }
+  h1 b { color: #5ec4e4; }
+  .claim { font-size: clamp(17px, 2.6vw, 22px); color: #b6c6d3;
+           max-width: 660px; margin: 0 auto 32px; }
+  .reqmini { color: #7d8fa0; font-size: 12.5px; letter-spacing: .2px;
+             margin-bottom: 14px; }
+  .tasti { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .cta { display: inline-block; font-size: 17px; font-weight: 700; color: #fff;
+         text-decoration: none; padding: 15px 44px; border-radius: 28px;
+         background: linear-gradient(135deg, #41abd0, #1f6f9c 70%);
+         box-shadow: 0 10px 34px rgba(31,111,156,.5);
+         transition: transform .25s, box-shadow .25s; }
+  .cta:hover { transform: translateY(-2px);
+               box-shadow: 0 16px 44px rgba(31,111,156,.6); }
+  .cta.altro { background: none; box-shadow: none; color: #5ec4e4;
+               border: 1px solid rgba(94,196,228,.42); padding: 14px 34px; }
+  .cta.altro:hover { box-shadow: none; border-color: #5ec4e4;
+                     background: rgba(94,196,228,.08); }
+  .req { color: #7d8fa0; font-size: 13px; margin-top: 15px; }
 
-  h2 { font-size: 24px; margin: 56px 0 12px; letter-spacing: -.3px; }
-  p { color: #cfe0e9; }
-  .lead { max-width: var(--testo); margin-left: auto; margin-right: auto; }
+  .finestra { display: block; width: min(1060px, 92vw); height: auto;
+              margin: 54px auto 0; border-radius: 18px;
+              filter: drop-shadow(0 40px 90px rgba(0,0,0,.55)); }
 
-  .tre { display: grid; gap: 16px; grid-template-columns: repeat(3, 1fr); margin-top: 18px; }
+  .blocco { max-width: 1060px; margin: 0 auto; padding: 0 22px; }
+  h2 { font-size: clamp(24px, 3.4vw, 32px); font-weight: 800;
+       letter-spacing: -.6px; margin: 86px 0 14px; }
+  .lead { color: #b6c6d3; max-width: 660px; margin: 0 auto; font-size: 16.5px; }
+
+  .tre { display: grid; gap: 16px; grid-template-columns: repeat(3, 1fr);
+         margin-top: 26px; }
   @media (max-width: 760px) { .tre { grid-template-columns: 1fr; } }
-  .punto { background: var(--card); border: 1px solid var(--line);
-           border-radius: 14px; padding: 20px; text-align: center; }
-  .punto h3 { margin: 0 0 7px; font-size: 16.5px; }
-  .punto p { margin: 0; font-size: 14.5px; color: var(--muted); }
+  .punto { background: #141b25; border: 1px solid rgba(255,255,255,.07);
+           border-radius: 16px; padding: 22px; }
+  .punto h3 { margin: 0 0 8px; font-size: 17px; }
+  .punto p { margin: 0; font-size: 14.5px; color: #97a9b8; }
 
-  .filmato { width: 100%; height: auto; display: block; margin-top: 18px;
-             background: #0b1d2c; border: 1px solid var(--line); border-radius: 12px; }
+  .avviso { max-width: 660px; margin: 26px auto 0; text-align: left;
+            background: #141b25; border: 1px solid rgba(255,255,255,.07);
+            border-left: 3px solid #41abd0; border-radius: 14px;
+            padding: 22px 24px; }
+  .avviso h3 { margin: 0 0 8px; font-size: 17px; }
+  .avviso p { margin: 0 0 10px; font-size: 15px; color: #b6c6d3; }
+  .avviso p:last-child { margin-bottom: 0; }
+  .avviso code { background: rgba(255,255,255,.07); border-radius: 5px;
+                 padding: 1px 6px; font-size: 14px; }
 
-  /* Qui i disegni sono larghi e pieni di scritte piccole: incolonnarli a due
-     per riga come su FoodBridge li renderebbe illeggibili. Uno sotto l'altro,
-     tutti della stessa larghezza, restano simmetrici e si leggono. Premendoli
-     si aprono a piena pagina. */
-  .galleria { display: grid; gap: 26px; grid-template-columns: 1fr; margin-top: 18px; }
-  figure { margin: 0; }
-  .tessera { width: 100%; display: block; overflow: hidden; padding: 0;
-             background: #0b1d2c; border: 1px solid var(--line); border-radius: 12px;
-             cursor: zoom-in; transition: border-color .15s, transform .15s; }
-  .tessera:hover, .tessera:focus-visible { border-color: var(--ciano);
-                                           transform: translateY(-2px); }
-  .tessera:focus-visible { outline: 3px solid var(--ciano); outline-offset: 3px; }
-  .tessera img { width: 100%; height: auto; display: block; }
-  figcaption { color: var(--muted); font-size: 13.5px; margin-top: 8px; }
-
-  /* ingranditore */
-  .zoom { position: fixed; inset: 0; z-index: 90; display: flex; align-items: center;
-          justify-content: center; padding: 28px; background: rgba(4,14,24,.92);
-          cursor: zoom-out; }
-  .zoom[hidden] { display: none; }
-  .zoom img { max-width: 100%; max-height: 100%; border-radius: 10px;
-              box-shadow: 0 30px 80px rgba(0,0,0,.6); }
-  .zoom .chiudi { position: absolute; top: 18px; right: 20px; background: none;
-                  border: 1px solid var(--line); color: var(--ink); border-radius: 10px;
-                  width: 40px; height: 40px; font-size: 20px; cursor: pointer;
-                  line-height: 1; }
-  .zoom .chiudi:hover { border-color: var(--ciano); }
-
-  /* La tabella dei moduli: e' la cosa che un lettore tecnico cerca per prima,
-     e va letta come una tabella e non come un elenco di riquadri. Su schermo
-     stretto scorre da sola invece di spezzare le parole. */
-  .moduli { margin-top: 18px; overflow-x: auto; }
-  .moduli table { width: 100%; border-collapse: collapse; text-align: left;
-                  font-size: 15px; min-width: 620px; }
-  .moduli th { font-size: 12px; text-transform: uppercase; letter-spacing: .08em;
-               color: var(--muted); font-weight: 700; padding: 0 14px 10px 0;
-               border-bottom: 1px solid var(--line); }
-  .moduli td { padding: 13px 14px 13px 0; border-bottom: 1px solid var(--line);
-               color: #cfe0e9; vertical-align: top; }
-  .moduli td:first-child { color: var(--ink); font-weight: 600; white-space: nowrap; }
-  .moduli td:last-child { color: var(--muted); white-space: nowrap; }
-
-  /* Chiusura: come si arriva a parlarne. Su una pagina rivolta a chi valuta,
-     e' l'informazione che deve restare in mano. */
-  .chiusura { margin: 56px auto 0; max-width: var(--testo); text-align: left;
-              background: var(--card); border: 1px solid var(--line);
-              border-radius: 16px; padding: 26px 28px; }
-  .chiusura h2 { margin: 0 0 10px; font-size: 20px; }
-  .chiusura p { margin: 0 0 12px; }
-  .chiusura p:last-child { margin-bottom: 0; }
-  .chiusura a { color: var(--ciano); font-weight: 600; text-decoration: none; }
-  .chiusura a:hover { text-decoration: underline; }
-
-  .nota { margin: 18px auto 0; font-size: 13.5px; color: var(--muted);
-          max-width: var(--testo); padding-top: 14px;
-          border-top: 1px solid var(--line); }
+  .coda { height: 90px; }
 
   /* ---------------- il piede ----------------
      Fascia a se', come sulla pagina di Bayran Office: fondo proprio, un poco
@@ -128,7 +90,7 @@
      incolonna con quello che sta sopra. */
   footer { background: #0a2233; color: #9db4c0; font-size: 14px;
            border-top: 1px solid rgba(255,255,255,.09); text-align: left; }
-  footer .fwrap { max-width: 940px; margin: 0 auto; padding: 44px 22px 30px; }
+  footer .fwrap { max-width: 1060px; margin: 0 auto; padding: 44px 22px 30px; }
   .fcols { display: grid; gap: 30px 26px; grid-template-columns: 1.7fr 1.5fr 1fr 1fr; }
   @media (max-width: 900px) { .fcols { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 520px) { .fcols { grid-template-columns: 1fr; } }
@@ -157,32 +119,6 @@
              border-top: 1px solid rgba(255,255,255,.10);
              font-size: 12.5px; opacity: .72; }
 
-  /* I due tasti stanno su una riga sola e vanno a capo insieme su schermo
-     stretto, invece di incollarsi con uno spazio di testo in mezzo. */
-  .tasti { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
-           margin-top: 6px; }
-  .scarica { display: inline-block; background: var(--blu); color: #fff;
-             text-decoration: none; font-weight: 700; font-size: 16px;
-             border-radius: 12px; padding: 14px 30px; transition: filter .15s; }
-  .scarica:hover { filter: brightness(1.1); }
-  /* L'altro sistema e' un'alternativa, non la scelta principale: stessa forma,
-     peso diverso. */
-  .scarica.altro { background: none; color: var(--ciano);
-                   border: 1px solid color-mix(in srgb, var(--ciano) 40%, transparent);
-                   transition: border-color .15s, background-color .15s; }
-  .scarica.altro:hover { filter: none; border-color: var(--ciano);
-                         background: color-mix(in srgb, var(--ciano) 8%, transparent); }
-  .sotto { margin: 12px 0 0; font-size: 13.5px; color: var(--muted); }
-  .finestra { width: 100%; height: auto; display: block; margin-top: 26px;
-              border-radius: 14px; border: 1px solid var(--line);
-              box-shadow: 0 18px 44px rgba(0,0,0,.4); }
-  .avviso { margin: 26px auto 0; max-width: var(--testo); text-align: left;
-            background: var(--card); border: 1px solid var(--line);
-            border-left: 3px solid var(--blu); border-radius: 12px; padding: 20px 22px; }
-  .avviso h3 { margin: 0 0 8px; font-size: 16.5px; }
-  .avviso p { margin: 0 0 10px; font-size: 15px; }
-  .avviso p:last-child { margin-bottom: 0; }
-
   /* pannello cookie, come sulle altre pagine */
   .cookiewrap { position: fixed; inset: 0; z-index: 95; display: flex;
                 align-items: center; justify-content: center; padding: 22px;
@@ -209,27 +145,34 @@
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <div class="topbar">
+<div id="ambiente"></div>
+
+<header class="topbar">
+  <div class="wrap">
     <a class="brand" href="../" aria-label="BayranLab Software — torna alla pagina principale">
-      <img src="../img/bayranlab-logo.png" alt="BayranLab Software">
+      <img src="img/bayranlab-logo.png" alt="BayranLab Software">
     </a>
   </div>
+</header>
 
-  <header class="hero">
-    <h1>Bayran WinCleaner</h1>
-    <p class="claim">Pulizia onesta per il tuo PC. Le scansioni partono solo quando le
-    chiedi tu, e ogni cosa rimossa resta recuperabile dal Registro.</p>
-    <div class="tasti">
-      <a class="scarica" href="../bayrancleaner/BayranWinCleaner-0.9.2.zip">Scarica gratis</a>
-      <a class="scarica altro" href="../bayrancleaner/">Versione per Mac</a>
-    </div>
-    <p class="sotto">Versione 0.9.2 · per Windows, Intel/AMD e ARM · 15 MB</p>
-  </header>
+<div class="hero">
+  <img class="logo" src="img/logo.png" alt="Bayran WinCleaner">
+  <h1><b>Bayran</b> WinCleaner</h1>
+  <p class="claim">Pulizia onesta per il tuo PC.<br>
+  Le scansioni partono solo quando le chiedi tu, e ogni cosa rimossa resta
+  recuperabile dal Registro.</p>
+  <div class="reqmini">Windows · Intel/AMD e ARM · 15 MB</div>
+  <div class="tasti">
+    <a class="cta" href="../bayrancleaner/BayranWinCleaner-0.9.2.zip">Scarica gratis</a>
+    <a class="cta altro" href="../bayrancleaner/">Versione per Mac</a>
+  </div>
+  <div class="req">Versione 0.9.2 · Gratuito</div>
+</div>
 
-  <img class="finestra" src="img/finestra.png?v=1" alt="La finestra di Bayran WinCleaner su Windows, con la panoramica delle sezioni">
+<img class="finestra" src="img/finestra.png?v=1" alt="La finestra di Bayran WinCleaner su Windows, con la panoramica delle sezioni">
 
+<div class="blocco">
   <h2>Cosa fa</h2>
   <div class="tre">
     <div class="punto">
@@ -253,7 +196,7 @@
   <h2>Come si installa</h2>
   <div class="avviso">
     <h3>Windows dirà che non conosce il programma</h3>
-    <p>È vero: <strong>non è firmato</strong>. Alla prima esecuzione compare l'avviso di
+    <p>È vero: <strong>non è firmato</strong>. Al primo avvio compare l'avviso di
     Windows: premi «Ulteriori informazioni» e poi «Esegui comunque». La firma di un
     programma per Windows si compra, e per questa versione non è stata comprata.</p>
     <p>Dentro il pacchetto c'è <code>Installa.bat</code>. Chiede la lingua e la cartella
@@ -270,8 +213,9 @@
   gente. Se qualcosa si comporta male è esattamente il motivo per cui una versione 0.9
   esiste. La <a href="../bayrancleaner/">versione per Mac</a>, di strada, ne ha fatta
   molta di più.</p>
-
 </div>
+
+<div class="coda"></div>
 
 <footer>
   <div class="fwrap">
@@ -286,7 +230,6 @@
         <h3>Software</h3>
         <div class="flista">
           <a href="../bayrancleaner/">Bayran Cleaner</a>
-          <a href="../bayranwincleaner/">Bayran WinCleaner</a>
           <a href="../bayranoffice/">Bayran Office</a>
           <a href="../nimbus/">Bayran Nimbus</a>
           <a href="../foodbridge/">FoodBridge</a>
