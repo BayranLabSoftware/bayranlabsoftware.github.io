@@ -117,22 +117,26 @@
        scorrimento resta dentro la fila. */
     overscroll-behavior-x: contain;
     padding-top: 250px; margin-top: -201px;
-    scrollbar-width: none;
+    scrollbar-width: thin;
     scroll-padding: 0 22px;
   }
   /* Sotto i 1040px l'ingrandimento non ha senso: quattro schede in fila
      sarebbero troppo strette perche' se ne capisca il contenuto, e su un
      dispositivo a sfioramento il passaggio del cursore non esiste. Si torna
      alla griglia, che li' funziona meglio. */
-  @media (max-width: 1040px) { main { grid-template-columns: repeat(2, 1fr);
-                                      max-width: 980px;
-                                      /* qui l'ingrandimento e' spento: senza
-                                         schede che crescono verso l'alto, i
-                                         92px sarebbero un buco e basta */
-                                      margin-top: 54px; } }
+  /* Sotto i 1040px l'ingrandimento e' spento e la fila che scorre non serve:
+     si torna alla griglia. Vanno annullate a mano tutte le cose che servono
+     alla fila scorrevole, perche' dire "grid-template-columns" a un
+     contenitore flessibile non fa assolutamente niente. */
+  @media (max-width: 1040px) {
+    main { display: grid; grid-template-columns: repeat(2, 1fr);
+           max-width: 980px; overflow: visible;
+           align-self: center; margin: 54px auto 0;
+           padding-top: 0; padding-left: 0; padding-right: 0; }
+    .scheda { flex: initial; }
+  }
   @media (max-width: 700px)  { main { grid-template-columns: 1fr; } }
 
-  main::-webkit-scrollbar { display: none; }
   .scheda {
     flex: 0 0 266px;
     display: flex; flex-direction: column; text-decoration: none; color: inherit;
@@ -481,6 +485,19 @@
       s.style.setProperty('--z', String(Math.round(k * 100)));
     });
   }
+
+  /* Con un mouse la rotellina e' verticale e non muoverebbe una fila
+     orizzontale. Qui la si gira, ma solo finche' la fila ha ancora strada da
+     fare: arrivati al bordo il gesto torna alla pagina, se no non si potrebbe
+     piu' scendere passando col cursore sopra le schede. */
+  riga.addEventListener('wheel', function (e) {
+    const resta = riga.scrollWidth - riga.clientWidth;
+    if (resta < 1 || Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+    const haStrada = e.deltaY > 0 ? riga.scrollLeft < resta - 1 : riga.scrollLeft > 1;
+    if (!haStrada) return;
+    riga.scrollLeft += e.deltaY;
+    e.preventDefault();
+  }, { passive: false });
 
   riga.addEventListener('pointermove', muovi);
   riga.addEventListener('pointerleave', spegni);
