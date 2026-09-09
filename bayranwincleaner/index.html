@@ -125,8 +125,28 @@
   .avviso h3 { margin: 0 0 8px; font-size: 17px; }
   .avviso p { margin: 0 0 10px; font-size: 15px; color: #b6c6d3; }
   .avviso p:last-child { margin-bottom: 0; }
-  .avviso code { background: rgba(255,255,255,.07); border-radius: 5px;
-                 padding: 1px 6px; font-size: 14px; }
+
+  /* I tre passi hanno la stessa scheda di "Cosa fa", con il numero sopra al
+     titolo invece che di fianco: di fianco avrebbe spostato il testo e le tre
+     colonne non sarebbero piu' state simmetriche fra loro. */
+  .passi { list-style: none; counter-reset: passo; padding: 0; }
+  .passi li { counter-increment: passo; }
+  .passi li::before { content: counter(passo); display: grid; place-items: center;
+                      width: 30px; height: 30px; margin: 0 auto 12px;
+                      border-radius: 10px; background: rgba(94,196,228,.14);
+                      color: #5ec4e4; font-weight: 800; font-size: 15px; }
+
+  /* I dettagli: prosa, quindi allineata a sinistra come l'avviso qui sopra.
+     Il percorso di Windows e' una parola sola lunga 340px e su uno schermo da
+     320 sfonderebbe la finestra: "anywhere" lo manda a capo. */
+  .dett { max-width: 660px; margin: 16px auto 0; text-align: left;
+          background: #141b25; border: 1px solid rgba(255,255,255,.07);
+          border-radius: 14px; padding: 22px 24px; }
+  .dett dt { font-size: 15px; font-weight: 700; margin-top: 16px; }
+  .dett dt:first-of-type { margin-top: 0; }
+  .dett dd { margin: 3px 0 0; font-size: 14.5px; color: #97a9b8; }
+  code { background: rgba(255,255,255,.07); border-radius: 5px;
+         padding: 1px 6px; font-size: 13.5px; overflow-wrap: anywhere; }
 
   .coda { height: 90px; }
 
@@ -277,19 +297,65 @@
 
 <div class="blocco su" data-amb="#4778c4">
   <h2>Come si installa</h2>
+  <p class="lead">Uno zip da 15 MB e una finestra con due domande. Il programma
+  si installa dentro il tuo profilo utente, quindi Windows non chiede la
+  password dell'amministratore.</p>
+
+  <ol class="tre passi">
+    <li class="punto">
+      <h3>Estrai lo zip</h3>
+      <p>Va bene qualunque cartella, anche la Scrivania: quello che estrai è
+      l'installatore, non il programma.</p>
+    </li>
+    <li class="punto">
+      <h3>Apri <code>Installa.bat</code></h3>
+      <p>Doppio clic. Si apre una finestra che chiede la lingua — già scelta in
+      base a quella del computer — e dove mettere il programma.</p>
+    </li>
+    <li class="punto">
+      <h3>Premi Installa</h3>
+      <p>Copia i file, crea i collegamenti nel menu Start e sulla Scrivania, e
+      registra il programma fra quelli installati. Da lì lo avvii.</p>
+    </li>
+  </ol>
+
   <div class="avviso">
-    <h3>Windows dirà che non conosce il programma</h3>
-    <p>È vero: <strong>non è firmato</strong>. Al primo avvio compare l'avviso di
-    Windows: premi «Ulteriori informazioni» e poi «Esegui comunque». La firma di un
-    programma per Windows si compra, e per questa versione non è stata comprata.</p>
-    <p>Dentro il pacchetto c'è <code>Installa.bat</code>. Chiede la lingua e la cartella
-    dove mettere il programma, poi fa tutto: copia, installa il runtime che serve se
-    manca, crea i collegamenti nel menu Start e sulla Scrivania, e si registra in
-    «Installazione applicazioni», da dove si toglie. Nel pacchetto ci sono tutte e due
-    le architetture, Intel/AMD e ARM: l'installatore sceglie la giusta da solo.</p>
-    <p><strong>Non chiede l'amministratore.</strong> Un pulitore che se lo fa dare solo
-    per installarsi comincia male.</p>
+    <h3>Al primo avvio Windows dirà che non lo conosce</h3>
+    <p>Ha ragione: il programma non è firmato. La firma per Windows si compra da
+    un'autorità di certificazione, e per questa versione non è stata comprata.
+    Nell'avviso premi «Ulteriori informazioni» e poi «Esegui comunque»: succede
+    solo la prima volta.</p>
   </div>
+
+  <dl class="dett">
+    <dt>Dove finisce</dt>
+    <dd>In <code>%LOCALAPPDATA%\Programs\Bayran WinCleaner</code>, dentro il tuo
+    profilo. È il motivo per cui non serve l'amministratore: un pulitore che se
+    lo fa dare solo per installarsi comincia male. Se preferisci un'altra
+    cartella, la scegli dalla finestra.</dd>
+
+    <dt>Il runtime .NET</dt>
+    <dd>Il programma usa quello di sistema invece di portarselo dentro: è il
+    motivo per cui il pacchetto pesa 15 MB e non un centinaio. Se sul computer
+    non c'è, l'installatore lo scarica da solo, ed è il passo che può durare
+    qualche minuto. Se non ci riesce, la finestra ti dice l'indirizzo da cui
+    prenderlo a mano.</dd>
+
+    <dt>Intel/AMD o ARM</dt>
+    <dd>Nel pacchetto ci sono tutte e due le versioni e l'installatore sceglie
+    la giusta guardando il processore. Serve Windows 10 dalla versione 1809, o
+    Windows 11.</dd>
+
+    <dt>Per toglierlo</dt>
+    <dd>Da «Installazione applicazioni» di Windows, come qualunque altro
+    programma. Le impostazioni e il Registro delle operazioni restano in
+    <code>%LOCALAPPDATA%\BayranWinCleaner</code>: se un giorno reinstalli,
+    ritrovi tutto com'era.</dd>
+
+    <dt>Gli aggiornamenti</dt>
+    <dd>Te li propone il programma stesso, e riusano questo installatore nella
+    cartella dove l'hai messo: non devi riscaricare niente a mano.</dd>
+  </dl>
 
 </div>
 
