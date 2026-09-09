@@ -140,7 +140,11 @@
      e la colonna diventava alta il doppio, con "Bayran" sopra e "Cleaner"
      sotto. Per questo la colonna e' anche piu' larga di prima. */
   .flista a { white-space: nowrap; }
-  @media (max-width: 520px) { .flista { grid-auto-flow: row;
+  /* Le colonne da tre si tengono solo dove il piede ha le sue quattro colonne
+     larghe. Sotto, l'elenco torna a scendere: con sette prodotti diventava a
+     tre colonne di nomi che non vanno a capo, e a 560px sfondava la finestra
+     di 23px facendo scorrere di lato tutta la pagina. */
+  @media (max-width: 900px) { .flista { grid-auto-flow: row;
                                         grid-template-rows: none; } }
   .fbottom { margin-top: 32px; padding-top: 18px;
              border-top: 1px solid rgba(255,255,255,.10);

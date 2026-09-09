@@ -132,18 +132,26 @@
      sarebbero troppo strette perche' se ne capisca il contenuto, e su un
      dispositivo a sfioramento il passaggio del cursore non esiste. Si torna
      alla griglia, che li' funziona meglio. */
-  /* Sotto i 1040px l'ingrandimento e' spento e la fila che scorre non serve:
-     si torna alla griglia. Vanno annullate a mano tutte le cose che servono
-     alla fila scorrevole, perche' dire "grid-template-columns" a un
-     contenitore flessibile non fa assolutamente niente. */
+  /* Su telefono e tablet la fila resta una fila: si scorre col dito, che e' il
+     gesto naturale li' come lo e' il trackpad qui. Prima diventava una griglia
+     e sette schede impilate facevano una colonna alta 3400px, che nessuno
+     scorre fino in fondo.
+     L'ingrandimento pero' e' spento (niente puntatore fine), quindi lo spazio
+     riservato in alto perche' le schede crescessero non serve piu' e va tolto:
+     erano 250px di imbottitura ripresi da un margine negativo. */
   @media (max-width: 1040px) {
-    main { display: grid; grid-template-columns: repeat(2, 1fr);
-           max-width: 980px; overflow: visible;
-           align-self: center; margin: 54px auto 0;
-           padding-top: 0; padding-left: 0; padding-right: 0; }
-    .scheda { flex: initial; }
+    main { padding-top: 0; margin-top: 44px;
+           /* con lo scorrimento a dito la fila si ferma su una scheda per
+              volta invece che a meta' strada */
+           scroll-snap-type: x mandatory; }
+    main .scheda { flex-basis: 260px; scroll-snap-align: center; }
   }
-  @media (max-width: 700px)  { main { grid-template-columns: 1fr; } }
+  /* Solo sul telefono una scheda si prende quasi tutto lo schermo, con un pezzo
+     della successiva che sbuca a dire che ce ne sono altre. Il tetto a 320px
+     serve perche' 78vw su un telefono largo, o su un tablet stretto, faceva
+     schede da mezzo metro: il contenuto e' disegnato per stare intorno ai
+     270. */
+  @media (max-width: 560px) { main .scheda { flex-basis: min(78vw, 320px); } }
 
   main::-webkit-scrollbar { display: none; }
   .scheda {
@@ -238,7 +246,11 @@
      e la colonna diventava alta il doppio, con "Bayran" sopra e "Cleaner"
      sotto. Per questo la colonna e' anche piu' larga di prima. */
   .flista a { white-space: nowrap; }
-  @media (max-width: 520px) { .flista { grid-auto-flow: row;
+  /* Le colonne da tre si tengono solo dove il piede ha le sue quattro colonne
+     larghe. Sotto, l'elenco torna a scendere: con sette prodotti diventava a
+     tre colonne di nomi che non vanno a capo, e a 560px sfondava la finestra
+     di 23px facendo scorrere di lato tutta la pagina. */
+  @media (max-width: 900px) { .flista { grid-auto-flow: row;
                                         grid-template-rows: none; } }
   .fbottom { margin-top: 32px; padding-top: 18px;
              border-top: 1px solid rgba(255,255,255,.10);

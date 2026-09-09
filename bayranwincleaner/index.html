@@ -88,8 +88,16 @@
   .dida span { color: #b6c6d3; font-size: 14.5px; }
   .dida.sx { left: 4vw; text-align: left; }
   .dida.dx { right: 4vw; text-align: right; }
-  @media (max-width: 900px) { .dida { display: none; }
-                              #palco { height: 200vh; } }
+  /* Su telefono e tablet il palcoscenico non ha senso: la finestra e' larga e
+     bassa, dentro uno schermo alto e stretto diventa una striscia di 170px in
+     mezzo al vuoto, e per vederla crescere si scorrerebbero due schermate.
+     Li' la schermata si mostra e basta, a tutta larghezza. */
+  @media (max-width: 900px) {
+    #palco { height: auto; padding: 26px 0; }
+    #palco .scena { position: static; height: auto; }
+    #palco img.tela { width: 92vw; height: auto; }
+    .dida { display: none; }
+  }
   @media (prefers-reduced-motion: reduce) {
     #palco { height: auto; padding: 40px 0; }
     #palco .scena { position: static; height: auto; }
@@ -151,7 +159,11 @@
             gap: 0 20px; justify-content: start; }
   /* Un nome di prodotto non si spezza a meta'. */
   .flista a { white-space: nowrap; }
-  @media (max-width: 520px) { .flista { grid-auto-flow: row;
+  /* Le colonne da tre si tengono solo dove il piede ha le sue quattro colonne
+     larghe. Sotto, l'elenco torna a scendere: con sette prodotti diventava a
+     tre colonne di nomi che non vanno a capo, e a 560px sfondava la finestra
+     di 23px facendo scorrere di lato tutta la pagina. */
+  @media (max-width: 900px) { .flista { grid-auto-flow: row;
                                         grid-template-rows: none; } }
   .fbottom { margin-top: 32px; padding-top: 18px;
              border-top: 1px solid rgba(255,255,255,.10);
@@ -366,7 +378,14 @@ const dide = [...palco.querySelectorAll(".dida")].map(d => {
 });
 const fermo = matchMedia("(prefers-reduced-motion: reduce)").matches;
 function scrub() {
-  if (fermo) return;
+  /* Sotto i 900px il palcoscenico e' spento dal foglio di stile: qui vanno
+     tolte anche le misure scritte a mano sull'elemento, se no restano quelle
+     dell'ultima volta che la finestra era larga. */
+  if (fermo || innerWidth <= 900) {
+    tela.style.removeProperty("transform");
+    tela.style.removeProperty("border-radius");
+    return;
+  }
   const r = palco.getBoundingClientRect();
   const corsa = r.height - innerHeight;
   const prog = Math.min(1, Math.max(0, -r.top / corsa));
