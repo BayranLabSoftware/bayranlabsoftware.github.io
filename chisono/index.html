@@ -47,10 +47,19 @@
   p { color: #cfe0e9; }
 
   /* Foto a sinistra, testo a destra; su schermo stretto uno sotto l'altro.
-     La colonna della foto non si stringe: e' una misura, non una proporzione. */
-  .scheda { display: grid; gap: 30px; grid-template-columns: 300px 1fr;
+     La colonna della foto non si stringe: e' una misura, non una proporzione.
+     Il testo resta su una colonna di ~610px, che sono una sessantina di
+     battute: leggerlo a tutta pagina sarebbe faticoso. */
+  .scheda { display: grid; gap: 34px; grid-template-columns: 300px 1fr;
             align-items: start; text-align: left; margin-top: 10px; }
   @media (max-width: 760px) { .scheda { grid-template-columns: 1fr; } }
+  .bio p { margin: 0 0 16px; }
+  .bio p:last-child { margin-bottom: 0; }
+  /* L'ultima riga e' una sintesi e si legge come tale: piu' grande, staccata,
+     e con una linea sopra che chiude il discorso. */
+  .chiusa { margin: 30px auto 0; max-width: var(--testo); padding-top: 20px;
+            border-top: 1px solid var(--line); font-size: 19px;
+            color: #d7e6ee; }
 
   .ritratto { width: 100%; aspect-ratio: 4 / 5; border-radius: 16px;
               object-fit: cover; display: block; border: 1px solid var(--line); }
@@ -62,7 +71,6 @@
             display: flex; align-items: center; justify-content: center;
             text-align: center; padding: 20px; font-size: 14px; line-height: 1.5; }
   .daFare.foto { width: 100%; aspect-ratio: 4 / 5; }
-  .daFare.testo { min-height: 220px; }
 
   /* ---------------- il piede ----------------
      Fascia a se', come sulla pagina di Bayran Office: fondo proprio, un poco
@@ -141,8 +149,42 @@
 
   <div class="scheda">
     <div class="daFare foto">foto da mettere</div>
-    <div class="daFare testo">descrizione da scrivere</div>
+
+    <div class="bio">
+      <p>Classe 1988, romano. La mia storia con la tecnologia inizia da bambino,
+      davanti a un vecchio PC con MS-DOS a casa di mia nonna: quelle prime schermate
+      a caratteri hanno acceso una curiosità che non si è più spenta. Nel 2000, a
+      dodici anni, ho realizzato il mio primo portale web con Microsoft FrontPage —
+      all'epoca andava forte — rimasto però nel cassetto: pubblicare costava troppo
+      e le conoscenze erano ancora agli inizi. Ma il seme era piantato.</p>
+
+      <p>Negli anni la passione è cresciuta insieme all'hardware: ho imparato ad
+      assemblare computer da zero, provando le soluzioni che uscivano generazione
+      dopo generazione, fino a costruire un sistema completo con custom loop a
+      liquido per raffreddare CPU e GPU. In parallelo ho esplorato il software su
+      ogni fronte: Windows, macOS e Linux, avventurandomi anche tra distribuzioni
+      di nicchia come Sabayon.</p>
+
+      <p>Il diploma di Liceo Scientifico ha dato basi solide a questa curiosità, che
+      oggi si esprime soprattutto nella programmazione: <strong>non è il mio lavoro,
+      è la mia passione</strong>. Scrivo codice per il piacere di creare e di capire
+      come funzionano le cose, spaziando dalle applicazioni web alla progettazione di
+      circuiti stampati con Altium e KiCad.</p>
+
+      <p>Nell'ultimo periodo ho rivolto lo sguardo anche alla sicurezza informatica:
+      sto seguendo corsi di preparazione per certificazioni come CompTIA Security+,
+      PEKIT ed EC-Council, in attesa di sostenere gli esami — perché imparare cose
+      nuove, per me, non è mai stato un dovere ma un divertimento.</p>
+
+      <p>Fuori dallo schermo, la curiosità guarda in alto: sono un grande appassionato
+      di astronomia e di scienza in generale. E quando non osservo le stelle, molto
+      probabilmente sto giocando a un videogioco — un'altra passione che coltivo fin
+      da ragazzo.</p>
+    </div>
   </div>
+
+  <p class="chiusa">In sintesi: un curioso instancabile, con la tastiera sotto le
+  dita e la testa tra le stelle.</p>
 
 </div>
 
