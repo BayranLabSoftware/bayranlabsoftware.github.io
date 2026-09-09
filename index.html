@@ -112,6 +112,10 @@
        riprende con un margine negativo: la fila resta dov'era, e
        l'ingrandimento ha lo spazio DENTRO invece di sbatterci contro. */
     display: flex; gap: 18px; overflow-x: auto; overflow-y: hidden;
+    /* Arrivati in fondo alla fila, sul trackpad il gesto continua e il browser
+       lo prende per "torna indietro", portando via dalla pagina. Con questo lo
+       scorrimento resta dentro la fila. */
+    overscroll-behavior-x: contain;
     padding-top: 250px; margin-top: -201px;
     scrollbar-width: none;
     scroll-padding: 0 22px;
@@ -444,11 +448,17 @@
   }
 
   function attiva() {
-    // Prima si guardava il numero di colonne della griglia. Adesso la fila e'
-    // flessibile e quel dato non esiste piu': si guarda se le schede stanno
-    // davvero tutte sulla stessa riga, che e' la cosa che conta e vale con
-    // qualunque impaginazione.
-    const cime = new Set(schede.map(s => Math.round(s.getBoundingClientRect().top)));
+    // Si guarda se le schede stanno davvero tutte sulla stessa riga: vale con
+    // qualunque impaginazione, mentre il numero di colonne della griglia non
+    // esiste piu' da quando la fila e' flessibile.
+    //
+    // offsetTop e NON getBoundingClientRect: il secondo comprende
+    // l'ingrandimento, quindi appena le schede crescevano le loro altezze
+    // diventavano diverse, questo controllo concludeva che non era piu' una
+    // riga e spegneva tutto. Si accendeva al primo movimento del mouse e si
+    // spegneva al secondo. offsetTop e' la posizione di impaginazione e le
+    // trasformazioni non la toccano.
+    const cime = new Set(schede.map(s => s.offsetTop));
     return finemouse.matches && !menoMoto.matches && cime.size === 1;
   }
   function spegni() {
