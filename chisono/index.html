@@ -66,6 +66,11 @@
                 border: 1px solid var(--line); }
   .fotone figcaption { color: var(--muted); font-size: 13.5px; margin-top: 10px;
                        text-align: left; }
+  /* Le altre due sono verticali e della stessa forma: stanno affiancate senza
+     bisogno di ritagliarle. Su schermo stretto scendono una sotto l'altra. */
+  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+         margin-top: 26px; }
+  @media (max-width: 700px) { .duo { grid-template-columns: 1fr; } }
 
   /* ---------------- il piede ----------------
      Fascia a se', come sulla pagina di Bayran Office: fondo proprio, un poco
@@ -185,6 +190,19 @@
     rigidi e raccordi. Sistema del 2014 su piattaforma X99, riadattato nel 2016 con
     l'arrivo della GTX 1080 EVGA.</figcaption>
   </figure>
+
+  <div class="duo">
+    <figure class="fotone">
+      <img src="img/loop-flessibile.jpg?v=1" alt="Il primo montaggio del circuito, con tubi flessibili verdi">
+      <figcaption>Il primo montaggio, con i tubi flessibili: stessa piattaforma,
+      blocco sulla CPU e sulla 980 Ti.</figcaption>
+    </figure>
+    <figure class="fotone">
+      <img src="img/overclock.jpg?v=1" alt="CPU-Z: il 5820K a 4998,8 MHz con 1,401 V">
+      <figcaption>Il 5820K a 5 GHz: moltiplicatore ×50, 1,401 V. Uno scatto al banco,
+      di quando mi cimentavo con l'overclock.</figcaption>
+    </figure>
+  </div>
 
 </div>
 
