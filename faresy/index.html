@@ -107,7 +107,24 @@
   footer .fwrap { max-width: 940px; margin: 0 auto; padding: 44px 22px 30px; }
   .fcols { display: grid; gap: 30px 26px; grid-template-columns: 1.7fr 1.5fr 1fr 1fr; }
   @media (max-width: 900px) { .fcols { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 520px) { .fcols { grid-template-columns: 1fr; } }
+  /* Sul telefono il piede era alto 702px su una pagina di 1659: il 42% della
+     pagina per quattro blocchi in fila indiana, con l'elenco dei software da
+     solo che ne prendeva 252. Adesso il marchio e i software stanno a tutta
+     larghezza (con le voci su due colonne, che li' ci stanno), e contatti e
+     note legali si dividono la riga sotto. */
+  @media (max-width: 520px) {
+    .fcols { grid-template-columns: 1fr 1fr; gap: 24px 18px; }
+    .fcols > :nth-child(1), .fcols > :nth-child(2) { grid-column: 1 / -1; }
+    /* "footer .flista" e non ".flista": la regola che le rimette in colonna
+       sotto i 900px sta piu' in basso nel foglio e a parita' di precisione
+       vincerebbe lei. */
+    footer .flista { grid-auto-flow: column; grid-template-rows: repeat(4, auto);
+                     gap: 0 18px; }
+    footer .fwrap { padding-top: 30px; }
+    /* l'indirizzo di posta e' una parola sola piu' larga della sua colonna:
+       senza questo sfonderebbe la finestra invece di andare a capo */
+    .fcol a { overflow-wrap: anywhere; }
+  }
   .fbrand { display: flex; align-items: center; gap: 9px; font-weight: 700;
             color: #eaf6f4; font-size: 16px; }
   .fbrand img { width: 26px; height: 26px; border-radius: 7px; }

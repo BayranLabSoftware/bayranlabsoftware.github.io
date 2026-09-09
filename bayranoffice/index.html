@@ -113,7 +113,13 @@
      sono due e si vedono. */
   .fcols{display:grid;gap:30px 26px;grid-template-columns:1.7fr 1.3fr 1fr 1fr}
   @media(max-width:900px){ .fcols{grid-template-columns:1fr 1fr} }
-  @media(max-width:520px){ .fcols{grid-template-columns:1fr} }
+  @media(max-width:520px){
+    .fcols{grid-template-columns:1fr 1fr;gap:24px 18px}
+    .fcols > :nth-child(1), .fcols > :nth-child(2){grid-column:1 / -1}
+    footer .flista{grid-auto-flow:column;grid-template-rows:repeat(4,auto);gap:0 18px}
+    footer .wrap{padding-top:30px}
+    .fcol a{overflow-wrap:anywhere}
+  }
   .fcol-brand{max-width:420px}
   .fcol h3{font-size:12px;text-transform:uppercase;letter-spacing:.09em;
     color:#7fb8ae;font-weight:700;margin:0 0 12px;min-height:1em}
