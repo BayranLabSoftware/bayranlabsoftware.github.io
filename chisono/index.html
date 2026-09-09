@@ -10,7 +10,7 @@
     color-scheme: dark;
     --ink: #eef6fa; --muted: #9db4c0; --line: rgba(255,255,255,.13);
     --card: #102232; --bg: #071626; --blu: #3f9fd0; --ciano: #5ec4e4;
-    --verde: #34a06a; --giallo: #e0a53c;
+    --verde: #34a06a;
     /* Stessa lunghezza di riga di FoodBridge: le due pagine di presentazione
        si leggono una dopo l'altra e devono avere la stessa misura. */
     --testo: 660px;
@@ -59,13 +59,13 @@
   .ritratto { width: 100%; aspect-ratio: 4 / 5; border-radius: 16px;
               object-fit: cover; display: block; border: 1px solid var(--line); }
 
-  /* I due riquadri tratteggiati sono segnaposto: spariscono quando arrivano
-     la foto e il testo veri. */
-  .daFare { border: 1px dashed var(--giallo); color: var(--giallo);
-            background: rgba(224,165,60,.06); border-radius: 16px;
-            display: flex; align-items: center; justify-content: center;
-            text-align: center; padding: 20px; font-size: 14px; line-height: 1.5; }
-  .daFare.foto { width: 100%; aspect-ratio: 4 / 5; }
+  /* La seconda fotografia sta sotto al testo, a tutta larghezza: e' una
+     panoramica dentro il case, e in piccolo non si leggerebbe niente. */
+  .fotone { margin: 44px 0 0; }
+  .fotone img { width: 100%; height: auto; display: block; border-radius: 16px;
+                border: 1px solid var(--line); }
+  .fotone figcaption { color: var(--muted); font-size: 13.5px; margin-top: 10px;
+                       text-align: left; }
 
   /* ---------------- il piede ----------------
      Fascia a se', come sulla pagina di Bayran Office: fondo proprio, un poco
@@ -143,7 +143,7 @@
   </header>
 
   <div class="scheda">
-    <div class="daFare foto">foto da mettere</div>
+    <img class="ritratto" src="img/bambino.jpg?v=1" alt="Io da bambino">
 
     <div class="bio">
       <p>Classe 1988, romano. La mia storia con la tecnologia inizia da bambino,
@@ -178,6 +178,12 @@
       testa tra le stelle.</p>
     </div>
   </div>
+
+  <figure class="fotone">
+    <img src="img/loop.jpg?v=1" alt="Il sistema con raffreddamento a liquido, tubi rigidi e liquido verde">
+    <figcaption>Il custom loop: CPU e scheda video sullo stesso circuito, tubi
+    rigidi e raccordi.</figcaption>
+  </figure>
 
 </div>
 
