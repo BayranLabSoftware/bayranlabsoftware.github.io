@@ -83,7 +83,16 @@
 
   /* ---------------- le schede dei software ---------------- */
   main {
-    width: 100%; max-width: 1400px;
+    /* La fila arriva ai bordi dello schermo invece di fermarsi a 1400, ma
+       l'imbottitura riporta la PRIMA scheda esattamente dove stava: cosi' la
+       colonna resta quella di prima e l'ultima scheda visibile viene tagliata
+       dal bordo della finestra, che e' l'unico modo di far capire che la fila
+       continua. Cinque schede da 266 con i loro vuoti fanno 1402px: a 1400
+       tagliava pulito dopo la quinta e la sesta non esisteva per nessuno. */
+    align-self: stretch;
+    margin-left: -22px; margin-right: -22px;
+    padding-left: max(22px, calc((100% - 1400px) / 2 + 22px));
+    padding-right: max(22px, calc((100% - 1400px) / 2 + 22px));
     /* 92px prima che sotto al marchio ci fosse la riga: adesso e' lei a
        occupare quello spazio, e la fila resta dov'era. Spostarla vorrebbe dire
        ritarare l'ingrandimento, che e' stato misurato con la fila a y=428. */
@@ -93,7 +102,19 @@
        pagina sotto. Il margine automatico si mangia lo spazio avanzato e
        spinge il piede in fondo; quando la pagina e' lunga vale zero. */
     margin-bottom: auto;
-    display: grid; gap: 18px; grid-template-columns: repeat(5, 1fr);
+    /* La fila scorre invece di stringersi: le schede restano larghe 266px,
+       quelle su cui erano stati scelti 1400 e 1.60, e se ne possono aggiungere
+       quante se ne vuole.
+       Il guaio: un contenitore che scorre in orizzontale non puo' lasciar
+       uscire niente dall'alto (il CSS non permette overflow-x che scorre con
+       overflow-y visibile), e la scheda ingrandita cresce di 235px verso
+       l'alto. Per questo il contenitore ha 250px di imbottitura sopra e li
+       riprende con un margine negativo: la fila resta dov'era, e
+       l'ingrandimento ha lo spazio DENTRO invece di sbatterci contro. */
+    display: flex; gap: 18px; overflow-x: auto; overflow-y: hidden;
+    padding-top: 250px; margin-top: -201px;
+    scrollbar-width: none;
+    scroll-padding: 0 22px;
   }
   /* Sotto i 1040px l'ingrandimento non ha senso: quattro schede in fila
      sarebbero troppo strette perche' se ne capisca il contenuto, e su un
@@ -107,7 +128,9 @@
                                       margin-top: 54px; } }
   @media (max-width: 700px)  { main { grid-template-columns: 1fr; } }
 
+  main::-webkit-scrollbar { display: none; }
   .scheda {
+    flex: 0 0 266px;
     display: flex; flex-direction: column; text-decoration: none; color: inherit;
     background: var(--card); border: 1px solid var(--line); border-radius: 18px;
     overflow: hidden; transition: transform .18s ease, box-shadow .18s ease,
@@ -148,6 +171,13 @@
     overflow: hidden;
   }
   .vetrina img { border-radius: 8px 8px 0 0; box-shadow: 0 12px 30px rgba(0,0,0,.38); }
+  /* La scheda che aspetta: stessa forma delle altre, un filo piu' spenta, e
+     senza la mano del cursore perche' non porta da nessuna parte. */
+  .attesa { cursor: default; }
+  .attesa .vetrina { background: linear-gradient(160deg, #24435a, #1a3247); }
+  .attesa .nome, .attesa .claim { opacity: .82; }
+  .prossima { align-self: center; color: #cfe3ee; font-size: 14px;
+              letter-spacing: .08em; text-transform: uppercase; }
   .vetrina .mac { width: 86%; height: auto; }
   .vetrina .web { width: 86%; height: auto; }
   .vetrina .telefono { width: 124px; height: auto; }
@@ -293,6 +323,20 @@
     </div>
   </a>
 
+  <!-- Non e' un collegamento: la pagina non c'e' ancora e il programma non si
+       scarica. Resta una scheda, con la stessa forma delle altre, che dice
+       quello che e': sta arrivando. -->
+  <div class="scheda attesa">
+    <div class="vetrina"><span class="prossima">In arrivo</span></div>
+    <div class="testo">
+      <div class="nome">BayranWinCleaner</div>
+      <div class="claim">Pulizia onesta per il tuo PC.</div>
+      <div class="piede">
+        <span class="dove">Windows</span>
+      </div>
+    </div>
+  </div>
+
   <a class="scheda" href="faresy/">
     <div class="vetrina"><img class="web" src="img/card-faresy.png" alt="La postazione dell'operatore di FaReSy"></div>
     <div class="testo">
@@ -400,9 +444,12 @@
   }
 
   function attiva() {
-    return finemouse.matches && !menoMoto.matches &&
-           window.getComputedStyle(riga).gridTemplateColumns.split(' ').length
-             === schede.length;
+    // Prima si guardava il numero di colonne della griglia. Adesso la fila e'
+    // flessibile e quel dato non esiste piu': si guarda se le schede stanno
+    // davvero tutte sulla stessa riga, che e' la cosa che conta e vale con
+    // qualunque impaginazione.
+    const cime = new Set(schede.map(s => Math.round(s.getBoundingClientRect().top)));
+    return finemouse.matches && !menoMoto.matches && cime.size === 1;
   }
   function spegni() {
     riga.classList.remove('dock');
