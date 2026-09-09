@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bayran SDK — BayranLab Software</title>
-<meta name="description" content="Bayran SDK: sei motori documentali che girano dentro il dispositivo, senza rete e senza telemetria. Un progetto BayranLab Software.">
+<title>Bayran WinCleaner — BayranLab Software</title>
+<meta name="description" content="Bayran WinCleaner: pulizia onesta per Windows. Le scansioni partono su richiesta e ogni cosa rimossa resta recuperabile.">
 <style>
   :root {
     color-scheme: dark;
@@ -157,6 +157,21 @@
              border-top: 1px solid rgba(255,255,255,.10);
              font-size: 12.5px; opacity: .72; }
 
+  .scarica { display: inline-block; margin-top: 6px; background: var(--blu); color: #fff;
+             text-decoration: none; font-weight: 700; font-size: 16px;
+             border-radius: 12px; padding: 14px 30px; transition: filter .15s; }
+  .scarica:hover { filter: brightness(1.1); }
+  .sotto { margin: 12px 0 0; font-size: 13.5px; color: var(--muted); }
+  .finestra { width: 100%; height: auto; display: block; margin-top: 26px;
+              border-radius: 14px; border: 1px solid var(--line);
+              box-shadow: 0 18px 44px rgba(0,0,0,.4); }
+  .avviso { margin: 26px auto 0; max-width: var(--testo); text-align: left;
+            background: var(--card); border: 1px solid var(--line);
+            border-left: 3px solid var(--blu); border-radius: 12px; padding: 20px 22px; }
+  .avviso h3 { margin: 0 0 8px; font-size: 16.5px; }
+  .avviso p { margin: 0 0 10px; font-size: 15px; }
+  .avviso p:last-child { margin-bottom: 0; }
+
   /* pannello cookie, come sulle altre pagine */
   .cookiewrap { position: fixed; inset: 0; z-index: 95; display: flex;
                 align-items: center; justify-content: center; padding: 22px;
@@ -192,98 +207,53 @@
   </div>
 
   <header class="hero">
-    <h1>Bayran SDK</h1>
-    <p class="claim">Sei motori documentali che eseguono interamente sul dispositivo.
-    Nessuna chiamata di rete durante l'elaborazione, nessuna telemetria, nessuna
-    dipendenza da servizi di terzi.</p>
-    <span class="stato"><i></i> Sei moduli · distribuzione su invito</span>
+    <h1>Bayran WinCleaner</h1>
+    <p class="claim">Pulizia onesta per il tuo PC. Le scansioni partono solo quando le
+    chiedi tu, e ogni cosa rimossa resta recuperabile dal Registro.</p>
+    <a class="scarica" href="../bayrancleaner/BayranWinCleaner-0.9.1.zip">Scarica gratis</a>
+    <p class="sotto">Versione 0.9.1 · per Windows, Intel/AMD e ARM · 15 MB</p>
   </header>
 
-  <h2>Il problema</h2>
-  <p class="lead">Chi tratta documenti in banca, in assicurazione, in sanità o nella
-  pubblica amministrazione deve leggerli, renderli a schermo, convertirli e stamparli.
-  I motori documentali disponibili sul mercato sono in larga parte servizi: il documento
-  viene caricato su un'infrastruttura esterna e restituito elaborato. Dove il dato non
-  può lasciare il perimetro, quell'architettura non è praticabile.</p>
+  <img class="finestra" src="img/finestra.png?v=1" alt="La finestra di Bayran WinCleaner su Windows, con la panoramica delle sezioni">
 
-  <h2>Cosa fa Bayran SDK</h2>
+  <h2>Cosa fa</h2>
   <div class="tre">
     <div class="punto">
-      <h3>Elaborazione sul dispositivo</h3>
-      <p>I motori lavorano dove si trova il documento. Nessuna chiamata di rete durante
-      l'elaborazione e nessuna telemetria: il collaudo si può eseguire in rete
-      isolata.</p>
+      <h3>Libera spazio, con giudizio</h3>
+      <p>Cache di sviluppo, resti delle applicazioni, duplicati, file grandi e vecchi.
+      Ogni scansione parte quando la chiedi tu, e mostra cosa ha trovato prima di
+      toccare qualsiasi cosa.</p>
     </div>
     <div class="punto">
-      <h3>Misure riproducibili</h3>
-      <p>Ogni modulo è accompagnato dal proprio contratto tecnico e dai banchi di prova
-      con verità a terra. I risultati dichiarati si verificano sulla propria
-      infrastruttura.</p>
+      <h3>Tutto si torna indietro</h3>
+      <p>Quello che viene rimosso finisce nel Cestino e resta scritto nel Registro delle
+      operazioni. Non c'è un'azione che non si possa disfare.</p>
     </div>
     <div class="punto">
-      <h3>Un solo codice, quattro ambienti</h3>
-      <p>Lo stesso motore esegue in browser, in WebView su Android e iOS, in Electron e
-      in Node. L'aggiornamento consiste nella sostituzione di un file.</p>
+      <h3>Guarda anche il sistema</h3>
+      <p>App di avvio, rete, processi, firewall, batteria e le regolazioni di Windows che
+      servono davvero, raccolte in un posto solo e spiegate.</p>
     </div>
   </div>
 
-  <h2>I moduli</h2>
-  <div class="moduli">
-    <table>
-      <thead>
-        <tr><th>Modulo</th><th>Funzione</th><th>Versione</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>bayran-scanner</td><td>Rilevamento del documento nelle immagini e ritaglio prospettico, con addestramento sui dati del cliente</td><td>0.2</td></tr>
-        <tr><td>bayran-ocr</td><td>Lettura del testo dalle immagini, 32 lingue ad alfabeto latino, con indice di fiducia esposto</td><td>0.1</td></tr>
-        <tr><td>bayran-write</td><td>Resa e modifica di documenti .docx, esportazione in PDF</td><td>0.1</td></tr>
-        <tr><td>bayran-grid</td><td>Resa di fogli di calcolo .xlsx con stili e formati numerici localizzati</td><td>0.1</td></tr>
-        <tr><td>bayran-deck</td><td>Resa di presentazioni .pptx, comprese geometrie e grafici DrawingML</td><td>0.1</td></tr>
-        <tr><td>bayran-pdf</td><td>Visualizzazione .pdf con testo selezionabile, estrazione in ordine di lettura, stampa</td><td>0.1</td></tr>
-      </tbody>
-    </table>
+  <h2>Come si installa</h2>
+  <div class="avviso">
+    <h3>Windows dirà che non conosce il programma</h3>
+    <p>È vero: <strong>non è firmato</strong>. Alla prima esecuzione compare l'avviso di
+    Windows: premi «Ulteriori informazioni» e poi «Esegui comunque». La firma di un
+    programma per Windows si compra, e per questa versione non è stata comprata.</p>
+    <p>Dentro il pacchetto c'è <code>Installa.bat</code>: doppio clic e basta. Copia il
+    programma nella cartella dell'utente, installa il runtime che gli serve se manca, e
+    si registra in «Installazione applicazioni», da dove si toglie.</p>
+    <p><strong>Non chiede l'amministratore.</strong> Un pulitore che se lo fa dare solo
+    per installarsi comincia male.</p>
   </div>
-  <p class="nota">I nomi dei moduli sono marchi di BayranLab Software. I formati citati
-  sono standard tecnici di interscambio, nominati a solo scopo di compatibilità.</p>
 
-  <h2>Come si presenta</h2>
-  <div class="galleria">
-    <figure>
-      <button type="button" class="tessera" aria-label="Ingrandisci: il documento trovato nella foto">
-        <img src="img/scanner.png?v=1" alt="Il documento trovato in una foto e raddrizzato, e il testo letto dall'immagine">
-      </button>
-      <figcaption>A sinistra la foto storta e il documento trovato dentro; a destra il
-      ritaglio raddrizzato. Accanto, il testo letto dall'immagine con la fiducia in
-      chiaro: sotto una certa soglia il motore avvisa invece di consegnare spazzatura.</figcaption>
-    </figure>
-    <figure>
-      <button type="button" class="tessera" aria-label="Ingrandisci: documenti e fogli di calcolo">
-        <img src="img/documenti.png?v=1" alt="Un documento .docx reso a pagine e un foglio .xlsx con i suoi stili">
-      </button>
-      <figcaption>Un .docx reso a pagine e un .xlsx con gli stili veri e i formati numero
-      nella lingua giusta. Non un'anteprima approssimata: la resa si misura contro il
-      programma che quei file li ha generati.</figcaption>
-    </figure>
-    <figure>
-      <button type="button" class="tessera" aria-label="Ingrandisci: una presentazione resa dal motore">
-        <img src="img/presentazioni.png?v=2" alt="Una presentazione .pptx resa dal motore, con i colori del tema">
-      </button>
-      <figcaption>Una .pptx resa dal motore: colori del tema, geometrie e grafici. Lo
-      stesso motore accende i grafici dentro i documenti e i fogli.</figcaption>
-    </figure>
-  </div>
-  <p class="nota">Le schermate vengono dalla vetrina interna, che esegue i motori dal vivo
-  mentre la si guarda. I documenti e le cifre dentro sono inventati: servono a far vedere
-  la resa, non sono i dati di nessuno.</p>
-
-  <div class="chiusura">
-    <h2>Distribuzione</h2>
-    <p>I pacchetti non sono pubblici. La distribuzione avviene su invito, con pacchetti
-    privati sotto scope: il cliente li installa con gli strumenti che già usa, ma
-    l'accesso resta nominale.</p>
-    <p>Per una valutazione tecnica, il contratto di un modulo o una dimostrazione:
-    <a href="mailto:bayranlabsoftware@gmail.com">bayranlabsoftware@gmail.com</a></p>
-  </div>
+  <h2>Perché 0.9 e non 1.0</h2>
+  <p class="lead">Perché nessuno l'ha ancora usato su un computer vero: questa è la prima
+  volta. Se qualcosa si comporta male è esattamente il motivo per cui questa versione
+  esiste. C'è anche <a href="../bayrancleaner/">la versione per Mac</a>, che di strada
+  ne ha fatta di più.</p>
 
 </div>
 
@@ -305,7 +275,6 @@
           <a href="../nimbus/">Bayran Nimbus</a>
           <a href="../foodbridge/">FoodBridge</a>
           <a href="../faresy/">FaReSy</a>
-          <a href="../bayransdk/">Bayran SDK</a>
         </div>
       </nav>
 
@@ -318,6 +287,7 @@
         <h3>Note legali</h3>
         <!-- Ogni prodotto rimanda alla propria informativa: trattano cose
              diverse. Quella del sito copre solo le pagine informative. -->
+        <a href="../bayrancleaner/privacy/">Privacy policy — Bayran Cleaner</a>
         <a href="../privacy/">Privacy policy del sito</a>
         <button type="button" class="flink" id="cookiebtn">Cookie</button>
       </nav>
@@ -347,11 +317,6 @@
 </div>
 
 
-<div class="zoom" id="zoom" hidden role="dialog" aria-modal="true" aria-label="Immagine ingrandita">
-  <button type="button" class="chiudi" id="zoomChiudi" aria-label="Chiudi">&times;</button>
-  <img id="zoomImg" src="" alt="">
-</div>
-
 
 <script>
 (function pannelloCookie(){
@@ -362,52 +327,6 @@
   document.getElementById('cookieok').addEventListener('click', chiudi);
   w.addEventListener('click', e => { if (e.target === w) chiudi(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !w.hidden) chiudi(); });
-})();
-
-/* Il filmato parte da solo, ma solo per chi non ha chiesto meno animazioni al
-   sistema: per questo l'attributo non sta nel markup ma si accende qui. Se il
-   browser rifiuta la riproduzione automatica resta il pulsante, che c'e'
-   comunque. */
-(function filmato() {
-  const v = document.getElementById('filmato');
-  if (!v || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  v.autoplay = true;
-  const p = v.play();
-  if (p) p.catch(function () {});
-})();
-
-/* Ingranditore: la stessa immagine gia' scaricata, mostrata a piena pagina.
-   Niente libreria e niente secondo file da caricare. Al ritorno il fuoco torna
-   sul riquadro premuto, altrimenti chi naviga da tastiera lo perde. */
-(function ingranditore() {
-  const strato = document.getElementById('zoom');
-  const dentro = document.getElementById('zoomImg');
-  let premuto = null;
-
-  function apri(bottone) {
-    const img = bottone.querySelector('img');
-    dentro.src = img.getAttribute('src');
-    dentro.alt = img.getAttribute('alt') || '';
-    premuto = bottone;
-    strato.hidden = false;
-    document.getElementById('zoomChiudi').focus();
-  }
-  function chiudi() {
-    strato.hidden = true;
-    dentro.removeAttribute('src');
-    if (premuto) premuto.focus();
-  }
-
-  document.querySelectorAll('.tessera').forEach(function (b) {
-    b.addEventListener('click', function () { apri(b); });
-  });
-  document.getElementById('zoomChiudi').addEventListener('click', chiudi);
-  strato.addEventListener('click', function (e) {
-    if (e.target === strato || e.target === dentro) chiudi();
-  });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && !strato.hidden) chiudi();
-  });
 })();
 </script>
 </body>

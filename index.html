@@ -183,13 +183,6 @@
     overflow: hidden;
   }
   .vetrina img { border-radius: 8px 8px 0 0; box-shadow: 0 12px 30px rgba(0,0,0,.38); }
-  /* La scheda che aspetta: stessa forma delle altre, un filo piu' spenta, e
-     senza la mano del cursore perche' non porta da nessuna parte. */
-  .attesa { cursor: default; }
-  .attesa .vetrina { background: linear-gradient(160deg, #24435a, #1a3247); }
-  .attesa .nome, .attesa .claim { opacity: .82; }
-  .prossima { align-self: center; color: #cfe3ee; font-size: 14px;
-              letter-spacing: .08em; text-transform: uppercase; }
   .vetrina .mac { width: 86%; height: auto; }
   .vetrina .web { width: 86%; height: auto; }
   .vetrina .telefono { width: 124px; height: auto; }
@@ -299,19 +292,17 @@
     </div>
   </a>
 
-  <!-- Non e' un collegamento: la pagina non c'e' ancora e il programma non si
-       scarica. Resta una scheda, con la stessa forma delle altre, che dice
-       quello che e': sta arrivando. -->
-  <div class="scheda attesa">
-    <div class="vetrina"><span class="prossima">In arrivo</span></div>
+  <a class="scheda" href="bayranwincleaner/">
+    <div class="vetrina"><img class="web" src="img/card-wincleaner.png" alt="La finestra di Bayran WinCleaner"></div>
     <div class="testo">
       <div class="nome">BayranWinCleaner</div>
       <div class="claim">Pulizia onesta per il tuo PC.</div>
       <div class="piede">
-        <span class="dove">Windows</span>
+        <span class="dove">Windows · gratuito</span>
+        <span class="vai">Vai <span class="freccia">→</span></span>
       </div>
     </div>
-  </div>
+  </a>
 
   <a class="scheda" href="bayranoffice/">
     <div class="vetrina"><img class="telefono" src="img/card-office.png" alt="La schermata iniziale di Bayran Office"></div>
@@ -387,6 +378,7 @@
         <h3>Software</h3>
         <div class="flista">
           <a href="bayrancleaner/">Bayran Cleaner</a>
+      <a href="bayranwincleaner/">Bayran WinCleaner</a>
           <a href="bayranoffice/">Bayran Office</a>
           <a href="nimbus/">Bayran Nimbus</a>
           <a href="foodbridge/">FoodBridge</a>
