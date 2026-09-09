@@ -116,6 +116,10 @@
        lo prende per "torna indietro", portando via dalla pagina. Con questo lo
        scorrimento resta dentro la fila. */
     overscroll-behavior-x: contain;
+    /* Niente barra sotto la fila: si scorre appoggiando il cursore ai bordi, e
+       una barra li' sarebbe solo un ingombro. Vale SOLO per questa fila: la
+       barra della pagina resta quella di sistema, come la fa macOS. */
+    scrollbar-width: none;
     padding-top: 250px; margin-top: -201px;
     scroll-padding: 0 22px;
   }
@@ -136,6 +140,7 @@
   }
   @media (max-width: 700px)  { main { grid-template-columns: 1fr; } }
 
+  main::-webkit-scrollbar { display: none; }
   .scheda {
     flex: 0 0 266px;
     display: flex; flex-direction: column; text-decoration: none; color: inherit;
