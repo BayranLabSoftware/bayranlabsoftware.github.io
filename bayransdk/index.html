@@ -93,6 +93,31 @@
                   line-height: 1; }
   .zoom .chiudi:hover { border-color: var(--ciano); }
 
+  /* La tabella dei moduli: e' la cosa che un lettore tecnico cerca per prima,
+     e va letta come una tabella e non come un elenco di riquadri. Su schermo
+     stretto scorre da sola invece di spezzare le parole. */
+  .moduli { margin-top: 18px; overflow-x: auto; }
+  .moduli table { width: 100%; border-collapse: collapse; text-align: left;
+                  font-size: 15px; min-width: 620px; }
+  .moduli th { font-size: 12px; text-transform: uppercase; letter-spacing: .08em;
+               color: var(--muted); font-weight: 700; padding: 0 14px 10px 0;
+               border-bottom: 1px solid var(--line); }
+  .moduli td { padding: 13px 14px 13px 0; border-bottom: 1px solid var(--line);
+               color: #cfe0e9; vertical-align: top; }
+  .moduli td:first-child { color: var(--ink); font-weight: 600; white-space: nowrap; }
+  .moduli td:last-child { color: var(--muted); white-space: nowrap; }
+
+  /* Chiusura: come si arriva a parlarne. Su una pagina rivolta a chi valuta,
+     e' l'informazione che deve restare in mano. */
+  .chiusura { margin: 56px auto 0; max-width: var(--testo); text-align: left;
+              background: var(--card); border: 1px solid var(--line);
+              border-radius: 16px; padding: 26px 28px; }
+  .chiusura h2 { margin: 0 0 10px; font-size: 20px; }
+  .chiusura p { margin: 0 0 12px; }
+  .chiusura p:last-child { margin-bottom: 0; }
+  .chiusura a { color: var(--ciano); font-weight: 600; text-decoration: none; }
+  .chiusura a:hover { text-decoration: underline; }
+
   .nota { margin: 18px auto 0; font-size: 13.5px; color: var(--muted);
           max-width: var(--testo); padding-top: 14px;
           border-top: 1px solid var(--line); }
@@ -168,39 +193,58 @@
 
   <header class="hero">
     <h1>Bayran SDK</h1>
-    <p class="claim">Sei motori documentali che girano dentro il dispositivo.
-    Niente rete mentre lavorano, niente telemetria, nessun servizio di terzi.</p>
-    <span class="stato"><i></i> Sei moduli funzionanti · distribuzione riservata</span>
+    <p class="claim">Sei motori documentali che eseguono interamente sul dispositivo.
+    Nessuna chiamata di rete durante l'elaborazione, nessuna telemetria, nessuna
+    dipendenza da servizi di terzi.</p>
+    <span class="stato"><i></i> Sei moduli · distribuzione su invito</span>
   </header>
 
   <h2>Il problema</h2>
-  <p class="lead">Una banca, un'assicurazione, un ospedale, un ufficio pubblico: chi
-  lavora lì dentro ha documenti da leggere, da rendere a schermo, da convertire e da
-  stampare. I motori che fanno queste cose, quasi tutti, sono servizi: il documento si
-  carica da qualche parte e torna lavorato. Dove un solo byte non deve uscire dal
-  perimetro, quella strada non esiste, e allora si finisce a fare le cose a mano o a non
-  farle.</p>
+  <p class="lead">Chi tratta documenti in banca, in assicurazione, in sanità o nella
+  pubblica amministrazione deve leggerli, renderli a schermo, convertirli e stamparli.
+  I motori documentali disponibili sul mercato sono in larga parte servizi: il documento
+  viene caricato su un'infrastruttura esterna e restituito elaborato. Dove il dato non
+  può lasciare il perimetro, quell'architettura non è praticabile.</p>
 
   <h2>Cosa fa Bayran SDK</h2>
   <div class="tre">
     <div class="punto">
-      <h3>Sei motori, un perimetro solo</h3>
-      <p>Trova i documenti nelle foto, legge il testo dalle immagini, rende .docx, .xlsx,
-      .pptx e .pdf. Tutto dentro il dispositivo: si può collaudare in una rete
-      isolata, staccata.</p>
+      <h3>Elaborazione sul dispositivo</h3>
+      <p>I motori lavorano dove si trova il documento. Nessuna chiamata di rete durante
+      l'elaborazione e nessuna telemetria: il collaudo si può eseguire in rete
+      isolata.</p>
     </div>
     <div class="punto">
-      <h3>Numeri che si rifanno in casa</h3>
-      <p>Ogni modulo ha il suo contratto scritto e i suoi banchi di prova con la verità
-      a terra. Non si chiede fiducia: si consegnano gli strumenti per misurare, e i
-      conti si rifanno senza di noi.</p>
+      <h3>Misure riproducibili</h3>
+      <p>Ogni modulo è accompagnato dal proprio contratto tecnico e dai banchi di prova
+      con verità a terra. I risultati dichiarati si verificano sulla propria
+      infrastruttura.</p>
     </div>
     <div class="punto">
-      <h3>Un cuore, quattro case</h3>
-      <p>Lo stesso codice gira nel browser, dentro un'app su Android e iOS, in Electron
-      e su Node. Aggiornare un motore vuol dire sostituire un file.</p>
+      <h3>Un solo codice, quattro ambienti</h3>
+      <p>Lo stesso motore esegue in browser, in WebView su Android e iOS, in Electron e
+      in Node. L'aggiornamento consiste nella sostituzione di un file.</p>
     </div>
   </div>
+
+  <h2>I moduli</h2>
+  <div class="moduli">
+    <table>
+      <thead>
+        <tr><th>Modulo</th><th>Funzione</th><th>Versione</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>bayran-scanner</td><td>Rilevamento del documento nelle immagini e ritaglio prospettico, con addestramento sui dati del cliente</td><td>0.2</td></tr>
+        <tr><td>bayran-ocr</td><td>Lettura del testo dalle immagini, 32 lingue ad alfabeto latino, con indice di fiducia esposto</td><td>0.1</td></tr>
+        <tr><td>bayran-write</td><td>Resa e modifica di documenti .docx, esportazione in PDF</td><td>0.1</td></tr>
+        <tr><td>bayran-grid</td><td>Resa di fogli di calcolo .xlsx con stili e formati numerici localizzati</td><td>0.1</td></tr>
+        <tr><td>bayran-deck</td><td>Resa di presentazioni .pptx, comprese geometrie e grafici DrawingML</td><td>0.1</td></tr>
+        <tr><td>bayran-pdf</td><td>Visualizzazione .pdf con testo selezionabile, estrazione in ordine di lettura, stampa</td><td>0.1</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="nota">I nomi dei moduli sono marchi di BayranLab Software. I formati citati
+  sono standard tecnici di interscambio, nominati a solo scopo di compatibilità.</p>
 
   <h2>Come si presenta</h2>
   <div class="galleria">
@@ -222,7 +266,7 @@
     </figure>
     <figure>
       <button type="button" class="tessera" aria-label="Ingrandisci: una presentazione resa dal motore">
-        <img src="img/presentazioni.png?v=1" alt="Una presentazione .pptx resa dal motore, con i colori del tema">
+        <img src="img/presentazioni.png?v=2" alt="Una presentazione .pptx resa dal motore, con i colori del tema">
       </button>
       <figcaption>Una .pptx resa dal motore: colori del tema, geometrie e grafici. Lo
       stesso motore accende i grafici dentro i documenti e i fogli.</figcaption>
@@ -232,11 +276,14 @@
   mentre la si guarda. I documenti e le cifre dentro sono inventati: servono a far vedere
   la resa, non sono i dati di nessuno.</p>
 
-  <h2>A che punto è</h2>
-  <p class="lead">I sei moduli funzionano, fra la prima e la seconda versione. <strong>I
-  pacchetti non sono pubblici e non è una dimenticanza</strong>: si installano su invito,
-  e da questa pagina non si scarica niente. Il codice dei motori non è offuscato, e
-  metterlo in chiaro vorrebbe dire regalarlo.</p>
+  <div class="chiusura">
+    <h2>Distribuzione</h2>
+    <p>I pacchetti non sono pubblici. La distribuzione avviene su invito, con pacchetti
+    privati sotto scope: il cliente li installa con gli strumenti che già usa, ma
+    l'accesso resta nominale.</p>
+    <p>Per una valutazione tecnica, il contratto di un modulo o una dimostrazione:
+    <a href="mailto:bayranlabsoftware@gmail.com">bayranlabsoftware@gmail.com</a></p>
+  </div>
 
 </div>
 
