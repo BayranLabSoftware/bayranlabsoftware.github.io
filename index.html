@@ -69,6 +69,11 @@
     filter: drop-shadow(0 12px 30px color-mix(in srgb, var(--blu) 26%, transparent));
   }
   header .scritta { width: min(330px, 76vw); height: auto; display: block; margin: 0 auto; }
+  /* La riga sta attaccata al marchio e non a mezz'aria: cosi' i due si leggono
+     come un blocco solo, e quando la scheda ingrandita passa di li' li copre
+     insieme invece di tagliarli a meta'. */
+  header .cosa { margin: 16px auto 0; max-width: 640px; font-size: 19px;
+                 color: #c3d8e4; line-height: 1.45; }
   /* Il marchio e' un'immagine con dentro il nome: per chi legge con la voce
      e per i motori di ricerca il nome deve esistere comunque come testo. */
   h1 {
@@ -78,7 +83,11 @@
 
   /* ---------------- le schede dei software ---------------- */
   main {
-    width: 100%; max-width: 1400px; margin-top: 92px;
+    width: 100%; max-width: 1400px;
+    /* 92px prima che sotto al marchio ci fosse la riga: adesso e' lei a
+       occupare quello spazio, e la fila resta dov'era. Spostarla vorrebbe dire
+       ritarare l'ingrandimento, che e' stato misurato con la fila a y=428. */
+    margin-top: 49px;
     /* Su uno schermo alto la pagina e' piu' corta della finestra: senza
        questo, la fascia del piede resta a meta' altezza con il fondo della
        pagina sotto. Il margine automatico si mangia lo spazio avanzato e
@@ -231,6 +240,8 @@
   <h1>BayranLab Software</h1>
   <img class="cane" src="img/logo-dog.png" alt="">
   <img class="scritta" src="img/bayranlab-logo.png" alt="BayranLab Software">
+  <p class="cosa">Applicazioni per Mac, iPhone e Android.
+  Simulazioni e sistemi per il web.</p>
 </header>
 
 <main>
