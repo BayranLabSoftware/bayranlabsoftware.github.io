@@ -93,7 +93,7 @@
        pagina sotto. Il margine automatico si mangia lo spazio avanzato e
        spinge il piede in fondo; quando la pagina e' lunga vale zero. */
     margin-bottom: auto;
-    display: grid; gap: 18px; grid-template-columns: repeat(5, 1fr);
+    display: grid; gap: 18px; grid-template-columns: repeat(6, 1fr);
   }
   /* Sotto i 1040px l'ingrandimento non ha senso: quattro schede in fila
      sarebbero troppo strette perche' se ne capisca il contenuto, e su un
@@ -148,6 +148,7 @@
     overflow: hidden;
   }
   .vetrina img { border-radius: 8px 8px 0 0; box-shadow: 0 12px 30px rgba(0,0,0,.38); }
+  .daFare { color: #ffe9c2; font-size: 12.5px; align-self: center; }
   .vetrina .mac { width: 86%; height: auto; }
   .vetrina .web { width: 86%; height: auto; }
   .vetrina .telefono { width: 124px; height: auto; }
@@ -288,6 +289,18 @@
       <div class="claim">Marketplace B2B per ristoranti e forniture.</div>
       <div class="piede">
         <span class="dove">Showcase</span>
+        <span class="vai">Vai <span class="freccia">→</span></span>
+      </div>
+    </div>
+  </a>
+
+  <a class="scheda" href="bayranwincleaner/">
+    <div class="vetrina"><span class="daFare">schermata da fare</span></div>
+    <div class="testo">
+      <div class="nome">Bayran WinCleaner</div>
+      <div class="claim">Pulizia onesta per il tuo PC.</div>
+      <div class="piede">
+        <span class="dove">Windows · gratuito</span>
         <span class="vai">Vai <span class="freccia">→</span></span>
       </div>
     </div>
