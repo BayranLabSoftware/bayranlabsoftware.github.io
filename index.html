@@ -83,16 +83,21 @@
 
   /* ---------------- le schede dei software ---------------- */
   main {
-    /* La fila arriva ai bordi dello schermo invece di fermarsi a 1400, ma
-       l'imbottitura riporta la PRIMA scheda esattamente dove stava: cosi' la
-       colonna resta quella di prima e l'ultima scheda visibile viene tagliata
-       dal bordo della finestra, che e' l'unico modo di far capire che la fila
-       continua. Cinque schede da 266 con i loro vuoti fanno 1402px: a 1400
-       tagliava pulito dopo la quinta e la sesta non esisteva per nessuno. */
+    /* La fila arriva ai bordi dello schermo, cosi' su schermo stretto l'ultima
+       scheda viene tagliata dal bordo e si capisce che la fila continua.
+       "safe center" fa le due cose che servono, e le fa da solo: quando le
+       schede ci stanno tutte le centra sullo schermo, e quando non ci stanno
+       torna ad allinearle a sinistra. Un "center" secco invece, quando la
+       fila sborda, spinge il primo pezzo fuori a sinistra dove non si
+       raggiunge piu' nemmeno scorrendo.
+       Prima l'imbottitura ancorava la prima scheda alla colonna da 1400 del
+       resto della pagina: su uno schermo 21:9, dove le schede ci stanno tutte,
+       il blocco restava incollato a quella colonna e finiva 285px a destra del
+       centro — e la fila credeva di dover scorrere quando non serviva. */
     align-self: stretch;
+    justify-content: safe center;
     margin-left: -22px; margin-right: -22px;
-    padding-left: max(22px, calc((100% - 1400px) / 2 + 22px));
-    padding-right: max(22px, calc((100% - 1400px) / 2 + 22px));
+    padding-left: 22px; padding-right: 22px;
     /* 92px prima che sotto al marchio ci fosse la riga: adesso e' lei a
        occupare quello spazio, e la fila resta dov'era. Spostarla vorrebbe dire
        ritarare l'ingrandimento, che e' stato misurato con la fila a y=428. */
