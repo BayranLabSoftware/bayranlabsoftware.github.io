@@ -193,40 +193,35 @@
   <header class="hero">
     <h1>FaReSy</h1>
     <img class="insegna" src="img/faresy-banner.svg?v=2" alt="FaReSy — Face Recognition Surveillance System">
-    <p class="claim">Riconoscimento facciale per la videosorveglianza, costruito
-    attorno a una regola: la macchina propone, una persona decide.</p>
+    <p class="claim">Riconoscimento facciale per la videosorveglianza.
+    La macchina propone, una persona decide.</p>
     <span class="stato"><i></i> Sistema completo · in prova su un impianto vero</span>
   </header>
 
-  <h2>Il problema</h2>
-  <p class="lead">Confrontare i volti ripresi da una telecamera con un elenco di
-  persone da cercare è un lavoro che si fa guardando i fotogrammi uno per uno. I
-  sistemi che lo automatizzano di solito rispondono sì o no e basta: non dicono
-  quanto sono sicuri, non dicono su quale fotogramma hanno deciso, e non lasciano
-  traccia di chi ha guardato cosa. Ma il riconoscimento biometrico è dato ad alto
-  rischio per il regolamento europeo sull'intelligenza artificiale, e un sistema
-  che non sa spiegare come è arrivato a un nome non è utilizzabile: né in
-  un'indagine, né davanti a chi dovrà giudicarla.</p>
+  <h2>Un sì o un no non bastano</h2>
+  <p class="lead">I sistemi di riconoscimento rispondono sì o no: non dicono quanto
+  sono sicuri, su quale fotogramma hanno deciso, né chi ha guardato cosa. Ma la
+  biometria è un dato ad alto rischio per il regolamento europeo sull'intelligenza
+  artificiale, e un nome senza una catena che lo regga non serve — né in un'indagine,
+  né davanti a un giudice.</p>
 
   <h2>Cosa fa FaReSy</h2>
   <div class="tre">
     <div class="punto">
       <h3>Due modelli, un voto solo</h3>
-      <p>ArcFace e Facenet512 calcolano due impronte diverse dello stesso volto e
-      votano. Se non sono d'accordo non c'è riscontro: lo sbaglio di un modello,
-      da solo, non diventa un nome.</p>
+      <p>ArcFace e Facenet512 calcolano due impronte dello stesso volto e votano.
+      Senza accordo non c'è riscontro: lo sbaglio di un modello non diventa un nome.</p>
     </div>
     <div class="punto">
       <h3>Prima si scarta, poi si riconosce</h3>
-      <p>Un controllo scarta foto, schermi e maschere; un filtro di qualità scarta
-      i fotogrammi mossi, storti o troppo piccoli. Su un'immagine che non regge il
-      sistema si ferma, invece di tirare a indovinare.</p>
+      <p>Foto, schermi e maschere vengono respinti. Fotogrammi mossi, storti o troppo
+      piccoli anche. Su un'immagine che non regge, il sistema si ferma.</p>
     </div>
     <div class="punto">
       <h3>Niente si muove da solo</h3>
-      <p>Ogni riscontro diventa una segnalazione che un operatore deve confermare,
-      scartare o portare avanti, scrivendo il perché. Ogni passaggio finisce in un
-      registro firmato, che non si riscrive a cose fatte.</p>
+      <p>Ogni riscontro è una segnalazione che un operatore conferma, scarta o porta
+      avanti, motivandola. Ogni passaggio finisce in un registro firmato, che non si
+      riscrive a cose fatte.</p>
     </div>
   </div>
 
@@ -237,12 +232,10 @@
                      numero di traccia e identità decisa per traccia">
     <source src="img/tracciamento.mp4?v=1" type="video/mp4">
   </video>
-  <p class="nota">La scena è costruita: sono fotografie che attraversano uno sfondo
-  disegnato, non un filmato di sorveglianza. Serve a mettere alla prova il rilevamento,
-  l'inseguimento e la decisione per traccia anche con più soggetti in campo insieme. Il
-  riconoscimento ha lavorato sui fotogrammi originali; <strong>qui i volti sono coperti
-  da un mosaico</strong>, perché su una pagina pubblica non ci si mette la faccia di
-  nessuno.</p>
+  <p class="nota">Scena costruita: fotografie che attraversano uno sfondo disegnato,
+  non un filmato di sorveglianza. Mette alla prova rilevamento, inseguimento e decisione
+  per traccia con più soggetti in campo. Il riconoscimento ha lavorato sui fotogrammi
+  originali; <strong>qui i volti sono coperti da un mosaico</strong>.</p>
 
   <h2>Com'è davvero</h2>
   <div class="galleria">
@@ -250,31 +243,30 @@
       <button type="button" class="tessera" aria-label="Ingrandisci: il riepilogo">
         <img src="img/app-riepilogo.png?v=1" alt="Il riepilogo del sistema, con i conteggi delle ultime 24 ore">
       </button>
-      <figcaption>Il riepilogo: nodi e telecamere in linea, eventi delle ultime 24 ore divisi
-      fra noti e sconosciuti, tentativi con una foto o uno schermo, e quanti eventi restano da
+      <figcaption>Il riepilogo: nodi e telecamere in linea, eventi delle ultime 24 ore
+      fra noti e sconosciuti, tentativi con una foto o uno schermo, eventi ancora da
       verificare.</figcaption>
     </figure>
     <figure>
       <button type="button" class="tessera" aria-label="Ingrandisci: verifica e accuratezza">
         <img src="img/app-verifica.png?v=1" alt="La schermata di verifica: un verdetto per gruppo di volti simili">
       </button>
-      <figcaption>Verifica e accuratezza: gli eventi arrivano raggruppati per volti simili e si
-      dà un verdetto per gruppo. Da quei verdetti nasce la misura dell'errore — quante volte
-      riconosce chi non è, e quante volte non riconosce chi è — telecamera per telecamera.</figcaption>
+      <figcaption>Verifica e accuratezza: eventi raggruppati per volti simili, un verdetto
+      per gruppo. Da lì la misura dell'errore, telecamera per telecamera: quante volte
+      riconosce chi non è, quante volte non riconosce chi è.</figcaption>
     </figure>
     <figure>
       <button type="button" class="tessera" aria-label="Ingrandisci: la taratura delle telecamere">
         <img src="img/app-taratura.png?v=1" alt="La taratura di una telecamera contro la pianta del locale">
       </button>
-      <figcaption>La taratura: si segnano gli stessi punti sulla foto della telecamera e sulla
-      pianta, e da lì il sistema sa dove poggiano i piedi di chi inquadra. L'errore residuo è
-      scritto in centimetri, e ogni telecamera dice se è tarata bene o va rifatta.</figcaption>
+      <figcaption>La taratura: gli stessi punti segnati sulla foto della telecamera e
+      sulla pianta, e il sistema sa dove poggiano i piedi. L'errore residuo è in centimetri,
+      telecamera per telecamera.</figcaption>
     </figure>
   </div>
-  <p class="nota">Sono schermate del sistema che gira davvero, non disegni. <strong>I volti sono
+  <p class="nota">Schermate del sistema in funzione, non disegni. <strong>I volti sono
   coperti e i nomi sostituiti con nomi inventati</strong>: le persone in quell'archivio sono
-  vere e non c'entrano niente con questo sito. La pianta è sfocata per la stessa ragione — è la
-  planimetria di un locale esistente.</p>
+  vere. La pianta è sfocata per la stessa ragione: è un locale esistente.</p>
 
   <h2>Come funziona dentro</h2>
   <div class="galleria">
@@ -282,34 +274,32 @@
       <button type="button" class="tessera" aria-label="Ingrandisci: la catena di riconoscimento">
         <img src="img/faresy-pipeline.svg?v=1" alt="La catena di riconoscimento, dalla telecamera al registro firmato">
       </button>
-      <figcaption>Dalla telecamera al registro: ogni fotogramma passa per il controllo
-      anti-inganno, il filtro di qualità, i due modelli, il voto e la calibratura —
-      e finisce comunque davanti a una persona prima di diventare qualcosa.</figcaption>
+      <figcaption>Dalla telecamera al registro: controllo anti-inganno, filtro di
+      qualità, due modelli, voto, calibratura. E in fondo, sempre, una persona.</figcaption>
     </figure>
     <figure>
       <button type="button" class="tessera" aria-label="Ingrandisci: le difese del sistema">
         <img src="img/faresy-features.svg?v=1" alt="Le difese del sistema: cifratura, ruoli, registro firmato">
       </button>
-      <figcaption>Quello che sta sotto: dati cifrati a riposo, quattro ruoli separati con
-      secondo fattore, registro a prova di manomissione e prove di equità sui gruppi
+      <figcaption>Sotto: dati cifrati a riposo, quattro ruoli separati con secondo
+      fattore, registro a prova di manomissione, prove di equità fra gruppi
       demografici.</figcaption>
     </figure>
   </div>
 
   <h2>Le regole che si è dato</h2>
-  <p class="lead">I dati biometrici stanno fra le categorie particolari del GDPR (Art. 9)
-  e il regolamento europeo sull'intelligenza artificiale li mette fra i sistemi ad alto
-  rischio (Art. 6, Allegato III). FaReSy è costruito attorno a quei vincoli invece di
-  aggiungerli dopo: revisione umana obbligatoria prima di qualunque azione, cifratura dei
-  dati a riposo, ruoli separati con secondo fattore, registro firmato e prove di equità
-  fra gruppi demografici. Una cosa il software non può darla: <strong>il fondamento
-  giuridico per trattare quei dati lo porta chi lo installa</strong>, non chi lo scrive.</p>
+  <p class="lead">Il GDPR mette la biometria fra le categorie particolari (Art. 9), il
+  regolamento europeo sull'intelligenza artificiale fra i sistemi ad alto rischio (Art. 6,
+  Allegato III). FaReSy nasce dentro quei vincoli: revisione umana obbligatoria prima di
+  qualunque azione, cifratura a riposo, ruoli separati con secondo fattore, registro
+  firmato, prove di equità fra gruppi demografici. Una cosa il software non la dà:
+  <strong>il fondamento giuridico per trattare quei dati lo porta chi lo installa</strong>,
+  non chi lo scrive.</p>
 
-  <h2>A che punto è</h2>
-  <p class="lead">FaReSy è un <strong>sistema completo</strong> ed è stato messo alla prova
-  su un impianto vero: sei telecamere, un archivio di quasi quindicimila eventi e una misura
-  dell'errore fatta a mano, evento per evento. <strong>Non è un prodotto in vendita</strong>:
-  da qui non si scarica niente, e questa pagina è una presentazione.</p>
+  <h2>Dove si trova oggi</h2>
+  <p class="lead">Sistema completo, provato su un impianto vero: sei telecamere, un archivio
+  di quasi quindicimila eventi, e la misura dell'errore fatta a mano evento per evento.
+  <strong>Non è un prodotto in vendita</strong>: da qui non si scarica niente.</p>
 
 
 </div>
