@@ -102,11 +102,11 @@
   .flag{width:22px;height:15px;border-radius:3px;object-fit:cover;margin-right:8px;box-shadow:0 0 0 1px rgba(0,0,0,.08);flex:0 0 auto}
   .langgrid span{display:inline-flex;align-items:center}
   /* footer */
-  footer{background:#08201f;color:#bcd3cf;font-size:14px}
+  footer{background:#08201f;color:#bcd3cf;font-size:14px;text-align:center}
   footer .wrap{padding:44px 22px 26px}
   footer a{color:#9fe6d8;text-decoration:none}
   footer a:hover{text-decoration:underline}
-  .fbrand{display:flex;align-items:center;gap:9px;font-weight:700;color:#eaf6f4}
+  .fbrand{display:flex;align-items:center;justify-content:center;gap:9px;font-weight:700;color:#eaf6f4}
   .fbrand img{width:26px;height:26px;border-radius:7px}
   /* Tracce esplicite, non auto-fit: con auto-fit la quarta colonna cadeva su
      una seconda riga e lasciava un buco in mezzo al footer. Qui le soglie
@@ -120,7 +120,7 @@
     footer .wrap{padding-top:30px}
     .fcol a{overflow-wrap:anywhere}
   }
-  .fcol-brand{max-width:420px}
+  .fcol-brand{max-width:420px;margin:0 auto}
   .fcol h3{font-size:12px;text-transform:uppercase;letter-spacing:.09em;
     color:#7fb8ae;font-weight:700;margin:0 0 12px;min-height:1em}
   /* L'ultima colonna non ha titolo: sono le voci di servizio, e inventare
@@ -133,11 +133,11 @@
      alla quarta voce si apre una colonna nuova invece di allungare la lista.
      Su schermo stretto le colonne non ci stanno e torna a scendere e basta. */
   .flista{display:grid;grid-auto-flow:column;grid-template-rows:repeat(3,auto);
-    gap:0 20px;justify-content:start}
+    gap:0 20px;justify-content:center}
   /* Un nome di prodotto non si spezza a meta'. */
   .flista a{white-space:nowrap}
   @media(max-width:900px){ .flista{grid-auto-flow:row;grid-template-rows:none} }
-  .flink{background:none;border:0;font:inherit;cursor:pointer;text-align:inherit}
+  .flink{background:none;border:0;font:inherit;cursor:pointer;text-align:inherit;width:100%}
   .flink:hover{text-decoration:underline}
   .fclaim{margin:12px 0 10px;opacity:.85;line-height:1.5}
   .fnote{font-size:13px;opacity:.82;display:inline-flex;align-items:center;gap:6px}

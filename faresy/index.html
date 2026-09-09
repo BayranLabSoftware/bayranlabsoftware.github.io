@@ -103,7 +103,7 @@
      piu' chiaro della pagina, e larghezza piena. Dentro, il contenuto si
      incolonna con quello che sta sopra. */
   footer { background: #0a2233; color: #9db4c0; font-size: 14px;
-           border-top: 1px solid rgba(255,255,255,.09); text-align: left; }
+           border-top: 1px solid rgba(255,255,255,.09); text-align: center; }
   footer .fwrap { max-width: 940px; margin: 0 auto; padding: 44px 22px 30px; }
   .fcols { display: grid; gap: 30px 26px; grid-template-columns: 1.7fr 1.5fr 1fr 1fr; }
   @media (max-width: 900px) { .fcols { grid-template-columns: 1fr 1fr; } }
@@ -125,8 +125,8 @@
        senza questo sfonderebbe la finestra invece di andare a capo */
     .fcol a { overflow-wrap: anywhere; }
   }
-  .fbrand { display: flex; align-items: center; gap: 9px; font-weight: 700;
-            color: #eaf6f4; font-size: 16px; }
+  .fbrand { display: flex; align-items: center; justify-content: center; gap: 9px;
+            font-weight: 700; color: #eaf6f4; font-size: 16px; }
   .fbrand img { width: 26px; height: 26px; border-radius: 7px; }
   .fbrand b { color: #5ec4e4; }
   .fcol h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .09em;
@@ -135,13 +135,13 @@
                           text-decoration: none; }
   .fcol a:hover, .fcol .flink:hover { text-decoration: underline; }
   .flink { background: none; border: 0; font: inherit; cursor: pointer;
-           text-align: inherit; }
+           text-align: inherit; width: 100%; }
   .fnota { margin: 12px 0 0; font-size: 13px; opacity: .85; }
   /* Al massimo tre voci per colonna: la quarta apre una colonna nuova invece
      di allungare la lista. Su schermo stretto le colonne non ci stanno e
      l'elenco torna a scendere e basta. */
   .flista { display: grid; grid-auto-flow: column; grid-template-rows: repeat(3, auto);
-            gap: 0 20px; justify-content: start; }
+            gap: 0 20px; justify-content: center; }
   /* Un nome di prodotto non si spezza a meta': "Bayran Cleaner" andava a capo
      e la colonna diventava alta il doppio, con "Bayran" sopra e "Cleaner"
      sotto. Per questo la colonna e' anche piu' larga di prima. */
