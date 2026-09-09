@@ -117,7 +117,6 @@
        scorrimento resta dentro la fila. */
     overscroll-behavior-x: contain;
     padding-top: 250px; margin-top: -201px;
-    scrollbar-width: thin;
     scroll-padding: 0 22px;
   }
   /* Sotto i 1040px l'ingrandimento non ha senso: quattro schede in fila
@@ -465,17 +464,35 @@
     const cime = new Set(schede.map(s => s.offsetTop));
     return finemouse.matches && !menoMoto.matches && cime.size === 1;
   }
+  /* Scorrimento ai bordi. La fila si muove quando il cursore si appoggia agli
+     ultimi BORDO pixel, a destra o a sinistra, e va tanto piu' veloce quanto
+     piu' ci si avvicina al bordo. E' l'unico modo che funziona con qualunque
+     cosa si abbia in mano: la rotellina di un mouse e' verticale, e su macOS
+     la barra di scorrimento e' a scomparsa, quindi non si vede finche' non si
+     sta gia' scorrendo. */
+  const BORDO = 110;    // quanto e' larga la fascia sensibile
+  const PASSO = 16;     // pixel per fotogramma, alla massima velocita'
+  let ultimoX = null;
+  let moto = null;
+
   function spegni() {
     riga.classList.remove('dock');
+    riga.style.cursor = '';
+    ultimoX = null;
+    if (moto) { cancelAnimationFrame(moto); moto = null; }
     schede.forEach(s => { s.style.removeProperty('--k'); s.style.removeProperty('--z'); });
   }
-  function muovi(e) {
-    if (!attiva()) { spegni(); return; }
+
+  /* L'onda, data la posizione del cursore. Sta separata dal gestore del mouse
+     perche' va rifatta anche quando e' la FILA a muoversi sotto un cursore
+     fermo: durante lo scorrimento, senza questo, la scheda ingrandita restava
+     ingrandita mentre sotto al cursore ne passava un'altra. */
+  function onda(x) {
     riga.classList.add('dock');
     const RAGGIO = raggio();
     schede.forEach(s => {
       const r = s.getBoundingClientRect();
-      const d = Math.abs(e.clientX - (r.left + r.width / 2));
+      const d = Math.abs(x - (r.left + r.width / 2));
       // curva morbida: 1 sotto il cursore, 0 oltre il raggio
       const vicinanza = Math.max(0, 1 - d / RAGGIO);
       const k = 1 + (MAX - 1) * Math.pow(vicinanza, 1.4);
@@ -484,6 +501,45 @@
       // la vicina e sembra tagliata
       s.style.setProperty('--z', String(Math.round(k * 100)));
     });
+  }
+
+  /* Quanto e in che verso scorrere, adesso. Zero se il cursore non e' su un
+     bordo, o se da quella parte la fila e' gia' arrivata in fondo. */
+  function velocita() {
+    if (ultimoX === null) return 0;
+    const r = riga.getBoundingClientRect();
+    const resta = riga.scrollWidth - riga.clientWidth;
+    if (resta < 1) return 0;
+    if (ultimoX > r.right - BORDO && riga.scrollLeft < resta - 0.5)
+      return PASSO * Math.min(1, (ultimoX - (r.right - BORDO)) / BORDO);
+    if (ultimoX < r.left + BORDO && riga.scrollLeft > 0.5)
+      return -PASSO * Math.min(1, ((r.left + BORDO) - ultimoX) / BORDO);
+    return 0;
+  }
+
+  function segnale(v) {
+    // il cursore cambia forma sul bordo: e' il solo modo di far capire che li'
+    // succede qualcosa, senza aggiungere frecce alla pagina
+    riga.style.cursor = v > 0 ? 'e-resize' : v < 0 ? 'w-resize' : '';
+  }
+
+  function scorri() {
+    moto = null;
+    if (!attiva()) return;
+    const v = velocita();
+    segnale(v);
+    if (!v) return;
+    riga.scrollLeft += v;
+    onda(ultimoX);
+    moto = requestAnimationFrame(scorri);
+  }
+
+  function muovi(e) {
+    if (!attiva()) { spegni(); return; }
+    ultimoX = e.clientX;
+    onda(ultimoX);
+    segnale(velocita());
+    if (!moto) moto = requestAnimationFrame(scorri);
   }
 
   /* Con un mouse la rotellina e' verticale e non muoverebbe una fila
@@ -501,6 +557,11 @@
 
   riga.addEventListener('pointermove', muovi);
   riga.addEventListener('pointerleave', spegni);
+  // Se la fila si muove in un altro modo (barra, tastiera), l'onda si rifa'
+  // lo stesso sotto il cursore fermo.
+  riga.addEventListener('scroll', function () {
+    if (ultimoX !== null && !moto && attiva()) onda(ultimoX);
+  }, { passive: true });
   window.addEventListener('resize', spegni);
 })();
 
