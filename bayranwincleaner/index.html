@@ -70,6 +70,16 @@
   .cta.altro:hover { box-shadow: none; border-color: #5ec4e4;
                      background: rgba(94,196,228,.08); }
   .req { color: #7d8fa0; font-size: 13px; margin-top: 15px; }
+  /* Chi arriva dal sistema sbagliato per questa pagina lo legge sotto i tasti:
+     da un Mac trova la versione per Mac, da un telefono che serve un computer.
+     Da Windows la riga non compare. La stessa riga, uguale, sta sulla pagina
+     del Mac. */
+  .sistema { color: #b6c6d3; font-size: 13.5px; max-width: 520px;
+             margin: 14px auto 0; text-wrap: balance; }
+  .sistema[hidden] { display: none; }
+  .sistema a { color: #5ec4e4; text-decoration: none;
+               border-bottom: 1px solid rgba(94,196,228,.42); }
+  .sistema a:hover { border-color: #5ec4e4; }
 
   /* Palcoscenico: la schermata cresce fino a riempire lo schermo mentre si
      scorre, con le didascalie che entrano ed escono ai lati. Stessa meccanica
@@ -325,7 +335,35 @@
     <a class="cta" href="../bayrancleaner/BayranWinCleaner-0.9.9.zip">Scarica gratis</a>
     <a class="cta altro" href="../bayrancleaner/">Versione per Mac</a>
   </div>
-  <div class="req">Versione 0.9.9 · Gratuito</div>
+  <div class="req">Versione 0.9.9 · Gratuito<br>
+  Un solo download per PC Intel/AMD e ARM: l'installazione riconosce il processore da sola.</div>
+  <p class="sistema" id="sistema" hidden></p>
+  <script>
+  /* Il sistema di chi visita, da come il browser si presenta. Serve solo a
+     dare un'indicazione, mai a cambiare il download: lo zip e' uno solo e va
+     bene per ogni PC Windows. Il processore (Intel/AMD o ARM) il browser non
+     lo dice in modo affidabile, e non serve: lo riconosce l'installazione.
+     Prima telefoni e tablet, perche' l'iPad si presenta come un Mac e lo
+     tradisce solo lo schermo a tocco. ?sistema=mac|windows|telefono mostra
+     un caso a scelta, per vederlo in anteprima. */
+  (function () {
+    var ua = navigator.userAgent;
+    var sistema = new URLSearchParams(location.search).get("sistema")
+      || (/Android|iPhone|iPad|iPod|Mobile/i.test(ua)
+          || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1) ? "telefono"
+        : /Windows/.test(ua) ? "windows"
+        : /Macintosh|Mac OS X/.test(ua) ? "mac" : "");
+    var riga = document.getElementById("sistema");
+    if (sistema === "mac") {
+      riga.innerHTML = 'Stai usando un Mac: <a href="../bayrancleaner/">Bayran Cleaner per Mac è qui</a>.';
+    } else if (sistema === "telefono") {
+      riga.textContent = "Bayran WinCleaner si installa su un PC Windows: apri questa pagina dal computer.";
+    } else {
+      return;
+    }
+    riga.hidden = false;
+  })();
+  </script>
 </div>
 
 <div id="palco" data-amb="#1f6f9c">
