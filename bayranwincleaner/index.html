@@ -220,13 +220,17 @@
   .requisiti li { display: flex; justify-content: space-between; gap: 18px;
     padding: 9px 0; border-top: 1px solid rgba(255,255,255,.07);
     color: #eaf2f7; font-size: 14.5px; }
-  .requisiti li b { color: #8fa2b2; font-weight: 600; }
+  .requisiti li b { color: #8fa2b2; font-weight: 600; flex-shrink: 0; }
+  .requisiti li span { text-align: right; }
   /* La pagina del Mac non ha questa nota, perche' li' il programma e' firmato
      e verificato da Apple. Qui serve. */
   .requisiti .nota { margin: 16px 0 0; padding-top: 14px;
     border-top: 1px solid rgba(255,255,255,.07);
     color: #8fa2b2; font-size: 13.5px; text-align: left; }
   .requisiti .nota b { color: #b6c6d3; }
+  /* I requisiti stanno due volte, identici: sotto i tasti in cima, dove si
+     scarica, e in fondo. Chi ne cambia uno cambia anche l'altro. */
+  .hero .requisiti { margin-top: 30px; }
 
   .coda { height: 90px; }
 
@@ -256,6 +260,10 @@
     /* l'indirizzo di posta e' una parola sola piu' larga della sua colonna:
        senza questo sfonderebbe la finestra invece di andare a capo */
     .fcol a { overflow-wrap: anywhere; }
+    /* sul telefono etichetta e valore dei requisiti non ci stanno
+       affiancati: il valore va sotto l'etichetta, allineato con lei */
+    .requisiti li { flex-direction: column; gap: 2px; text-align: left; }
+    .requisiti li span { text-align: left; }
   }
   .fbrand { display: flex; align-items: center; justify-content: center; gap: 9px;
             font-weight: 700; color: #eaf6f4; font-size: 16px; }
@@ -332,8 +340,7 @@
     <a class="cta" href="../bayrancleaner/BayranWinCleaner-0.9.9.zip">Scarica gratis</a>
     <a class="cta altro" href="../bayrancleaner/">Versione per Mac</a>
   </div>
-  <div class="req">Versione 0.9.9 · Gratuito<br>
-  Windows · Intel/AMD e ARM · 10 MB</div>
+  <div class="req">Versione 0.9.9 · Gratuito</div>
   <p class="sistema" id="sistema" hidden></p>
   <script>
   /* Il sistema di chi visita, da come il browser si presenta. Serve solo a
@@ -361,6 +368,35 @@
     riga.hidden = false;
   })();
   </script>
+  <!-- Lo stesso riquadro che sta in fondo, parola per parola: chi scarica
+       da qui legge i requisiti prima di premere. -->
+  <div class="requisiti">
+    <h3>Requisiti di sistema</h3>
+    <ul>
+      <!-- 1809 (build 17763) e' il minimo dichiarato nel .csproj
+           (SupportedOSPlatformVersion): .NET 10 arriva alla 1607 e WebView2
+           alla 1709, quindi il limite lo mette il programma. Il pacchetto ha
+           solo build a 64 bit, x64 e ARM64. -->
+      <li><b>Sistema operativo</b><span>Windows 10 (versione 1809 o successiva) e Windows 11</span></li>
+      <li><b>Processore</b><span>Intel/AMD e ARM, a 64 bit</span></li>
+      <li><b>Download</b><span>10 MB, un solo pacchetto per Intel/AMD e ARM</span></li>
+      <!-- Misurato sulla macchina di prova il 13/9/2026, 0.9.9: il programma
+           installato pesa 10 MB, la cache di WebView2 in %LOCALAPPDATA% altri
+           28 MB dopo una giornata d'uso. 50 e' il tetto onesto. -->
+      <li><b>Spazio su disco</b><span>50 MB</span></li>
+      <li><b>Componenti</b><span>Microsoft Edge WebView2, già in Windows 11: se manca, l'installazione lo scarica da Microsoft</span></li>
+      <li><b>Amministratore</b><span>non richiesto: si installa nel profilo dell'utente</span></li>
+      <li><b>Lingua</b><span>Italiano e Inglese</span></li>
+      <li><b>Firma digitale</b><span>non ancora firmato</span></li>
+      <li><b>Licenza</b><span>gratuita, per uso personale e professionale</span></li>
+    </ul>
+    <!-- La firma va detta: senza, al primo avvio Windows mostra «Windows ha
+         protetto il PC» e chi non se lo aspetta pensa di aver scaricato un
+         virus. Meglio saperlo prima di scaricare che dopo. -->
+    <p class="nota">Al primo avvio Windows mostra «Windows ha protetto il
+    PC»: si prosegue con <b>Ulteriori informazioni</b> e poi <b>Esegui
+    comunque</b>.</p>
+  </div>
 </div>
 
 <div id="palco" data-amb="#1f6f9c">
@@ -484,12 +520,22 @@
   <div class="requisiti">
     <h3>Requisiti di sistema</h3>
     <ul>
-      <li><b>Sistema operativo</b>Windows 10 (1809) e Windows 11</li>
-      <li><b>Processore</b>Intel/AMD e ARM</li>
-      <li><b>Spazio su disco</b>50 MB</li>
-      <li><b>Lingua</b>Italiano e Inglese</li>
-      <li><b>Firma digitale</b>non ancora firmato</li>
-      <li><b>Licenza</b>gratuita, per uso personale e professionale</li>
+      <!-- 1809 (build 17763) e' il minimo dichiarato nel .csproj
+           (SupportedOSPlatformVersion): .NET 10 arriva alla 1607 e WebView2
+           alla 1709, quindi il limite lo mette il programma. Il pacchetto ha
+           solo build a 64 bit, x64 e ARM64. -->
+      <li><b>Sistema operativo</b><span>Windows 10 (versione 1809 o successiva) e Windows 11</span></li>
+      <li><b>Processore</b><span>Intel/AMD e ARM, a 64 bit</span></li>
+      <li><b>Download</b><span>10 MB, un solo pacchetto per Intel/AMD e ARM</span></li>
+      <!-- Misurato sulla macchina di prova il 13/9/2026, 0.9.9: il programma
+           installato pesa 10 MB, la cache di WebView2 in %LOCALAPPDATA% altri
+           28 MB dopo una giornata d'uso. 50 e' il tetto onesto. -->
+      <li><b>Spazio su disco</b><span>50 MB</span></li>
+      <li><b>Componenti</b><span>Microsoft Edge WebView2, già in Windows 11: se manca, l'installazione lo scarica da Microsoft</span></li>
+      <li><b>Amministratore</b><span>non richiesto: si installa nel profilo dell'utente</span></li>
+      <li><b>Lingua</b><span>Italiano e Inglese</span></li>
+      <li><b>Firma digitale</b><span>non ancora firmato</span></li>
+      <li><b>Licenza</b><span>gratuita, per uso personale e professionale</span></li>
     </ul>
     <!-- La firma va detta: senza, al primo avvio Windows mostra «Windows ha
          protetto il PC» e chi non se lo aspetta pensa di aver scaricato un
